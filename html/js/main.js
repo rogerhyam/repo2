@@ -6,6 +6,14 @@ $( document ).ready(function() {
         $('#repo-input-start').val(0);
     });    
 
+    $('.repo-search-result-top').on('click', function(){
+        
+        console.log($(this).parent().find('.repo-search-result-bottom').toggle('slow'));
+        
+        console.log('banana');
+    
+    });
+
     
 });
 

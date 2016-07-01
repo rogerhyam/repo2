@@ -33,22 +33,65 @@
         $result = json_decode(curl_exec($ch));
         curl_close($ch);
         
-        echo "<p>Showing {$result->response->start} to ". count($result->response->docs) ." of {$result->response->numFound} results found.</p>";
+        echo "<p>Showing {$result->response->start} to ". (count($result->response->docs) + $result->response->start) ." of {$result->response->numFound} results found.</p>";
         
+        $row_count = 0;
         foreach($result->response->docs as $doc){
-            echo '<div class="repo-search-result">';
+            
+            // tag the 
+            $type_css =  'repo-'. str_replace(' ', '-', strtolower($doc->item_type));
+            $odd_even_css =  'repo-' . ($row_count % 2 ? 'odd' : 'even');
+            
+            echo "<div class=\"repo-search-result $type_css $odd_even_css\">";
+            
+            // top of he search result
+            echo '<div class="repo-search-result-top">';
+            
             echo "<h3>";
             echo $doc->title[0];
-            echo "</h3>";
+            echo "</h3>";            
+            
+            echo '</div>';
+            
+            // body of the search result
+            echo '<div class="repo-search-result-bottom">';
+            
+            // a list of taxonomic fields
+            echo "<h4>Taxonomy</h4>";
+            echo '<ul class="repo-taxon-fields">';
+            write_facet_li($doc, 'higher_taxon', 'Higher Taxon', 'Higher Taxa');
+            write_facet_li($doc, 'family', 'Family', 'Families');
+            write_facet_li($doc, 'genus', 'Genus', 'Genera');
+            write_facet_li($doc, 'epithet', 'Epithet', 'Epithets');
+            write_field_li($doc, 'scientific_name_html', 'Scientific Name', 'Scientific Names');
+            echo '</ul>';
+            
+            echo "<h4>Geography</h4>";
+            echo '<ul class="repo-geography-fields">';
+            write_facet_li($doc, 'country_iso', 'Country', 'Countries');
+            write_field_li($doc, 'location', 'Location', 'locations');
+            write_field_li($doc, 'elevation', 'Elevation', 'Elevations');
+            echo '</ul>';
+            
+            
+            echo "<pre>";
+            var_dump($doc);
+            echo "</pre>";
+            
+            echo '</div>';
+            
+
             echo "</div>";
+            
+            $row_count++;
         }
 
 
         // Paging at the bottom
-        $rows = $_GET['rows'];
-        if($rows > 0){
+        $rows = @$_GET['rows'];
+        if($rows > 0 && $rows < $result->response->numFound){
             
-            echo '<div class="repo-pager">';
+            echo '<div id="repo-pager">';
             
             if($result->response->start > 0){
                 $new_start = $result->response->start - $rows;
@@ -72,17 +115,17 @@
             
                 // no more than then next 10
                 if($links_rendered > 10){
-                    echo "...";
+                    echo "... ";
                     break;
                 }
                 $links_rendered++;
                 
                 if($i * $rows == $result->response->start){
-                    echo ($i + 1) . " ";
+                    echo '<span class="repo-current-page" >'. ($i + 1) . "</span> ";
                 }else{
                     $new_start = $i * $rows;
                     $new_query_string = preg_replace('/start=[0-9]+/', "start=$new_start", $_SERVER['QUERY_STRING']);
-                    $uri = 'index.php?' . $new_query_string;    
+                    $uri = 'index.php?' . $new_query_string;
                     echo '<a href="'.$uri.'">'. ($i + 1) . '</a> ';
                 }
             }
@@ -100,11 +143,11 @@
             echo '</div>';
             
         }
-       
+       /*
         echo "<pre>";
         var_dump($result);
         echo "</pre>";
-
+        */
         
 ?>
 
