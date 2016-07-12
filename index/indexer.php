@@ -1,7 +1,8 @@
 <?php
 
     require_once('../config.php');
-    include_once('classes/Uploader.php');
+    require_once('classes/Uploader.php');
+    require_once('augmenter_switch.php');
 
     // starting off
     $now = new DateTime();
@@ -110,9 +111,12 @@
 
             // we tag when it is being indexed
             $doc->indexed_at = 'NOW';
-
-
-            $uploader->add_document($doc);
+            
+            // give the augmenters a chance to add to the document
+            augment($doc);
+           // var_dump($doc);
+           
+           $uploader->add_document($doc);
         }
 
         $uploader->submit_now();

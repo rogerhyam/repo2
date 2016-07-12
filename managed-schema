@@ -413,16 +413,16 @@
   <field name="description" type="strings"/>
   <field name="elevation" type="double" indexed="true" stored="true"/>
   <field name="embargo_date" type="date" indexed="true" stored="true"/>
-  <field name="epithet" type="string" indexed="true" stored="true"/>
-  <field name="family" type="string" indexed="true" stored="true"/>
+  <field name="epithet" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="family" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="file" type="string" multiValued="false" indexed="true" stored="true"/>
-  <field name="genus" type="string" indexed="true" stored="true"/>
+  <field name="genus" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="geolocation" type="location_rpt" indexed="true" stored="true"/>
   <field name="geolocation_rpt" type="location_rpt" indexed="true" stored="false"/>
-  <field name="higher_taxon" type="string" indexed="true" stored="true"/>
+  <field name="higher_taxon" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="indexed_at" type="date" indexed="true" stored="true"/>
-  <field name="item_type" type="lowercase" multiValued="false" indexed="true" required="true" stored="true"/>
+  <field name="item_type" type="string" indexed="true" stored="true"/>
   <field name="link_out" type="string" indexed="true" stored="true"/>
   <field name="location" type="string" indexed="true" stored="true"/>
   <field name="object_created" type="date" indexed="true" stored="true"/>

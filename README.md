@@ -14,4 +14,3 @@ curl http://localhost:8983/solr/gettingstarted/update --data '<commit/>' -H 'Con
 
 sudo cp /var/solr/data/gettingstarted/conf/managed-schema /var/www/
 
-

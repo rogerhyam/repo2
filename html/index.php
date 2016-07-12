@@ -3,7 +3,7 @@
     // before we do anything we redirect if we haven't got a q
     // we always need to run a query so we have the facets available.
     if (!@$_GET['q']) {
-        header('Location: index.php?rows=0&q=*&facet=true&facet.mincount=1&facet.limit=100&facet.field=genus&facet.field=family&facet.field=epithet');
+        header('Location: index.php?rows=0&q=*&facet=true&facet.mincount=1&facet.limit=100&facet.field=genus&facet.field=family&facet.field=epithet&facet.field=country_name&facet.field=item_type');
     }
     
     require_once('inc/header.php');
@@ -22,6 +22,8 @@
         <input type="hidden" name="facet.field" value="genus" />
         <input type="hidden" name="facet.field" value="family" />
         <input type="hidden" name="facet.field" value="epithet" />
+        <input type="hidden" name="facet.field" value="country_name" />
+        <input type="hidden" name="facet.field" value="item_type" />
         
         <input type="submit" value="Search"/>
     
@@ -72,7 +74,6 @@
             write_field_li($doc, 'location', 'Location', 'locations');
             write_field_li($doc, 'elevation', 'Elevation', 'Elevations');
             echo '</ul>';
-            
             
             echo "<pre>";
             var_dump($doc);
@@ -167,17 +168,35 @@
     
     ?>
     
+<?php if(isset($result->facet_counts->facet_fields->item_type)){ ?>
+    <p>
+        <strong>Item Type:</strong>        
+        <select name="fq" onchange="this.form.submit();">
+            <option value="">~ Any ~</option>
+<?php
+    for($i = 0; $i < count($result->facet_counts->facet_fields->item_type); $i = $i + 2){
+        $name = $result->facet_counts->facet_fields->item_type[$i];
+        $count = $result->facet_counts->facet_fields->item_type[$i + 1];
+        $selected = in_array("item_type:" . $name, $fqs) ? 'selected': '';
+        echo "<option value=\"item_type:&quot;$name&quot;\" $selected >$name ($count)</option>";
+    }
+?>
+        </select>
+    </p>
+<?php } //end check for item_type ?>
+
+    
 <?php if(isset($result->facet_counts->facet_fields->family)){ ?>
     <p>
         <strong>Family:</strong>        
         <select name="fq" onchange="this.form.submit();">
-            <option value="family:*">~ All ~</option>
+            <option value="">~ Any ~</option>
 <?php
     for($i = 0; $i < count($result->facet_counts->facet_fields->family); $i = $i + 2){
         $name = $result->facet_counts->facet_fields->family[$i];
         $count = $result->facet_counts->facet_fields->family[$i +1];
         $selected = in_array("family:" . $name, $fqs) ? 'selected': '';
-        echo "<option value=\"family:$name\" $selected >$name ($count)</option>";
+        echo "<option value=\"family:&quot;$name&quot;\" $selected >$name ($count)</option>";
     }
 ?>
         </select>
@@ -190,13 +209,13 @@
     <p>
         <strong>Genus:</strong>        
         <select name="fq" onchange="this.form.submit();">
-            <option value="genus:*">~ All ~</option>
+            <option value="">~ Any ~</option>
 <?php
     for($i = 0; $i < count($result->facet_counts->facet_fields->genus); $i = $i + 2){
         $name = $result->facet_counts->facet_fields->genus[$i];
         $count = $result->facet_counts->facet_fields->genus[$i +1];
         $selected = in_array("genus:" . $name, $fqs) ? 'selected': '';
-        echo "<option value=\"genus:$name\" $selected >$name ($count)</option>";
+        echo "<option value=\"genus:&quot;$name&quot;\" $selected >$name ($count)</option>";
     }
 ?>
         </select>
@@ -207,18 +226,35 @@
     <p>
         <strong>Epithet:</strong>        
         <select name="fq" onchange="this.form.submit();">
-            <option value="epithet:*">~ All ~</option>
+            <option value="">~ Any ~</option>
 <?php
     for($i = 0; $i < count($result->facet_counts->facet_fields->epithet); $i = $i + 2){
         $name = $result->facet_counts->facet_fields->epithet[$i];
         $count = $result->facet_counts->facet_fields->epithet[$i +1];
         $selected = in_array("epithet:" . $name, $fqs) ? 'selected': '';
-        echo "<option value=\"epithet:$name\" $selected >$name ($count)</option>";
+        echo "<option value=\"epithet:&quot;$name&quot;\" $selected >$name ($count)</option>";
     }
 ?>
         </select>
     </p>
-<?php } //end check for genus ?>
+<?php } //end check for epithet ?>
+
+<?php if(isset($result->facet_counts->facet_fields->country_name)){ ?>
+    <p>
+        <strong>Country:</strong>        
+        <select name="fq" onchange="this.form.submit();">
+            <option value="">~ All ~</option>
+<?php
+    for($i = 0; $i < count($result->facet_counts->facet_fields->country_name); $i = $i + 2){
+        $name = $result->facet_counts->facet_fields->country_name[$i];
+        $count = $result->facet_counts->facet_fields->country_name[$i + 1];
+        $selected = in_array("country_name:" . $name, $fqs) ? 'selected': '';
+        echo "<option value=\"country_name:&quot;$name&quot;\" $selected >$name ($count)</option>";
+    }
+?>
+        </select>
+    </p>
+<?php } //end check for country_name ?>
 
 
 
