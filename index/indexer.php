@@ -107,7 +107,9 @@
         foreach($docs as $doc){
 
             // we have to have the location of the file containing the data
-            $doc->data_location = $file_path;
+            // but this should be within the scope of the repository - the full path might change
+            $relative_file_path = str_replace(REPO_ROOT, '', $file_path);
+            $doc->data_location = $relative_file_path;
 
             // we tag when it is being indexed
             $doc->indexed_at = 'NOW';
@@ -139,6 +141,5 @@
     // $file_path = '/test/reference_doc.json';
 
 
-    
 
 ?>

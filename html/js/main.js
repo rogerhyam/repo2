@@ -8,7 +8,7 @@ $( document ).ready(function() {
 
     $('.repo-search-result-top').on('click', function(){
         
-        console.log($(this).parent().find('.repo-search-result-bottom').toggle('slow'));
+        console.log($(this).parent().children('.repo-search-result-bottom').toggle('slow'));
         
         console.log('banana');
     

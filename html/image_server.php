@@ -9,7 +9,7 @@
     $kind = $_GET['kind'];
     $md5 = md5($within_repo);
     
-    $cache_dir = "cache/$kind/" . implode('/', str_split($md5, 16));
+    $cache_dir = "cache/$kind/" . substr($md5, 0,2);
     $cache_path =  "$cache_dir/$md5.jpg";
     
     // if it isn't in the cache create it

@@ -1,8 +1,8 @@
 <?php
 
-include_once('classes/Singleton.php');
+include_once('classes/BaseAugmenter.php');
 
-class CountryNameAugmenter extends Singleton
+class CountryNameAugmenter extends BaseAugmenter
 {
     
     var $countries = array(

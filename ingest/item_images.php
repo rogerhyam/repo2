@@ -3,7 +3,7 @@
 require_once('../config.php');
 require_once('../config_bgbase_dump.php');
 
-   $page_size = 100;
+   $page_size = 1000;
  
    $now = new DateTime();
    echo "Item Image Start: " . $now->format(DATE_ATOM) . "\n";
@@ -13,7 +13,8 @@ require_once('../config_bgbase_dump.php');
        
        echo "Starting at offset = $offset\n";
        
-       $sql = "SELECT * FROM image_archive.uploaded_images ORDER BY id LIMIT $page_size OFFSET " . $offset;
+       // $sql = "SELECT * FROM image_archive.uploaded_images ORDER BY id LIMIT $page_size OFFSET " . $offset;
+       $sql = "SELECT * FROM image_archive.uploaded_images WHERE accession_number is NULL ORDER BY id LIMIT $page_size OFFSET " . $offset;
        $response = $mysqli->query($sql);
        echo "\tGot {$response->num_rows}\n";
        
@@ -78,10 +79,24 @@ require_once('../config_bgbase_dump.php');
            $doc['item_type'] = 'Accession Photo';
            $path_parts = str_split($row['accession_number'], 2);
            $repo_path .= '/accessions/' . implode('/', $path_parts);
+           
+           //need to decide if this is attached to a plant or an accession
+           // if there is no qualifier in the barcode_accession this is accession linked
+           if($row['barcode_accession'] == $row['accession_number']){
+               $doc['derived_from'] = 'http://data.rbge.org.uk/living/' . $row['barcode_accession'];
+           }else{
+               $doc['derived_from'] = 'http://repo.rbge.org.uk/id/plant/' . $row['barcode_accession'];
+           }
+    
+           
        }else{
            $doc['item_type'] = 'Specimen Photo';
            $path_parts = str_split($row['barcode_accession'], 3);
            $repo_path .= '/specimens/' . implode('/', $path_parts);
+           
+           // we definitely link this to the specimen it is of
+           $doc['derived_from'] = 'http://data.rbge.org.uk/herb/' . $row['barcode_accession'];
+       
        }
        
        // make sure it exists

@@ -1,18 +1,19 @@
 <?php 
-
+    require_once('inc/header.php');
+    
     // before we do anything we redirect if we haven't got a q
     // we always need to run a query so we have the facets available.
     if (!@$_GET['q']) {
-        header('Location: index.php?rows=0&q=*&facet=true&facet.mincount=1&facet.limit=100&facet.field=genus&facet.field=family&facet.field=epithet&facet.field=country_name&facet.field=item_type&facet.field=object_created_year');
+        header('Location: index.php?q=_text_:*&repo_type=hidden&' . REPO_SOLR_QUERY_STRING);
     }
     
-    require_once('inc/header.php');
 ?>
 <div id="repo-page-wrap">
      <form class="repo-search-form" method="GET" action="index.php">
 <div id="repo-page-content">
    
-        <input type="text" name="q" id="repo-input-q" value="<?php echo @$_GET['q'] ?>"/>
+        <input type="text" name="q" id="repo-input-q" value="<?php echo @$_GET['repo_type'] != 'hidden' ? @$_GET['q'] : ''; ?>"/>
+        <input type="hidden" name="repo_type" value="simple" />
         <input type="hidden" name="start" id="repo-input-start" value="<?php echo @$_GET['start'] ? $_GET['start'] : 0;  ?>" />
         <input type="hidden" name="rows" value="<?php echo REPO_SOLR_PAGE_SIZE ?>" />
         <input type="hidden" name="facet" value="true" />
@@ -26,80 +27,33 @@
         <input type="hidden" name="facet.field" value="item_type" />
         <input type="hidden" name="facet.field" value="object_created_year" />
         
-        
         <input type="submit" value="Search"/>
     
     
 <?php 
-        $uri = REPO_SOLR_URI . '/query?'. $_SERVER['QUERY_STRING'];
+
+        // is it a simple query or is there a field name in it?      
+        $query_string =  $_SERVER['QUERY_STRING'];
+        if(@$_GET['repo_type'] == 'simple'){
+            // surround the query submitted with "" and it will search the default field.
+            $query_string = preg_replace('/^q=([^&]+)&/', 'q=%22$1%22&', $query_string);
+        }
+        
+        // remove the repo_type param so it doesn't go to solr
+        $query_string = preg_replace('/&repo_type=[a-z_]+/', '', $query_string);
+            
+        // call solr
+        $uri = REPO_SOLR_URI . '/query?'. $query_string;
         $ch = curl_init($uri);
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );        
         $result = json_decode(curl_exec($ch));
         curl_close($ch);
-        
+              
         echo "<p>Showing {$result->response->start} to ". (count($result->response->docs) + $result->response->start) ." of {$result->response->numFound} results found.</p>";
         
         $row_count = 0;
         foreach($result->response->docs as $doc){
-            
-            // tag the 
-            $type_css =  'repo-'. str_replace(' ', '-', strtolower($doc->item_type));
-            $odd_even_css =  'repo-' . ($row_count % 2 ? 'odd' : 'even');
-            
-            echo "<div class=\"repo-search-result $type_css $odd_even_css\">";
-            
-            // top of he search result
-            echo '<div class="repo-search-result-top">';
-            
-            echo '<div class="thumbnail">';
-            if(isset($doc->mime_type_s) && $doc->mime_type_s == 'image/jpeg'){
-                $src = 'image_server.php?kind=40&path=' . $doc->storage_location_path;
-                echo "<img src=\"$src\" />";
-            }else{
-                echo "*";
-            }
-            echo '</div>';
-            
-            echo "<h3>";
-            echo $doc->title[0];
-            echo "</h3>";            
-            
-            echo '</div>';
-            
-            // body of the search result
-            echo '<div class="repo-search-result-bottom">';
-            
-            if(isset($doc->mime_type_s) && $doc->mime_type_s == 'image/jpeg'){
-                $src = 'image_server.php?kind=400&path=' . $doc->storage_location_path;
-                echo "<img class=\"large-image\" src=\"$src\" />";
-            }
-            
-            // a list of taxonomic fields
-            echo "<h4>Taxonomy</h4>";
-            echo '<ul class="repo-taxon-fields">';
-            write_facet_li($doc, 'higher_taxon', 'Higher Taxon', 'Higher Taxa');
-            write_facet_li($doc, 'family', 'Family', 'Families');
-            write_facet_li($doc, 'genus', 'Genus', 'Genera');
-            write_facet_li($doc, 'epithet', 'Epithet', 'Epithets');
-            write_field_li($doc, 'scientific_name_html', 'Scientific Name', 'Scientific Names');
-            echo '</ul>';
-            
-            echo "<h4>Geography</h4>";
-            echo '<ul class="repo-geography-fields">';
-            write_facet_li($doc, 'country_iso', 'Country', 'Countries');
-            write_field_li($doc, 'location', 'Location', 'locations');
-            write_field_li($doc, 'elevation', 'Elevation', 'Elevations');
-            echo '</ul>';
-            
-            echo "<pre>";
-            var_dump($doc);
-            echo "</pre>";
-            
-            echo '</div>';
-            
-
-            echo "</div>";
-            
+             write_doc($doc, $row_count);
             $row_count++;
         }
 

@@ -87,3 +87,31 @@ html, body{
 .repo-searching-link{
     cursor: zoom-in;
 }
+
+.repo-taxon-fields h4,
+.repo-geography-fields h4{
+    display: inline-block;
+    margin: 0px;
+    margin-bottom: 0.5em;
+    width: 100px;
+    text-align: right;
+    color: black;
+    padding-right: 1em;
+}
+.repo-taxon-fields ul,
+.repo-geography-fields ul{
+    display: inline;
+    border: solid 1px gray;
+    margin: 0px;
+    padding-left: 0px;
+}
+.repo-taxon-fields ul li,
+.repo-geography-fields ul li{
+    display: inline;
+    list-style-type: none;
+    padding-right: 0.5em;
+}
+.repo-taxon-fields ul li strong,
+.repo-geography-fields ul li strong{
+    color: gray;
+}

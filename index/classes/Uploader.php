@@ -30,8 +30,6 @@ class Uploader{
     // submits to solr
     function submit_now(){
         
-        
-        
         $ch = curl_init( REPO_SOLR_URI . '/update/json?commitWithin=' . $this->commitWithin );
         
         curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $this->docs )); // not sure why this doesn't need a field name
