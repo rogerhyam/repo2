@@ -4,18 +4,18 @@
     require_once('../config_bgbase_dump.php');
     
     $page_size = 100000;
-  
+    //$page_size = 10; // debug
+    
     $now = new DateTime();
-    echo "Herbarium Specimens Start: " . $now->format(DATE_ATOM) . "\n";
+    echo "Accessions Start: " . $now->format(DATE_ATOM) . "\n";
   
-    // do 100k at a time
     $offset = 0;
     $file_count = 0;
     while(true){
         
         echo "Starting at offset = $offset\n";
         
-        $sql = "SELECT * FROM darwin_core ORDER BY GloballyUniqueIdentifier LIMIT $page_size OFFSET " . $offset;
+        $sql = "SELECT * FROM darwin_core_living ORDER BY GloballyUniqueIdentifier LIMIT $page_size OFFSET " . $offset;
         $response = $mysqli->query($sql);
         echo "\tGot {$response->num_rows}\n";
         
@@ -31,14 +31,15 @@
         $file_count++;
         $offset = $offset + $page_size;
 
+        //break; // debug
     }
     
     $now = new DateTime();
-    echo "Herbarium Specimens Finish: " . $now->format(DATE_ATOM) . "\n";
+    echo "Accessions Finish: " . $now->format(DATE_ATOM) . "\n";
     
     
     function write_json_to_file($out, $file_count){
-        $file_path = REPO_ROOT . '/bgbase/herbarium_specimens/' . str_pad($file_count, 3 ,"0",STR_PAD_LEFT)  . '.json';
+        $file_path = REPO_ROOT . '/bgbase/accessions/' . str_pad($file_count, 3 ,"0",STR_PAD_LEFT)  . '.json';
         file_put_contents($file_path, JSON_encode($out));
         echo "\tWritten $file_path\n";
     }
@@ -48,20 +49,22 @@
         $doc = array();
         
         // required field
-        $doc['item_type'] = 'Herbarium Specimen';
-        $doc['storage_location'] = 'Herbarium';
-        $doc['storage_location_path'] = '/Inverleith/Science Buildings/Herbarium';
+        $doc['item_type'] = 'Garden Accession';
+    
+        $doc['storage_location'] = 'Living Collections Catalogue';
+        $doc['storage_location_path'] = '/Living Collections Catalogue';
         
         // id is the guid
         $doc['id'] = $row['GloballyUniqueIdentifier'];
         $doc["link_out"] = $row['GloballyUniqueIdentifier'];
+        
         $doc['catalogue_number'] = $row['CatalogNumber'];
         
         // other catalogue numbers
         $doc['catalogue_number_other'] = array();
-        if($row['CatalogNumberNumeric']) $doc['catalogue_number_other'][] = $row['CatalogNumberNumeric'];
-        if($row['CollectorNumber']) $doc['catalogue_number_other'][] = $row['CollectorNumber'];
-        if($row['OtherCatalogNumbers']) $doc['catalogue_number_other'][] = $row['OtherCatalogNumbers'];
+        if(isset($row['CatalogNumberNumeric'])) $doc['catalogue_number_other'][] = $row['CatalogNumberNumeric'];
+        if(isset($row['CollectorNumber'])) $doc['catalogue_number_other'][] = $row['CollectorNumber'];
+        if(isset($row['OtherCatalogNumbers'])) $doc['catalogue_number_other'][] = $row['OtherCatalogNumbers'];
         
         // scientific name - always have?
         $doc['scientific_name_html'] = $row['ScientificName'];
@@ -116,7 +119,6 @@
         
         // this could be nicer
         $title_parts = array();
-        $title_parts[] = $row['CatalogNumber'];
         $title_parts[] = $row['Collector'];
         $title_parts[] = $row['CollectorNumber'];
         $title_parts[] = $row['ScientificName'];

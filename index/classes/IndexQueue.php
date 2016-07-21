@@ -16,10 +16,45 @@ class IndexQueue extends SQLite3{
     }
     
     public function enqueue($item_id, $data_file){
-        $this->exec("INSERT INTO index_queue (item_id, data_file, priority) VALUES ('second', 'third', 8)");
-        //$result = $this->query('select count(*) as n from index_queue');
-        $result = $this->query('select * from index_queue');
-        print_r($result->fetchArray(SQLITE3_ASSOC));
+        
+        $id = $this->escapeString($item_id);
+        $f = $this->escapeString($data_file);
+
+        $result = $this->query("SELECT * FROM index_queue WHERE item_id = '$id'");
+        if($result->fetchArray()){
+            $this->exec("UPDATE index_queue SET priority = priority + 1 WHERE item_id = '$id'");
+        }else{
+            $this->exec("INSERT INTO index_queue (item_id, data_file, priority) VALUES ('$id', '$f' , 1)");
+        }
+        
+    }
+    
+    /**
+    *   removes item from queue
+    */
+    public function dequeue($item_id){
+        $id = $this->escapeString($item_id);
+        $this->exec("DELETE FROM index_queue WHERE item_id = '$id'");
+    }
+    
+    /**
+    *   returns the most important file to index
+    */
+    public function get_priority_file(){
+        $result = $this->query("SELECT data_file FROM index_queue WHERE priority > 0 GROUP BY data_file ORDER BY SUM(priority) DESC, created ASC LIMIT 1");   
+        $row = $result->fetchArray(SQLITE3_ASSOC);     
+        if($row){
+            return $row['data_file'];
+        }else{
+            return null;
+        }
+    }
+    
+    /**
+    * called when a data file is un-available or corrupted
+    */
+    public function shelve($data_file){
+        $this->exec("UPDATE index_queue SET priority = -1 WHERE data_file = '$data_file'");
     }
     
 }

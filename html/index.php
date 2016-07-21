@@ -1,19 +1,24 @@
 <?php 
     require_once('inc/header.php');
     
+//    echo $_GET['fq'];
+//    exit;
+    
     // before we do anything we redirect if we haven't got a q
     // we always need to run a query so we have the facets available.
     if (!@$_GET['q']) {
-        header('Location: index.php?q=_text_:*&repo_type=hidden&' . REPO_SOLR_QUERY_STRING);
+         header('Location: index.php?q=_text_:*&repo_type=hidden&' . REPO_SOLR_QUERY_STRING);
     }
-    
+
 ?>
+
+
 <div id="repo-page-wrap">
      <form class="repo-search-form" method="GET" action="index.php">
 <div id="repo-page-content">
    
-        <input type="text" name="q" id="repo-input-q" value="<?php echo @$_GET['repo_type'] != 'hidden' ? @$_GET['q'] : ''; ?>"/>
-        <input type="hidden" name="repo_type" value="simple" />
+        <input type="text" name="q" id="repo-input-q" value="<?php echo @$_GET['repo_type'] != 'hidden' ? @$_GET['q'] : ''; ?>"/>        
+        <input type="hidden" name="repo_type" value="simple"/>
         <input type="hidden" name="start" id="repo-input-start" value="<?php echo @$_GET['start'] ? $_GET['start'] : 0;  ?>" />
         <input type="hidden" name="rows" value="<?php echo REPO_SOLR_PAGE_SIZE ?>" />
         <input type="hidden" name="facet" value="true" />

@@ -101,7 +101,7 @@ html, body{
 .repo-taxon-fields ul,
 .repo-geography-fields ul{
     display: inline;
-    border: solid 1px gray;
+    /* border: solid 1px gray; */
     margin: 0px;
     padding-left: 0px;
 }

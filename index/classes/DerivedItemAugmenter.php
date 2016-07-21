@@ -24,7 +24,9 @@ class DerivedItemAugmenter extends BaseAugmenter
         'epithet',
         'geolocation',
         'country_iso',
-        'country_name'
+        'country_name',
+        'scientific_name_plain',
+        'scientific_name_html'
     );
     
     public function __construct(){
@@ -38,6 +40,7 @@ class DerivedItemAugmenter extends BaseAugmenter
             $this->inherit_field_data($doc->derived_from, $doc);
         }
         
+        // called on all items that might have derivatives
         $this->check_derivatives($doc);
     
     }
@@ -59,6 +62,8 @@ class DerivedItemAugmenter extends BaseAugmenter
                 $target->$field_name = $source->$field_name;
             }
             
+            file_put_contents('parent_examples.txt', $source_id . "\n", FILE_APPEND);
+            
         }
 
         // give up if we can't find it        
@@ -66,9 +71,9 @@ class DerivedItemAugmenter extends BaseAugmenter
     }
     
     
-    public function check_derivatives($source_doc){
+    public function check_derivatives($source){
         
-        $source_id = $source_doc->id;
+        $source_id = $source->id;
         
         // find all the things that have my id in their "derived_from" field
         $result = $this->query_solr("derived_from:\"$source_id\"");
@@ -84,15 +89,19 @@ class DerivedItemAugmenter extends BaseAugmenter
                     // if the field isn't in the source we do nothing - no data to copy
                     if(!isset($source->$field_name)) continue;
                     
+                    // if the target property doesn't exist we create it empty
+                    if(!isset($target->$field_name)) $target->$field_name = "";
+                    
+                   // echo $source->$field_name . ":" .$target->$field_name. "\n";
+                    
                     // if the values in fields are different queue for indexing
                     if($target->$field_name != $source->$field_name){
+                        // echo $source->$field_name . ":" .$target->$field_name. "\n";
                         $this->queue->enqueue($target->id, $target->data_location);
                         break;
                     }
                     
                 } // end fields
-                
-                echo "  no field changed\n";
                 
             } // end items
         }

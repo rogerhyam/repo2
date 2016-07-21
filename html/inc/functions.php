@@ -23,12 +23,15 @@ function write_doc($doc, $index){
     // item_type
     echo '<span class="repo-item-type">';
     echo $doc->item_type;
+    if(isset($doc->link_out)){
+        echo " [<a href=\"{$doc->link_out}\">Link Out</a>]";
+    }
     echo '</span>';
     
     // title
     echo "<h3>";
     echo $doc->title[0];
-    echo "</h3>";            
+    echo "</h3>";
     
     echo '</div>'; // search result top
     

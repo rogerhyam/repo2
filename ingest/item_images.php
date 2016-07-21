@@ -4,6 +4,14 @@ require_once('../config.php');
 require_once('../config_bgbase_dump.php');
 
    $page_size = 1000;
+
+   // look to see if we are passed a start date
+   if(count($argv) > 1){
+       $since = " WHERE `modified` > '{$argv[1]}'";
+       echo "Doing since: {$argv[1]}";
+   }else{
+       $since = "";
+   }
  
    $now = new DateTime();
    echo "Item Image Start: " . $now->format(DATE_ATOM) . "\n";
@@ -13,8 +21,8 @@ require_once('../config_bgbase_dump.php');
        
        echo "Starting at offset = $offset\n";
        
-       // $sql = "SELECT * FROM image_archive.uploaded_images ORDER BY id LIMIT $page_size OFFSET " . $offset;
-       $sql = "SELECT * FROM image_archive.uploaded_images WHERE accession_number is NULL ORDER BY id LIMIT $page_size OFFSET " . $offset;
+       $sql = "SELECT * FROM image_archive.uploaded_images $since ORDER BY `modified` ASC as LIMIT $page_size OFFSET " . $offset;
+       //$sql = "SELECT * FROM image_archive.uploaded_images WHERE accession_number is not NULL ORDER BY id LIMIT $page_size OFFSET " . $offset;
        $response = $mysqli->query($sql);
        echo "\tGot {$response->num_rows}\n";
        
@@ -27,7 +35,7 @@ require_once('../config_bgbase_dump.php');
        }
        $offset = $offset + $page_size;
        
-       break;
+       //break;
 
    }
    
@@ -90,6 +98,7 @@ require_once('../config_bgbase_dump.php');
     
            
        }else{
+           
            $doc['item_type'] = 'Specimen Photo';
            $path_parts = str_split($row['barcode_accession'], 3);
            $repo_path .= '/specimens/' . implode('/', $path_parts);
