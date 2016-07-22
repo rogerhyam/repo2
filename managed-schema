@@ -415,6 +415,7 @@
   <field name="embargo_date" type="date" indexed="true" stored="true"/>
   <field name="epithet" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="family" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="field_name" type="strings"/>
   <field name="file" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="genus" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="geolocation" type="location_rpt" indexed="true" stored="true"/>
