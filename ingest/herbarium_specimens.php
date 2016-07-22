@@ -38,7 +38,10 @@
     
     
     function write_json_to_file($out, $file_count){
-        $file_path = REPO_ROOT . '/bgbase/herbarium_specimens/' . str_pad($file_count, 3 ,"0",STR_PAD_LEFT)  . '.json';
+        
+        $dir_path = REPO_ROOT . '/bgbase/herbarium_specimens';
+        if(file_exists($dir_path)) mkdir($dir_path, 0777, true);
+        $file_path = $dir_path . '/' . str_pad($file_count, 3 ,"0",STR_PAD_LEFT)  . '.json';
         file_put_contents($file_path, JSON_encode($out));
         echo "\tWritten $file_path\n";
     }
