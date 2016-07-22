@@ -59,6 +59,7 @@
         $doc['id'] = $row['GloballyUniqueIdentifier'];
         $doc["link_out"] = $row['GloballyUniqueIdentifier'];
         $doc['catalogue_number'] = $row['CatalogNumber'];
+        $doc['derivation_rank_i'] = 0;
         
         // other catalogue numbers
         $doc['catalogue_number_other'] = array();

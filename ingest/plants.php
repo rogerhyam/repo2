@@ -96,6 +96,8 @@
       $doc["link_out"] = 'http://data.rbge.org.uk/living/' . $row['acc_num'];
       
       $doc['derived_from'] = 'http://data.rbge.org.uk/living/' . $row['acc_num'];
+      $doc['derivation_rank_i'] = 1;
+      
       
       $doc['catalogue_number'] = $row['acc_num'] . $row['acc_num_qual'];
       

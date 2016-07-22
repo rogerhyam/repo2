@@ -3,9 +3,6 @@
 require_once('../config.php');
 require_once('../config_bgbase_dump.php');
 
-
-    // FIXME - pass in starting time.
-
    //$page_size = 1000
    $page_size = 10; // debug
  
@@ -56,6 +53,7 @@ require_once('../config_bgbase_dump.php');
        // ui for uploaded image
        $doc['id'] = 'http://repo.rbge.org.uk/id/herb_scan/' . $row['ID'];
        $doc['derived_from'] = 'http://data.rbge.org.uk/herb/' . $row['BARCODE'];
+       $doc['derivation_rank_i'] = 1;
        $doc['item_type'] = 'Herbarium Specimen Scan';
        
        // link out is the the specimen page with the viewer

@@ -108,6 +108,8 @@ require_once('../config_bgbase_dump.php');
        
        }
        
+       $doc['derivation_rank_i'] = 10;
+       
        // make sure it exists
        @mkdir($repo_path, 0777, true);
        

@@ -36,12 +36,23 @@ class DerivedItemAugmenter extends BaseAugmenter
 
     public function augment($doc){
         
+        // FIXME - CHECK DERIVATION RANK!
+        // FIXME - ANNOTATIONS CAN'T ANNOTATE ANNOTATIONS!
+        
         if(isset($doc->derived_from) && $doc->derived_from){
             $this->inherit_field_data($doc->derived_from, $doc);
         }
         
         // called on all items that might have derivatives
         $this->check_derivatives($doc);
+        
+        // if this is an annotation then the thing it annotates might need to be queued for re-indexing
+        if(isset($doc->annotation_of_s) && $doc->annotation_of_s && isset($doc->annotation_updates_b) && $doc->annotation_updates_b){            
+            $this->queue_annotation_target($doc);
+        }else{
+            $this->update_with_annotations($doc);
+        }
+        
     
     }
     
@@ -62,14 +73,9 @@ class DerivedItemAugmenter extends BaseAugmenter
                 $target->$field_name = $source->$field_name;
             }
             
-            file_put_contents('parent_examples.txt', $source_id . "\n", FILE_APPEND);
-            
         }
 
-        // give up if we can't find it        
-        
     }
-    
     
     public function check_derivatives($source){
         
@@ -112,6 +118,64 @@ class DerivedItemAugmenter extends BaseAugmenter
         // $this->queue->enqueue($item_id, $data_file);
         
         
+    }
+    
+    /*
+    *   will queue the target of an annotation if the fields are different
+    */
+    public function queue_annotation_target($source){
+        
+        $target = $this->get_solr_item_by_id($source->annotation_of_s);
+        
+        // work through the heritable fields
+        foreach($this->fields as $field_name){
+            
+            // if the field isn't in the source we do nothing - no data to copy
+            if(!isset($source->$field_name)) continue;
+            
+            
+            // if the target property doesn't exist we create it empty
+            if(!isset($target->$field_name)) $target->$field_name = "";
+            
+            // if the values in fields are different queue for indexing
+            if($target->$field_name != $source->$field_name){
+                $this->queue->enqueue($target->id, $target->data_location);
+                break;
+            }
+            
+        } // end fields
+                
+    }
+    
+    
+    public function update_with_annotations($target){
+        
+        // get all the annotations of this document that are set to over write stuff
+        // in date order i.e. the more recent ones will overwrite the older ones 
+        $result = $this->query_solr("annotation_of_s:\"{$target->id}\" && annotation_updates_b:\"true\"", "object_created ASC");
+           
+        if(isset($result->response->numFound) && $result->response->numFound > 0){
+            
+            // work through all the annotations items
+            foreach($result->response->docs as $source){
+                
+                echo "source_id: {$source->id}\n";
+                
+                foreach($this->fields as $field_name){
+                
+                    // if the field isn't in the source we do nothing - no data to copy
+                    if(!isset($source->$field_name)) continue;
+                
+                    // otherwise we copy it - annotations overwrite existing data
+                    $target->$field_name = $source->$field_name;
+                    
+                }
+                
+            }
+            
+        }
+    
+    
     }
 
 }

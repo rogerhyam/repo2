@@ -7,9 +7,14 @@ class BaseAugmenter
         // just incase we need it
     }
 
-    protected function query_solr($query){
+    protected function query_solr($query, $sort = false){
         
         $uri = REPO_SOLR_URI . '/query?q=' . urlencode($query);
+        
+        if($sort){
+            $uri .= "&sort=" . urlencode($sort);
+        }
+        
         $ch = curl_init( $uri );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         

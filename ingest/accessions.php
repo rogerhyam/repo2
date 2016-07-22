@@ -56,6 +56,7 @@
     
         $doc['storage_location'] = 'Living Collections Catalogue';
         $doc['storage_location_path'] = '/Living Collections Catalogue';
+        $doc['derivation_rank_i'] = 0; // this can be derived from nothing higher
         
         // id is the guid
         $doc['id'] = $row['GloballyUniqueIdentifier'];
