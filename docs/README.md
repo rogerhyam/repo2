@@ -34,19 +34,22 @@ Then copy over the rbge schema ...
 
 sudo apt-get install php-curl
 sudo apt-get install php-gd
+sudo apt-get install php-sqlite3
 
-
-
+mkdir /var/www/index/queues
+sudo chown -R roger:www-data /var/www/index/queues
 
 # Useful commands
 
 curl http://localhost:8983/solr/gettingstarted/update --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'
 
 curl http://localhost:8983/solr/gettingstarted/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
+curl http://localhost:8983/solr/rbge01/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
+
 
 sudo cp /var/solr/data/gettingstarted/conf/managed-schema /var/www/
 
-sudo cp  /var/www/managed-schema /var/solr/data/gettingstarted/conf/managed-schema
+sudo cp  /var/www/managed-schema /var/solr/data/rbge01/conf/managed-schema
 
 
 
