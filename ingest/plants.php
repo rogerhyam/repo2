@@ -40,8 +40,6 @@
         darwin_core_living as dwc
       on 
         ACC_NUM = CatalogNumber
-      group by
-        acc_num
       order by
         acc_num ASC
       Limit $page_size

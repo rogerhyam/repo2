@@ -1,0 +1,26 @@
+[{
+ "id": "http://repo.rbge.org.uk/id/annotation/1",
+ "item_type" : "Test Type",
+ "data_location": "/test/annotations.json",
+ "storage_location": "RBGE Repository",
+ "genus": "rhododendron----",
+ "creator":"Roger Hyam",
+ "annotation_of_s": "http://data.rbge.org.uk/herb/E00421509",
+ "annotation_updates_b": true,
+ "object_created_date": "2014-12-03T10:15:30Z",
+ "title": "Update of taxon name",
+ "content": "This is Roger updating the taxon name because I can.,"
+},
+{
+ "id": "http://repo.rbge.org.uk/id/annotation/0",
+ "item_type" : "Test Type",
+ "data_location": "/test/annotations.json",
+ "storage_location": "RBGE Repository",
+ "genus": "rhododendron----",
+ "creator":"John Doe",
+ "annotation_of_s": "http://data.rbge.org.uk/herb/E00421509",
+ "object_created_date": "2011-12-03T10:15:30Z",
+ "title": "Update of taxon name",
+ "content": "This is John updating the taxon name because I can.,"
+}
+]

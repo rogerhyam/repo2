@@ -19,4 +19,24 @@
     define('REPO_SOLR_QUERY_STRING',  'facet=true&facet.mincount=1&facet.limit=100&facet.field=genus&facet.field=family&facet.field=epithet&facet.field=country_name&facet.field=item_type&facet.field=object_created_year&start=0&rows=' . REPO_SOLR_PAGE_SIZE ); 
     
     
+    // A function that could be used anywhere
+    function get_identifier_for_repo_file($repo_path, $qualifier = false){
+        
+        // we need to be sure none of the parts of the file path contain unfriendly url chars
+        $id = str_replace(' ', '_', $repo_path);
+        $parts = explode('/', $id);
+        for ($i=0; $i < count($parts); $i++) { 
+            $parts[$i] = urlencode($parts[$i]);
+        }
+        $id = implode('/', $parts);
+        if($qualifier){
+            $id .= '#' . urlencode($qualifier);
+        }
+        
+        return 'http://repo.rbge.org.uk/id' . $id;
+        
+    }
+    
+    
+    
 ?>

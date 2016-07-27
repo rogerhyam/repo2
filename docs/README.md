@@ -35,6 +35,10 @@ Then copy over the rbge schema ...
 sudo apt-get install php-curl
 sudo apt-get install php-gd
 sudo apt-get install php-sqlite3
+sudo apt-get install php-zip
+sudo apt-get install php-dom
+
+
 
 mkdir /var/www/index/queues
 sudo chown -R roger:www-data /var/www/index/queues

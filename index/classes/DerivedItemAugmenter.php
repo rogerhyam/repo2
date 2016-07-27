@@ -127,12 +127,16 @@ class DerivedItemAugmenter extends BaseAugmenter
         
         $target = $this->get_solr_item_by_id($source->annotation_of_s);
         
+        if(!$target){
+            echo "Can't find annotation target: " . $source->annotation_of_s . "\n";
+            return;
+        }
+        
         // work through the heritable fields
         foreach($this->fields as $field_name){
             
             // if the field isn't in the source we do nothing - no data to copy
             if(!isset($source->$field_name)) continue;
-            
             
             // if the target property doesn't exist we create it empty
             if(!isset($target->$field_name)) $target->$field_name = "";
@@ -159,7 +163,7 @@ class DerivedItemAugmenter extends BaseAugmenter
             // work through all the annotations items
             foreach($result->response->docs as $source){
                 
-                echo "source_id: {$source->id}\n";
+//                echo "source_id: {$source->id}\n";
                 
                 foreach($this->fields as $field_name){
                 

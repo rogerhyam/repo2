@@ -1,7 +1,9 @@
+
 index/queues
 html/cache
 data/herbarium_specimen_scans
 data/item_images
 data/bgbase
+data/geospatial
 ._*
 .DS*
