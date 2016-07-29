@@ -46,28 +46,81 @@ html, body{
     margin: 0px;
 }
 
-/*
-.repo-search-result.repo-odd{
-    background-color: #eeeeee;
-}
-*/
-
 .repo-search-result-top{
     padding: 0.5em;
-    min-height: 50px;
+    min-height: 100px;
 }
 .repo-search-result-top:hover{
     background-color: #eeeeee;
     cursor: pointer; cursor: hand;
 }
-.repo-search-result-top .thumbnail{
+
+/* Thumbnail on image results top */
+.repo-search-result-top .repo-image-placeholder{
     float: left;
-    height: 41px;
-    width: 41px;
+    height: 101px;
+    width: 101px;
     text-align: center;
     vertical-align: middle;
     margin-right: 1em;
 }
+
+.repo-search-result-bottom h3{
+    color: black;
+    background: #cccccc;
+    margin-top: 1em;
+    padding: 0.3em;
+}
+
+/* Thumbnail on image results list */
+.repo-item-list{
+    list-style: none;
+    padding: 0px;
+    margin-top: 0px;
+}
+
+.repo-item-list li{
+    min-height: 60px;
+    padding-top: 1em;
+    border-bottom: 1px solid gray;
+
+}
+
+.repo-item-list li:hover{
+    background-color: #eeeeee;
+    cursor: pointer; cursor: hand;
+}
+
+
+.repo-item-list .repo-image-placeholder{
+    float: left;
+    height: 50px;
+    width: 50px;
+    margin-right: 1em;
+    padding
+}
+
+.repo-search-result-bottom pre{
+    display: none;
+}
+.repo-search-result-bottom-footer{
+    background-color: #fafafa;
+    cursor: pointer; cursor: hand;
+}
+
+/* slideshow of images in place */
+.repo-image-wrapper{
+    position: relative;
+    background-color: #eeeeee;
+}
+
+.repo-image-wrapper img{
+    position: absolute;
+    display: none;
+    top:0px;
+    left:0px;
+}
+
 
 .repo-search-result-bottom{
     display: none;

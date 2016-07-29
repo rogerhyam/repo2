@@ -18,6 +18,8 @@
     // default bits to include in a query string to get facetting to work.
     define('REPO_SOLR_QUERY_STRING',  'facet=true&facet.mincount=1&facet.limit=100&facet.field=genus&facet.field=family&facet.field=epithet&facet.field=country_name&facet.field=item_type&facet.field=object_created_year&start=0&rows=' . REPO_SOLR_PAGE_SIZE ); 
     
+    // API KEYS
+    define('REPO_GOOGLE_API_KEY', 'AIzaSyCuEKY1-ZvWGBfD_DFYe-kxAHop0hJPuYE');
     
     // A function that could be used anywhere
     function get_identifier_for_repo_file($repo_path, $qualifier = false){

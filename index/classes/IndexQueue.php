@@ -19,6 +19,16 @@ class IndexQueue extends SQLite3{
         
         $id = $this->escapeString($item_id);
         $f = $this->escapeString($data_file);
+        
+        if(!$id){
+            echo "No id supplied for enqueued item. Ignoring.\n";
+            return;
+        }
+
+        if(!$id){
+            echo "No data file supplied for enqueued item. Ignoring\n";
+            return;
+        }
 
         $result = $this->query("SELECT * FROM index_queue WHERE item_id = '$id'");
         if($result->fetchArray()){
@@ -43,7 +53,7 @@ class IndexQueue extends SQLite3{
     public function get_priority_file(){
         $result = $this->query("SELECT data_file FROM index_queue WHERE priority > 0 GROUP BY data_file ORDER BY SUM(priority) DESC, created ASC LIMIT 1");   
         $row = $result->fetchArray(SQLITE3_ASSOC);     
-        if($row){
+        if($row){       
             return $row['data_file'];
         }else{
             return null;

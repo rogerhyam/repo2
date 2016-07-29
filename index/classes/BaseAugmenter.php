@@ -9,7 +9,7 @@ class BaseAugmenter
 
     protected function query_solr($query, $sort = false){
         
-        $uri = REPO_SOLR_URI . '/query?q=' . urlencode($query);
+        $uri = REPO_SOLR_URI . '/query?rows=100000&q=' . urlencode($query);
         
         if($sort){
             $uri .= "&sort=" . urlencode($sort);

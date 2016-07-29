@@ -17,7 +17,21 @@ class DerivedItemAugmenter extends BaseAugmenter
 
     var $queue;
     
-    var $fields = array(
+    // fields that propopogate from parents to derived items
+    var $derived_fields = array(
+        'higher_taxon',
+        'family',
+        'genus',
+        'epithet',
+        'country_iso',
+        'country_name',
+        'scientific_name_plain',
+        'scientific_name_html'
+    );
+    
+    
+    // fields that propagate from annotations to targets
+    var $annotated_fields = array(
         'higher_taxon',
         'family',
         'genus',
@@ -52,7 +66,6 @@ class DerivedItemAugmenter extends BaseAugmenter
         }else{
             $this->update_with_annotations($doc);
         }
-        
     
     }
     
@@ -61,7 +74,7 @@ class DerivedItemAugmenter extends BaseAugmenter
         // get the item for the source
         $source = $this->get_solr_item_by_id($source_id);
         
-        foreach($this->fields as $field_name){
+        foreach($this->derived_fields as $field_name){
             
             // if the field isn't in the source we do nothing - no data to copy
             if(!isset($source->$field_name)) continue;
@@ -74,6 +87,8 @@ class DerivedItemAugmenter extends BaseAugmenter
             }
             
         }
+        
+
 
     }
     
@@ -90,7 +105,7 @@ class DerivedItemAugmenter extends BaseAugmenter
             foreach($result->response->docs as $target){
                 
                 // work through the heritable fields
-                foreach($this->fields as $field_name){
+                foreach($this->derived_fields as $field_name){
                     
                     // if the field isn't in the source we do nothing - no data to copy
                     if(!isset($source->$field_name)) continue;
@@ -133,7 +148,7 @@ class DerivedItemAugmenter extends BaseAugmenter
         }
         
         // work through the heritable fields
-        foreach($this->fields as $field_name){
+        foreach($this->annotated_fields as $field_name){
             
             // if the field isn't in the source we do nothing - no data to copy
             if(!isset($source->$field_name)) continue;
@@ -165,7 +180,7 @@ class DerivedItemAugmenter extends BaseAugmenter
                 
 //                echo "source_id: {$source->id}\n";
                 
-                foreach($this->fields as $field_name){
+                foreach($this->annotated_fields as $field_name){
                 
                     // if the field isn't in the source we do nothing - no data to copy
                     if(!isset($source->$field_name)) continue;
