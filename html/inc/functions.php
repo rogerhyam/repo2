@@ -187,27 +187,16 @@ function get_solr_item_by_id($id){
     
 }
 
-function write_searching_link($field, $value){
+function write_searching_link($value){
     
-    // chop the current q= out of the query string
-    $qs = $_SERVER['QUERY_STRING'];
     $val = urlencode(strip_tags($value));
-    $matches = array($qs);
-    preg_match('/(q=[^&]+)&/',$qs,$matches);
-        
-    if(count($matches) == 2){
-        $qs = str_replace($matches[1], 'q='. $val, $qs);
-    }
+    $uri = 'index.php?q=' . $val  . '&repo_type=simple&' . REPO_SOLR_QUERY_STRING;
     
-    // turn it into a simple search so the term is escaped and shown in the search box
-    $qs = preg_replace('/&repo_type=[a-z_]+/', '', $qs);
-    $qs .= '&repo_type=simple';
-    
-    echo "<a class=\"repo-searching-link\" href=\"index.php?$qs\">$value</a>";
+    echo "<a class=\"repo-searching-link\" href=\"$uri\">$value</a>";
     
 }
 
-function write_field_li($doc, $field, $label_single, $label_plural){
+function write_field_li($doc, $field, $label_single, $label_plural, $link = true){
     
     if(isset($doc->$field)){
            echo '<li>';
@@ -216,20 +205,48 @@ function write_field_li($doc, $field, $label_single, $label_plural){
                echo "<strong>$label_plural:</strong> ";
                $first = true;
                foreach($doc->$field as $val){
-                   write_searching_link($field, $val);
-                   if(!$first){
-                       echo ", ";
-                   }else{
-                       $first = false;
-                   }
+                   if(!$first) echo ", ";
+                   else $first = false;
+                   if($link) write_searching_link( format_if_date($val));
+                   else echo format_if_date($val);
                }
            }else{
                echo "<strong>$label_single:</strong> ";
-               write_searching_link($field, $doc->$field);            
+               if($link){
+                   write_searching_link(format_if_date($doc->$field));
+               }else{
+                   echo format_if_date($doc->$field);
+               }
            }
 
            echo '</li>';
       }
+    
+}
+
+function format_if_date($value){
+    
+    // we take the starndard string formats for dates as 
+    // turn them into something nice
+    
+    // does it look like a date?
+    // is it a day date e.g. 2009-02-10T00:00:00Z
+    // is it a date and time e.g. 2016-07-29T10:37:38.692Z
+ 
+    if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}/', $value)){
+        $dt = new DateTime($value);
+        if($dt->format('H:i:s') == "00:00:00"){
+            return $dt->format("Y-m-d");
+        }else{
+            return $dt->format(DATE_ATOM);
+        }
+        
+    }
+    
+    
+    
+    // not found to be a date so just return as is
+    return $value;
     
 }
 
@@ -240,7 +257,7 @@ function write_facet_select($result, $field_name, $label, $facet_queries){
     
     echo '<p>';
     echo "<strong>$label:&nbsp;</strong>";
-    echo '<select name="fq" onchange="this.form.submit();">';
+    echo '<select name="fq" onchange="repo.filterChange(this)">';
     echo '<option value="">~ Any ~</option>';
     
     for($i = 0; $i < count($result->facet_counts->facet_fields->$field_name); $i = $i + 2){

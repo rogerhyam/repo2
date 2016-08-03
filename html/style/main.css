@@ -67,7 +67,7 @@ html, body{
 
 .repo-search-result-bottom h3{
     color: black;
-    background: #cccccc;
+    background: #eeeeee;
     margin-top: 1em;
     padding: 0.3em;
 }
@@ -126,11 +126,12 @@ html, body{
     display: none;
     border-top: dashed gray 1px;
     padding: 0.5em;
+    overflow: auto;
 }
 
-.repo-search-result-bottom .large-image{
+.repo-search-result-bottom-right-col{
     float: right;
-    border: solid 1px gray;
+    text-align: center;
 }
 
 .repo-facetting-link{
@@ -141,30 +142,20 @@ html, body{
     cursor: zoom-in;
 }
 
-.repo-taxon-fields h4,
-.repo-geography-fields h4{
-    display: inline-block;
-    margin: 0px;
-    margin-bottom: 0.5em;
-    width: 100px;
-    text-align: right;
-    color: black;
-    padding-right: 1em;
+.repo-field-list{
+    margin-top: 0.6em;
+    padding-left: 0px;   
 }
-.repo-taxon-fields ul,
-.repo-geography-fields ul{
-    display: inline;
-    /* border: solid 1px gray; */
-    margin: 0px;
-    padding-left: 0px;
-}
-.repo-taxon-fields ul li,
-.repo-geography-fields ul li{
+.repo-field-list li{
     display: inline;
     list-style-type: none;
     padding-right: 0.5em;
 }
-.repo-taxon-fields ul li strong,
-.repo-geography-fields ul li strong{
+
+.repo-field-list li strong{
     color: gray;
+}
+
+.repo-content-field{
+    margin-top: 0.6em;
 }

@@ -19,6 +19,13 @@ $( document ).ready(function() {
         var uri = 'search_result_body.php?id=' + encodeURIComponent(docId);
         
         $(this).parent().find('.repo-bottom-placeholder').load(uri, function(){
+            
+            // load the images in the new code
+            $(this).parent().find('.repo-search-result-bottom .repo-image-placeholder').each(function(){
+                repo.loadImages($(this));
+            });
+            
+            // show it
             $(this).parent().find('.repo-search-result-bottom').show('slow');
         });
         
@@ -36,68 +43,86 @@ $( document ).ready(function() {
     }); 
     
     
-    /* populate image placeholders */
+    /* populate image placeholders in the main page*/
     $('.repo-image-placeholder').each(function(){
-        
-        var placeholder = $(this);
-        var imageKind = placeholder.data('repo-image-kind');
-        var docId = placeholder.data('repo-doc-id');
-        var imagesServiceUri = 'images_service.php?kind=' + imageKind + '&id=' + encodeURIComponent(docId);
-        
-        if(placeholder.data('repo-image-height')) placeholder.css('height', placeholder.data('repo-image-height') + 'px' );
-        
-        // load it into the placeholder
-        placeholder.load(imagesServiceUri, function(){
-            
-            var wrapper = placeholder.find('.repo-image-wrapper').first();
-        
-            if(placeholder.data('repo-image-height')) wrapper.css('min-height', placeholder.data('repo-image-height') + 'px' );
-            
-            // when it is loaded we look to see how many images there are.
-            var numberOfImages = placeholder.find('img').length;
-            console.log(numberOfImages);
-            
-            // if no images hide it.
-            if(numberOfImages == 0){
-               // placeholder.hide();
-                return;
-            }
-            
-            // if one image make it visible
-            if(numberOfImages == 1){
-                placeholder.find('img').show();
-                return;
-            }
-            
-            // show the first in the stack
-            wrapper.find('img').first().fadeIn();
-
-            // we have multiple images so animate them as a slideshow
-            setInterval(function(){
-                
-                // get the last image
-                var last = wrapper.find('img').last();
-                        
-                // make sure it is hidden
-                last.fadeOut();
-
-                // move it to the top of the stack
-                last.prependTo(wrapper);
-                
-                // show it
-                last.fadeIn('slow');
-                last.next().fadeOut('slow');
-                
-            }, 2000);
-            
-        });
-        
-
-        
-        
+            repo.loadImages($(this));    
     }); 
 
-    $('.repo-image-wrapper img').show('slow');
-    
 });
+
+var repo = {};
+repo.loadImages = function(placeholder){
+    
+    var imageKind = placeholder.data('repo-image-kind');
+    var docId = placeholder.data('repo-doc-id');
+    var imagesServiceUri = 'images_service.php?kind=' + imageKind + '&id=' + encodeURIComponent(docId);
+    
+    if(placeholder.data('repo-image-height')) placeholder.css('height', placeholder.data('repo-image-height') + 'px' );
+    
+    // load it into the placeholder
+    placeholder.load(imagesServiceUri, function(){
+        
+        var wrapper = placeholder.find('.repo-image-wrapper').first();
+    
+        if(placeholder.data('repo-image-height')) wrapper.css('min-height', placeholder.data('repo-image-height') + 'px' );
+        
+        // when it is loaded we look to see how many images there are.
+        var numberOfImages = placeholder.find('img').length;
+        console.log(numberOfImages);
+        
+        // if no images hide it.
+        if(numberOfImages == 0){
+           // placeholder.hide();
+            return;
+        }
+        
+        // if one image make it visible
+        if(numberOfImages == 1){
+            placeholder.find('img').show();
+            return;
+        }
+        
+        // show the first in the stack
+        wrapper.find('img').first().fadeIn();
+
+        // we have multiple images so animate them as a slideshow
+        setInterval(function(){
+            
+            // get the last image
+            var last = wrapper.find('img').last();
+                    
+            // make sure it is hidden
+            last.fadeOut();
+
+            // move it to the top of the stack
+            last.prependTo(wrapper);
+            
+            // show it
+            last.fadeIn('slow');
+            last.next().fadeOut('slow');
+            
+        }, 2000);
+        
+    });
+    
+}
+
+repo.filterChange = function(filterInput){
+    
+    // if they are filtering on an empty search box then
+    // make the search box look for everything and hide the content
+    // q=_text_:*&repo_type=hidden
+    var form = filterInput.form;
+    if(!$('#repo-input-q').val()){
+        $('#repo-input-q').val('_text_:*');
+        $('#repo-input-repo-type').val('hidden');
+    }
+    
+    // always start of the first page
+    $('#repo-input-start').val('0');
+    
+    // go for it
+    form.submit();
+    
+}
 
