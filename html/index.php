@@ -32,7 +32,7 @@
         <input type="hidden" name="facet.field" value="item_type" />
         <input type="hidden" name="facet.field" value="object_created_year" />
         
-        <input type="submit" value="Search"/>
+        <input type="submit" id="repo-input-submit" value="Search"/>
     
     
 <?php 
@@ -60,6 +60,11 @@
         foreach($result->response->docs as $doc){
              write_doc($doc, $row_count);
             $row_count++;
+        }
+        
+        // flag it up if there is only one search result
+        if($result->response->numFound == 1){
+            echo '<span id="repo-single-result-flag" style="display:none;"></span>';
         }
 
 

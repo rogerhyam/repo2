@@ -123,6 +123,7 @@
         
         // this could be nicer
         $title_parts = array();
+        $title_parts[] = $row['CatalogNumber'];
         $title_parts[] = $row['Collector'];
         $title_parts[] = $row['CollectorNumber'];
         $title_parts[] = $row['ScientificName'];

@@ -144,7 +144,8 @@ html, body{
 
 .repo-field-list{
     margin-top: 0.6em;
-    padding-left: 0px;   
+    padding-left: 0px;
+    line-height: 150%;
 }
 .repo-field-list li{
     display: inline;
@@ -158,4 +159,21 @@ html, body{
 
 .repo-content-field{
     margin-top: 0.6em;
+}
+
+#repo-input-q{
+    width: 60em;
+    height: 1.5em;
+    font-size: 100%;
+}
+
+#repo-input-submit{
+    border: solid gray 1px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }

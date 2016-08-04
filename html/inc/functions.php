@@ -207,15 +207,15 @@ function write_field_li($doc, $field, $label_single, $label_plural, $link = true
                foreach($doc->$field as $val){
                    if(!$first) echo ", ";
                    else $first = false;
-                   if($link) write_searching_link( format_if_date($val));
-                   else echo format_if_date($val);
+                   if($link) write_searching_link($val);
+                   else echo format_value($val);
                }
            }else{
                echo "<strong>$label_single:</strong> ";
                if($link){
-                   write_searching_link(format_if_date($doc->$field));
+                   write_searching_link($doc->$field);
                }else{
-                   echo format_if_date($doc->$field);
+                   echo format_value($doc->$field);
                }
            }
 
@@ -224,9 +224,9 @@ function write_field_li($doc, $field, $label_single, $label_plural, $link = true
     
 }
 
-function format_if_date($value){
+function format_value($value){
     
-    // we take the starndard string formats for dates as 
+    // we take the starndard string formats
     // turn them into something nice
     
     // does it look like a date?
@@ -238,12 +238,15 @@ function format_if_date($value){
         if($dt->format('H:i:s') == "00:00:00"){
             return $dt->format("Y-m-d");
         }else{
-            return $dt->format(DATE_ATOM);
+            return $dt->format("Y-m-d @ H:i");
         }
         
     }
     
-    
+    // does it look like an integer?
+    if(is_numeric($value)){
+        return number_format($value);
+    }
     
     // not found to be a date so just return as is
     return $value;
@@ -270,6 +273,12 @@ function write_facet_select($result, $field_name, $label, $facet_queries){
     echo '</select>';
     echo '</p>';
 
+}
+
+function human_filesize($bytes, $decimals = 2) {
+  $sz = 'BKMGTP';
+  $factor = floor((strlen($bytes) - 1) / 3);
+  return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
 
 

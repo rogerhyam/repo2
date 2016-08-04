@@ -76,34 +76,62 @@
      echo "<h3>Metadata:</h3>";
      echo '<ul class="repo-field-list">';
      write_field_li($doc, 'catalogue_number', 'Catalogue number', 'Catalogue numbers');
-     write_field_li($doc, 'catalogue_number_other', 'Other number', 'Other numbers');
+     write_field_li($doc, 'catalogue_number_other', 'Other identifiers', 'Other identifiers');
+     write_field_li($doc, 'image_width_pixels_i', 'Width (pixels)', 'Width (pixels)', false);
+     write_field_li($doc, 'image_height_pixels_i', 'Height (pixels)', 'Height (pixels)', false);
+     
+     
      write_field_li($doc, 'storage_location', 'Stored', 'Stored', false);
      write_field_li($doc, 'object_created', 'Object created', 'Object created', false);
      write_field_li($doc, 'embargo_date', 'Embargoed till', 'Embargoed till', false);
      write_field_li($doc, 'indexed_at', 'Indexed', 'Indexed', false);
+     
      echo '</ul>';
 
      if(isset($doc->storage_location_path) && isset($doc->storage_location) && $doc->storage_location == 'Repository'){
          echo "<h3>Download:</h3>";
          echo '<ul class="repo-field-list">';
          
-         $can_download = true;
-         
-         if(isset($doc->embargo_date)){
-             $embargo_date = new DateTime($doc->embargo_date);
-             // fixme - allow them to do it within our network.
-             if($embargo_date->getTimestamp() > time()){
-                 $can_download = false;
-             }
-         }
-         
-         if($can_download){             
-             echo "<li>";
-             echo "FIXME";
-             echo "</li>";
-         }else{
-             echo "<li>This item is still within its embargo date.</li>";
-         }
+        // how big is it
+        $size = filesize(REPO_ROOT . $doc->storage_location_path);
+        echo "<li>";
+        echo "<strong>Size:</strong> " . human_filesize($size);
+        echo "</li>";
+
+        // what is it
+        if(isset($doc->mime_type_s)){
+            echo "<li>";
+            echo "<strong>Kind:</strong> " . $doc->mime_type_s;
+            echo "</li>";
+        }
+
+        // here is the file
+        $can_download = true;
+        
+        // this logic will be repeated in download.php - more or less
+        if(isset($doc->embargo_date)){
+            $embargo_date = new DateTime($doc->embargo_date);
+            echo "<li><strong>Embargo date: </strong>" . $embargo_date->format('Y-m-d') . "</li>";
+            
+            // fixme - allow them to do it within our network.
+            if($embargo_date->getTimestamp() > time()){
+                $can_download = false;
+                echo "<li><strong>Embargoed: </strong> This item is still within its embargo date.</li>";
+            }
+            
+        }
+        
+        
+        $parts = pathinfo($doc->storage_location_path);
+        $file_name = $parts['basename'];
+        echo "<li>";
+        echo "<strong>File:</strong> ";
+        if($can_download){
+            echo "<a href=\"download.php?path={$doc->storage_location_path}\" >$file_name</a>";
+        }else{
+            echo $file_name;
+        }
+        echo "</li>";
          
          echo '</ul>';
          

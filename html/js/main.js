@@ -7,29 +7,14 @@ $( document ).ready(function() {
     });    
 
     $('.repo-search-result-top').on('click', function(){
-
-        // if we have already loaded the body just show/hide it.
-        if($(this).parent().find('.repo-search-result-bottom').length > 0){
-            $(this).parent().find('.repo-search-result-bottom').toggle('slow');
-            return;
-        }
- 
-        var docId = $(this).parent().data('repo-doc-id');
-        
-        var uri = 'search_result_body.php?id=' + encodeURIComponent(docId);
-        
-        $(this).parent().find('.repo-bottom-placeholder').load(uri, function(){
-            
-            // load the images in the new code
-            $(this).parent().find('.repo-search-result-bottom .repo-image-placeholder').each(function(){
-                repo.loadImages($(this));
-            });
-            
-            // show it
-            $(this).parent().find('.repo-search-result-bottom').show('slow');
+        repo.showSearchResultBottom($(this).parent());
+    });
+    
+    // if there is only one row then we open it
+    $('#repo-single-result-flag').each(function(){
+        $('.repo-search-result').each(function(){
+            repo.showSearchResultBottom($(this));
         });
-        
-
     });
     
     // follow links to items in list
@@ -51,6 +36,36 @@ $( document ).ready(function() {
 });
 
 var repo = {};
+
+repo.showSearchResultBottom = function(searchResult){
+    
+    
+    // if we have already loaded the body just show/hide it.
+    if(searchResult.find('.repo-search-result-bottom').length > 0){
+        searchResult.find('.repo-search-result-bottom').toggle('slow');
+        return;
+    }
+
+    var docId = searchResult.data('repo-doc-id');
+    
+    var uri = 'search_result_body.php?id=' + encodeURIComponent(docId);
+    
+    console.log(uri);
+    
+    searchResult.find('.repo-bottom-placeholder').load(uri, function(){
+        
+        // load the images in the new code
+        $(this).parent().find('.repo-search-result-bottom .repo-image-placeholder').each(function(){
+            repo.loadImages($(this));
+        });
+        
+        // show it
+        $(this).parent().find('.repo-search-result-bottom').show('slow');
+    });
+    
+    
+}
+
 repo.loadImages = function(placeholder){
     
     var imageKind = placeholder.data('repo-image-kind');
