@@ -42,6 +42,13 @@
          $right_col_width = "320px";
      }
 
+     if(isset($doc->summary_image_s)){
+         $src = 'image_server.php?kind=300&path=' . $doc->summary_image_s;
+         echo "<br/><img class=\"repo-large-image\" src=\"$src\" />";
+         $right_col_width = "320px";
+     }
+
+
      echo "</div>"; // repo-search-result-bottom-right-col
 
      // a wrapper div for the content

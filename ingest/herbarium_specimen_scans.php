@@ -3,8 +3,8 @@
 require_once('../config.php');
 require_once('../config_bgbase_dump.php');
 
-   //$page_size = 1000
-   $page_size = 10; // debug
+   $page_size = 1000;
+   //$page_size = 10; // debug
  
     // look to see if we are passed a start date
     if(count($argv) > 1){
@@ -37,7 +37,7 @@ require_once('../config_bgbase_dump.php');
        }
        $offset = $offset + $page_size;
        
-       break; // debug
+       //break; // debug
 
    }
    

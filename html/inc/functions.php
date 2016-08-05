@@ -266,6 +266,7 @@ function write_facet_select($result, $field_name, $label, $facet_queries){
     for($i = 0; $i < count($result->facet_counts->facet_fields->$field_name); $i = $i + 2){
         $name = $result->facet_counts->facet_fields->$field_name[$i];
         $count = $result->facet_counts->facet_fields->$field_name[$i + 1];
+        $count = number_format($count);
         $selected = in_array($field_name . ':"' . $name . '"', $facet_queries) ? 'selected': '';
         echo "<option value=\"$field_name:&quot;$name&quot;\" $selected >$name ($count)</option>";
     }

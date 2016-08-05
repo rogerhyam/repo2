@@ -1,0 +1,4 @@
+[{
+    "title": "This is the template for: ",
+    "content": "Some other text..",
+}]

@@ -121,6 +121,10 @@ html, body{
     left:0px;
 }
 
+.repo-large-image{
+    border: solid #eeeeee 1px;
+}
+
 
 .repo-search-result-bottom{
     display: none;
