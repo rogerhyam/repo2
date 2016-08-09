@@ -64,6 +64,11 @@ sudo apt-get install php-sqlite3
 sudo apt-get install php-zip
 sudo apt-get install php-dom
 sudo apt-get install php-imagick
+sudo a2enmod rewrite
+
+and allow rewrite in .htaccess 
+
+
 
 
 mkdir /var/www/index/queues
