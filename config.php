@@ -4,14 +4,23 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-
+    
+    // switch to tell if we are live or not
+    if(preg_match('/rbge.org.uk/', $_SERVER['SERVER_NAME'])){
+        $solr_core = 'rbge01';
+        $repo_root_path = '/media/repo';
+    }else{
+        $solr_core = 'gettingstarted';
+        $repo_root_path = '/var/www/data';
+    }
+    
     // full path to documents directory
-    define('REPO_ROOT', "/var/www/data");
+    define('REPO_ROOT', $repo_root_path);
     
     // URI for solr server collection
     define('REPO_SOLR_HOST', "localhost");
     define('REPO_SOLR_PORT', "8983");
-    define('REPO_SOLR_PATH', "/solr/gettingstarted");
+    define('REPO_SOLR_PATH', "/solr/" . $solr_core);
     define('REPO_SOLR_URI', "http://". REPO_SOLR_HOST . ":". REPO_SOLR_PORT . REPO_SOLR_PATH);
     define('REPO_SOLR_PAGE_SIZE', 10);
     
