@@ -98,3 +98,7 @@ solrconfig.xml file: <requestDispatcher handleSelect=”true”> <requestParsers
 curl "http://localhost:8983/solr/gettingstarted/update/extract?&extractOnly=true&wt=json&indent=true" -F "myfile=@stories.pdf"
 
 -F "myfile=@example/exampledocs/solr-word.pdf"
+
+# icons
+
+ http://bbc.github.io/gel-iconography/

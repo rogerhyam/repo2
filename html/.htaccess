@@ -1,0 +1,22 @@
+RewriteEngine on
+RewriteRule ^service$ srv.php [NC]
+
+# e.g. http://repo.rbge.org.uk/service/item/xml/cat?id=E00137838
+RewriteRule ^service/item/([^/]*)/cat srv.php?srv_name=item&response_format=$1&id_kind=cat [QSA,NC]
+
+# e.g. http://repo.rbge.org.uk/service/item/xml/guid?id=http://data.rbge.org.uk/herb/E00137838
+RewriteRule ^service/item/([^/]*)/guid srv.php?srv_name=item&response_format=$1&id_kind=guid [QSA,NC]
+
+# e.g. http://repo.rbge.org.uk/service/item/xml/146653
+RewriteRule ^service/item/([^/]*)/([^/]*) srv.php?srv_name=item&response_format=$1&id=$2 [QSA,NC]
+
+# Image service
+
+# http://repo.rbge.org.uk/service/images/<cat_ids>?callback=<method_name>
+RewriteRule ^service/images/([^/]*) srv.php?srv_name=images&ids=$1 [QSA,NC]
+
+# http://repo.rbge.org.uk/service/image/<id>/<size>/<square>
+RewriteRule ^service/image/([^/]*)/([^/]*)/square image_server.php?path=$1&kind=$2-square [QSA,NC]
+RewriteRule ^service/image/([^/]*)/([^/]*) image_server.php?srv_name=images&path=$1&kind=$2 [QSA,NC]
+
+

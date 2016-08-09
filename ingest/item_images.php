@@ -54,7 +54,7 @@ require_once('../config_bgbase_dump.php');
        $doc['title'] = $row['original_file_name'];
        
        // the other numbers are the ones we will use to link it to data later
-       $doc['catalogue_number'] = $row['barcode_accession'];
+       $doc['catalogue_number'] = $row['id']; // fixme 
        $doc['catalogue_number_other'][] = $row['id'];
        $doc['catalogue_number_other'][] = $row['accession_number'];
        $doc['catalogue_number_other'][] = $row['original_file_name'];
