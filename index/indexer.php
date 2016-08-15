@@ -85,7 +85,7 @@
             
             // lets go down the way
             if(is_dir($path . "/" . $file)){
-                directory_scan($path . "/" . $file);
+                directory_scan($path . "/" . $file, $since);
             };
             
             // actually looking at a file
