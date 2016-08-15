@@ -55,7 +55,6 @@ sudo su - solr -c "/opt/solr/bin/solr create -c rbge01 -n data_driven_schema_con
 
 Then copy over the rbge schema ...
 
-
 # Adding components to Apache
 
 sudo apt-get install php-curl
@@ -69,8 +68,6 @@ sudo a2enmod rewrite
 and allow rewrite in .htaccess 
 
 
-
-
 mkdir /var/www/index/queues
 sudo chown -R roger:www-data /var/www/index/queues
 
@@ -79,6 +76,9 @@ http://repo.rbge.org.uk/id/reference_doc
 curl http://localhost:8983/solr/gettingstarted/update --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'
 curl http://localhost:8983/solr/rbge01/update --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'
 
+## delete from a certain date
+curl http://localhost:8983/solr/rbge01/update --data '<delete><query>indexed_at: [2016-08-14T00:00:00Z TO NOW]</query></delete>' -H 'Content-type:text/xml; charset=utf-8'
+
 curl http://localhost:8983/solr/gettingstarted/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
 curl http://localhost:8983/solr/rbge01/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
 
@@ -86,6 +86,8 @@ curl http://localhost:8983/solr/rbge01/update --data '<commit/>' -H 'Content-typ
 sudo cp /var/solr/data/gettingstarted/conf/managed-schema /var/www/
 
 sudo cp  /var/www/managed-schema /var/solr/data/rbge01/conf/managed-schema
+
+
 
 
 # Indexing Stories.

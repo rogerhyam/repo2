@@ -2,13 +2,16 @@ RewriteEngine on
 RewriteRule ^service$ srv.php [NC]
 
 # e.g. http://repo.rbge.org.uk/service/item/xml/cat?id=E00137838
-RewriteRule ^service/item/([^/]*)/cat srv.php?srv_name=item&response_format=$1&id_kind=cat [QSA,NC]
+# RewriteRule ^service/item/([^/]*)/cat srv.php?srv_name=item&response_format=$1&id_kind=cat [QSA,NC]
 
 # e.g. http://repo.rbge.org.uk/service/item/xml/guid?id=http://data.rbge.org.uk/herb/E00137838
-RewriteRule ^service/item/([^/]*)/guid srv.php?srv_name=item&response_format=$1&id_kind=guid [QSA,NC]
+# RewriteRule ^service/item/([^/]*)/guid srv.php?srv_name=item&response_format=$1&id_kind=guid [QSA,NC]
 
 # e.g. http://repo.rbge.org.uk/service/item/xml/146653
-RewriteRule ^service/item/([^/]*)/([^/]*) srv.php?srv_name=item&response_format=$1&id=$2 [QSA,NC]
+# RewriteRule ^service/item/([^/]*)/([^/]*) srv.php?srv_name=item&response_format=$1&id=$2 [QSA,NC]
+
+# e.g. http://repo.rbge.org.uk/service/item/xml/catalogue_number?val=E00137838
+RewriteRule ^service/item/([^/]*)/([^/]*)/([^/]*) srv.php?srv_name=item&response_format=$1&field_name=$2&field_value=$3 [QSA,NC]
 
 # Image service
 

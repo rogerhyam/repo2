@@ -1,12 +1,14 @@
 <?php
     
     require_once('../config.php');
+    require_once('inc/functions.php');
     
     // image_server.php?kind=200&path=/item_images/accessions/19/02/10/06/Photo_4fdb19b3c7a5b.jpg
     
     // a really simple, one file, image server!
     $within_repo = $_GET['path'];
-    $kind = $_GET['kind'];
+    $kind = @$_GET['kind'];
+    if(!$kind) $kind = 600;
     $md5 = md5($within_repo);
     
     $cache_dir = "cache/$kind/" . substr($md5, 0,2);
@@ -20,6 +22,8 @@
         // parse out the size if needed
         if(is_numeric($kind)){
             make_smaller_file($src_path, $cache_path, $kind);
+        }else if ($kind == 'original'){
+            make_original_file($src_path, $cache_path, $within_repo);
         }else{
             
             // something like 100-square 
@@ -35,6 +39,27 @@
     header('Content-Type: image/jpeg');
     readfile($cache_path);
     
+    function make_original_file($src_path, $dest_path, $within_repo){
+        
+        $doc = get_doc_for_file_path($within_repo);
+        if(!$doc){
+            header("HTTP/1.0 500 Internal Server Error");
+            echo "Error retrieving metadata for file.";
+            exit;
+        }    
+
+        if(doc_is_embargoed($doc)){
+            header("HTTP/1.0 403 Forbidden");
+            echo "This file is embargoed until " . $embargo_date->format('Y-m-d');
+            exit;
+        }
+        
+        $path_parts = pathInfo($dest_path); 
+        @mkdir($path_parts['dirname'], 0777, true);
+        
+        copy($src_path, $dest_path);
+        
+    }
     
     function make_smaller_file($src_path, $dest_path, $max_dimension){
         

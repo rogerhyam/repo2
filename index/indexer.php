@@ -14,7 +14,15 @@
     // we are passed either a file or a directory to scan
     if(count($argv) < 2){
         echo "Usage: Please pass a json file(s) or directory(ies) path within REPO_ROOT containing json files to be indexed\n";
+        echo "\tOptionally follow it with a \n";
         exit(0);
+    }
+    
+    // have they set a since date?
+    if(count($argv) == 3){
+        $since = $argv[2];
+    }else{
+        $since = 0;
     }
     
     // look at each file or directory
@@ -36,7 +44,7 @@
         }
     
         if(is_dir($path)){
-            directory_scan($path);
+            directory_scan($path, $since);
             continue;
         }
         
@@ -64,12 +72,10 @@
         
     }
     
-    function directory_scan($path){
+    function directory_scan($path, $since){
         
         echo "Processing dir: $path\n";
-        
-        $dir_last_scan = dir_last_scanned($path);
-        
+                
         $files = scandir($path);
                         
         foreach($files as $file){
@@ -89,42 +95,18 @@
                 
                 $mtime = filemtime($file_path);
                 
-                if($mtime > $dir_last_scan){
+                if($mtime > $since){
                     echo "INDEXING: $file_path\n";
                     index_file($file_path);
                 }else{
-                    echo "SKIPPING: $file_path not modified.\n";
+                    echo "SKIPPING: $file_path not modified since $since.\n";
                 }
     
             }
         }
         
-        // keep track of when we have scanned directories
-        update_dir_scanned_list($path);
-        
     }
     
-    function dir_last_scanned($dir){
-        if(file_exists('dirs_scanned.json')){
-            $dirs = json_decode(file_get_contents('dirs_scanned.json'));
-            if(array_key_exists($dir, $dirs)) return $dirs->$dir;
-        }
-        return 0;
-    }
-    
-    function update_dir_scanned_list($dir){
-        
-        if(file_exists('dirs_scanned.json')){
-            $dirs = json_decode(file_get_contents('dirs_scanned.json'));
-        }else{
-            $dirs = new stdClass();
-        }
-        
-        $dirs->$dir = time();
-        
-        file_put_contents("dirs_scanned.json", json_encode($dirs));
-        
-    }
     
     function index_file($file_path, $queue = null){
         

@@ -282,6 +282,29 @@ function human_filesize($bytes, $decimals = 2) {
   return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
 
+function doc_is_embargoed($doc){
+    // is it embargoed?
+    // similar logic in search_result_body.php
+    if(isset($doc->embargo_date)){
+        $embargo_date = new DateTime($doc->embargo_date);
+        // fixme - allow them to do it within our network.
+        if($embargo_date->getTimestamp() > time()){
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+function get_doc_for_file_path($path){
+    $result = query_solr('storage_location_path:"'.$path.'"');
+    if($result->responseHeader->status != 0 || $result->response->numFound !=1){
+        return null;
+    }else{
+        return $result->response->docs[0];
+    }
+}
+
 
 
 ?>

@@ -5,8 +5,10 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     
+    $live = false;
+    
     // switch to tell if we are live or not
-    if(preg_match('/rbge.org.uk/', $_SERVER['SERVER_NAME'])){
+    if($live){
         $solr_core = 'rbge01';
         $repo_root_path = '/media/repo';
     }else{

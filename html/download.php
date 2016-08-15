@@ -22,26 +22,17 @@
     }
     
     // load the record for the item
-    $result = query_solr('storage_location_path:"'.$path.'"');
-    
-    if($result->responseHeader->status != 0 || $result->response->numFound !=1){
+    $doc = get_doc_for_file_path($path);
+    if(!$doc){
         header("HTTP/1.0 500 Internal Server Error");
         echo "Error retrieving metadata for file.";
         exit;
-    }
+    }    
     
-    $doc = $result->response->docs[0];
-    
-    // is it embargoed?
-    // similar logic in search_result_body.php
-    if(isset($doc->embargo_date)){
-        $embargo_date = new DateTime($doc->embargo_date);
-        // fixme - allow them to do it within our network.
-        if($embargo_date->getTimestamp() > time()){
-            header("HTTP/1.0 403 Forbidden");
-            echo "This file is embargoed until " . $embargo_date->format('Y-m-d');
-            exit;
-        }
+    if(doc_is_embargoed($doc)){
+        header("HTTP/1.0 403 Forbidden");
+        echo "This file is embargoed until " . $embargo_date->format('Y-m-d');
+        exit;
     }
 
     // do we have a mime type

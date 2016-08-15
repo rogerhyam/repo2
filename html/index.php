@@ -17,7 +17,7 @@
      <form class="repo-search-form" method="GET" action="index.php">
 <div id="repo-page-content">
    
-        <input type="text" name="q" id="repo-input-q" value="<?php echo @$_GET['repo_type'] != 'hidden' ? @$_GET['q'] : ''; ?>"/>        
+        <input type="text" name="q" id="repo-input-q" value="<?php echo @$_GET['repo_type'] != 'hidden' ? htmlspecialchars(@$_GET['q']) : ''; ?>"/>        
         <input type="hidden" name="repo_type" id="repo-input-repo-type" value="simple"/>
         <input type="hidden" name="start" id="repo-input-start" value="<?php echo @$_GET['start'] ? $_GET['start'] : 0;  ?>" />
         <input type="hidden" name="rows" value="<?php echo REPO_SOLR_PAGE_SIZE ?>" />
@@ -39,10 +39,6 @@
 
         // is it a simple query or is there a field name in it?      
         $query_string =  $_SERVER['QUERY_STRING'];
-        if(@$_GET['repo_type'] == 'simple'){
-            // surround the query submitted with "" and it will search the default field.
-            $query_string = preg_replace('/^q=([^&]+)&/', 'q=%22$1%22&', $query_string);
-        }
         
         // remove the repo_type param so it doesn't go to solr
         $query_string = preg_replace('/&repo_type=[a-z_]+/', '', $query_string);
@@ -66,7 +62,6 @@
         if($result->response->numFound == 1){
             echo '<span id="repo-single-result-flag" style="display:none;"></span>';
         }
-
 
         // Paging at the bottom
         $rows = @$_GET['rows'];
