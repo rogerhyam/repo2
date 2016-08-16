@@ -64,6 +64,7 @@ sudo apt-get install php-zip
 sudo apt-get install php-dom
 sudo apt-get install php-imagick
 sudo a2enmod rewrite
+sudo a2enmod headers
 
 and allow rewrite in .htaccess 
 

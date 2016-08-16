@@ -22,4 +22,7 @@ RewriteRule ^service/images/([^/]*) srv.php?srv_name=images&ids=$1 [QSA,NC]
 RewriteRule ^service/image/([^/]*)/([^/]*)/square image_server.php?path=$1&kind=$2-square [QSA,NC]
 RewriteRule ^service/image/([^/]*)/([^/]*) image_server.php?srv_name=images&path=$1&kind=$2 [QSA,NC]
 
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
 

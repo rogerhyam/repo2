@@ -37,6 +37,7 @@
 
     // return the file
     header('Content-Type: image/jpeg');
+    header("Content-length: " . filesize($cache_path));    
     readfile($cache_path);
     
     function make_original_file($src_path, $dest_path, $within_repo){
