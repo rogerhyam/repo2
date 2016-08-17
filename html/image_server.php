@@ -1,8 +1,8 @@
 <?php
-    
+   
     require_once('../config.php');
     require_once('inc/functions.php');
-    
+        
     // image_server.php?kind=200&path=/item_images/accessions/19/02/10/06/Photo_4fdb19b3c7a5b.jpg
     
     // a really simple, one file, image server!
@@ -39,6 +39,8 @@
     header('Content-Type: image/jpeg');
     header("Content-length: " . filesize($cache_path));    
     readfile($cache_path);
+    exit;
+    
     
     function make_original_file($src_path, $dest_path, $within_repo){
         
@@ -101,10 +103,10 @@
         // Calculate the New Image Dimensions 
         $limiting_dim = 0;
         if( $oldH > $oldW ){
-            /* Portrait */
+            // Portrait 
             $limiting_dim = $oldW;
         }else{
-            /* Landscape */
+            // Landscape 
             $limiting_dim = $oldH;
         }
 
@@ -120,7 +122,5 @@
         imagedestroy( $src );
 
     }
-
-
 
 ?>
