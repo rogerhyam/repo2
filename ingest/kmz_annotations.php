@@ -83,7 +83,21 @@
                     $coord = $coords->item(0);
 
                     // split it to three - notice order
-                    list($lon, $lat, $alt) = explode(',', $coord->textContent);
+                    list($lon, $lat, $alt) 
+                    $parts = explode(',', $coord->textContent);
+                    
+                    if(count($parts) > 1){
+                        $lon = $parts[0];
+                        $lat = $parts[1];
+                    }
+                    
+                    // only add the alt if it was passed
+                    if (count($parts) > 2){
+                        $alt = $parts[2];
+                    }else{
+                        $alt = false;
+                    }
+                    
 
                     $doc['geolocation'] = trim($lat) . ',' . trim($lon);
 
@@ -91,7 +105,7 @@
                     // if it is clamptoground or clamptoseafloor or absolute we can assume the number is height above sea level
                     // alternatives are relativetoground or relativetoseafloor - where we would have to know the local terrain height - more or a mapping feature.
                     $modes = $point->getElementsByTagNameNS('http://www.opengis.net/kml/2.2', 'altitudeMode');
-                    if($modes->length){
+                    if($alt && $modes->length){
                         $mode = $modes->item(0)->textContent;
                         if($alt && $mode && ($mode == 'clampToGround' || $mode == 'clampToSeaFloor' || $mode == 'relative')){
                             $doc['elevation'] = $alt;
