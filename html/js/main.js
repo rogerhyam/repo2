@@ -1,7 +1,5 @@
 $( document ).ready(function() {
     
-    console.log("page loaded");
-    
     $('#repo-input-q').on('keyup change', function(){
         $('#repo-input-start').val(0);
     });    
@@ -50,8 +48,6 @@ repo.showSearchResultBottom = function(searchResult){
     
     var uri = 'search_result_body.php?id=' + encodeURIComponent(docId);
     
-    console.log(uri);
-    
     searchResult.find('.repo-bottom-placeholder').load(uri, function(){
         
         // load the images in the new code
@@ -59,8 +55,19 @@ repo.showSearchResultBottom = function(searchResult){
             repo.loadImages($(this));
         });
         
+        // hide any empty sections
+        $(this).find('.repo-field-list').each(function(){
+            if($(this).find('li').length == 0){
+                $(this).hide();
+                $(this).prev().hide();
+            }
+
+            console.log(this);
+        });
+        
         // show it
         $(this).parent().find('.repo-search-result-bottom').show('slow');
+    
     });
     
     

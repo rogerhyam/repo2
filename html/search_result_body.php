@@ -86,16 +86,22 @@
      write_field_li($doc, 'catalogue_number_other', 'Other identifiers', 'Other identifiers');
      write_field_li($doc, 'image_width_pixels_i', 'Width (pixels)', 'Width (pixels)', false);
      write_field_li($doc, 'image_height_pixels_i', 'Height (pixels)', 'Height (pixels)', false);
-     
-     
-     write_field_li($doc, 'storage_location', 'Stored', 'Stored', false);
+     write_field_li($doc, 'storage_location_garden_s', 'Garden', 'Gardens', false);
+     write_field_li($doc, 'storage_location', 'Managed by', 'Managed', false);
+     write_field_li($doc, 'storage_location_path', 'Path', 'Paths', false);
+     write_field_li($doc, 'storage_location_description_s', 'Find', 'Find', false);
      write_field_li($doc, 'object_created', 'Object created', 'Object created', false);
      write_field_li($doc, 'embargo_date', 'Embargoed till', 'Embargoed till', false);
      write_field_li($doc, 'indexed_at', 'Indexed', 'Indexed', false);
-     
      echo '</ul>';
 
-     if(isset($doc->storage_location_path) && isset($doc->storage_location) && $doc->storage_location == 'Repository'){
+     if(
+        isset($doc->storage_location_path)
+        && isset($doc->storage_location)
+        && $doc->storage_location == 'Repository'
+        && (!isset($doc->mime_type_s) || $doc->mime_type_s != 'directory')        
+        ){
+         
          echo "<h3>Download:</h3>";
          echo '<ul class="repo-field-list">';
          

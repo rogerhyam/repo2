@@ -42,6 +42,15 @@
         
         // remove the repo_type param so it doesn't go to solr
         $query_string = preg_replace('/&repo_type=[a-z_]+/', '', $query_string);
+        
+        // if we are doing a simple query then we should escape : in the string
+        // because that implies a field name
+        if(@$_GET['repo_type'] == 'simple'){
+            $current_q = $_GET['q'];
+            $new_q = str_replace('\\', '\\\\', $current_q);
+            $new_q = str_replace(':', '\:', $new_q);
+            $query_string = str_replace('q='. urlencode($current_q) . '&', 'q=' . urlencode($new_q) . '&', $query_string);
+        }
             
         // call solr
         $uri = REPO_SOLR_URI . '/query?'. $query_string;

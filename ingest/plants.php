@@ -16,32 +16,36 @@
       echo "Starting at offset = $offset\n";
       
       $sql = "SELECT
-          p.acc_num,
-          p.acc_num_qual, 
-          p.location_now,
-          p.quadrant_now, 
-          dwc.ScientificName,
-          dwc.Family,
-          dwc.Genus,
-          dwc.SpecificEpithet,
-          dwc.Country,
-          dwc.CatalogNumber,
-          dwc.Collector,
-          dwc.County,
-          dwc.FieldNotes,
-          dwc.HigherGeography,
-          dwc.Locality,
-          dwc.remarks,
-          dwc.StateProvince,
-          dwc.EarliestDateCollected
-      from
-        plants as p 
-      join
-        darwin_core_living as dwc
-      on 
-        ACC_NUM = CatalogNumber
+            p.acc_num,
+            p.acc_num_qual, 
+            p.location_now,
+            p.quadrant_now,
+            l.location, 
+            dwc.ScientificName,
+            dwc.Family,
+            dwc.Genus,
+            dwc.SpecificEpithet,
+            dwc.Country,
+            dwc.CatalogNumber,
+            dwc.Collector,
+            dwc.County,
+            dwc.FieldNotes,
+            dwc.HigherGeography,
+            dwc.Locality,
+            dwc.remarks,
+            dwc.StateProvince,
+            dwc.EarliestDateCollected
+        from
+          plants as p 
+        join
+          darwin_core_living as dwc
+        on 
+          ACC_NUM = CatalogNumber
+  	  left join 
+          locations as l
+        on l.LOC_CODE = p.LOCATION_NOW
       order by
-        acc_num ASC
+          acc_num ASC
       Limit $page_size
       OFFSET $offset";
       
@@ -60,7 +64,7 @@
       $file_count++;
       $offset = $offset + $page_size;
 
-      // break; // debug
+      //break; // debug
   }
   
   $now = new DateTime();
@@ -83,11 +87,56 @@
       $doc['item_type'] = 'Garden Plant';
   
       $doc['storage_location'] = 'Living Collections';
-      $doc['storage_location_path'] = '/Living Collections Catalogue';
       
-      // this is the 
-      if(isset($row['quadrant_now']))$doc['storage_location_quadrant_s'] = $row['quadrant_now'];
+      $sl_path = '/Living Collections';
       
+      if($row['location_now']){
+          
+          $doc['storage_location_bed_code_s'] = $row['location_now'];
+          
+          // garden is based on first letter of the bed code
+          switch ( strtoupper(substr($row['location_now'],0,1)) ) {
+            case 'X':
+                $sl_path .= '/External';
+                break;
+            case 'Z':
+                $sl_path .= '/Logan';
+                $doc['storage_location_garden_s'] = "Logan Botanic Garden";
+                break;
+            case 'Y':
+                $sl_path .= '/Benmore';
+                $doc['storage_location_garden_s'] =  "Benmore Botanic Garden";
+                break;
+            case 'V':
+                $sl_path .= '/Dawyck';
+                $doc['storage_location_garden_s'] =  "Dawyck Botanic Garden";
+                break;
+            default:
+                $sl_path .= '/Inverleith';
+                $doc['storage_location_garden_s'] =  "Edinburgh Botanic Garden";
+                break;
+          }
+          
+          // add in the bed code
+          $sl_path .= '/' . $row['location_now'];
+          
+          // keep track of the quadrant if need be
+          if($row['quadrant_now']){
+              $sl_path .= '/' . $row['quadrant_now'];
+              $doc['storage_location_quadrant_s'] = $row['quadrant_now'];
+          }
+          
+          
+      }else{
+          $sl_path .= '/Unplaced';
+      }      
+      
+      $doc['storage_location_path'] = $sl_path;
+      
+      // if we have a description of the location add that
+      if($row['location']){
+          $doc['storage_location_description_s'] = $row['location'];
+      }
       
       // id is the guid
       $doc['id'] = 'http://data.rbge.org.uk/living/' . $row['acc_num'] . $row['acc_num_qual'];
@@ -95,7 +144,6 @@
       
       $doc['derived_from'] = 'http://data.rbge.org.uk/living/' . $row['acc_num'];
       $doc['derivation_rank_i'] = 1;
-      
       
       $doc['catalogue_number'] = $row['acc_num'] . $row['acc_num_qual'];
       
@@ -120,7 +168,6 @@
       $location_parts[] = $row['Locality'];
       $location_parts = array_filter($location_parts);
       $doc['location'] = implode(':', $location_parts);
-      
       
       if($row['Collector']) $doc['creator'] = $row['Collector'];
       

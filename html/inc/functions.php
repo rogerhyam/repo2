@@ -23,7 +23,11 @@ function write_doc($doc, $index){
     
     // title
     echo "<h3>";
-    echo $doc->title[0];
+    if(isset($doc->title[0])){
+        echo $doc->title[0];
+    }else{
+        echo '-';
+    }
     echo "</h3>";
     
     echo '</div>'; // search result top
