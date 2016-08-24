@@ -137,12 +137,14 @@
                     
                     
                     // links to the image
-                    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/image_server.php?path=';
-                    $image->url = $base_url . $doc->storage_location_path;
-                    $image->thumbnail = $base_url . $doc->storage_location_path . '&kind=75-square';
-                    $image->medium = $base_url . $doc->storage_location_path . '&kind=600';
-                    $image->large = $base_url . $doc->storage_location_path . '&kind=1000';
-                    $image->fullsize = $base_url . $doc->storage_location_path . '&kind=original';
+                    // $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/image_server.php?path=';
+                    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/image_server_base64/';
+                    $loc64 = base64_encode($doc->storage_location_path);
+                    $image->url = $base_url . $loc64;
+                    $image->thumbnail = $base_url . $loc64 . '/75/square';
+                    $image->medium = $base_url . $loc64 . '/600';
+                    $image->large = $base_url . $loc64 . '/1000';
+                    $image->fullsize = $base_url . $loc64 . '/original';
             
                     //$image->repo_index_doc = $doc;
                     

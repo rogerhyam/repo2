@@ -18,8 +18,15 @@ RewriteRule ^service/item/([^/]*)/([^/]*)/([^/]*) srv.php?srv_name=item&response
 # http://repo.rbge.org.uk/service/images/<cat_ids>?callback=<method_name>
 RewriteRule ^service/images/([^/]*) srv.php?srv_name=images&ids=$1 [QSA,NC]
 
+# Allow the image server to handle base64 path encoding
+RewriteRule ^image_server_base64/([^/]*)/([^/]*)/([^/]*) image_server\.php?path_base64=$1&kind=$2-$3 [QSA,NC]
+RewriteRule ^image_server_base64/([^/]*)/([^/]*) image_server\.php?path_base64=$1&kind=$2 [QSA,NC]
+RewriteRule ^image_server_base64/([^/]*) image_server\.php?path_base64=$1 [QSA,NC]
+
 # Allow the image server to work with a jpg extension as colourbox uses this
 RewriteRule ^image_server\.jpg image_server\.php [QSA,NC]
+
+
 
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"

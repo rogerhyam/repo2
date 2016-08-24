@@ -6,7 +6,13 @@
     // image_server.php?kind=200&path=/item_images/accessions/19/02/10/06/Photo_4fdb19b3c7a5b.jpg
     
     // a really simple, one file, image server!
-    $within_repo = $_GET['path'];
+    $within_repo = @$_GET['path'];
+    
+    // we may be passed a base64 encoded path
+    if(@$_GET['path_base64']){
+        $within_repo = base64_decode($_GET['path_base64']);
+    }
+    
     $kind = @$_GET['kind'];
     if(!$kind) $kind = 600;
     $md5 = md5($within_repo);

@@ -83,7 +83,6 @@
                     $coord = $coords->item(0);
 
                     // split it to three - notice order
-                    list($lon, $lat, $alt) 
                     $parts = explode(',', $coord->textContent);
                     
                     if(count($parts) > 1){
