@@ -114,6 +114,7 @@
                     $image = clone $images[0];
                     
                     $image->repo_image_item_uri = $doc->id;
+                    $image->repo_image_item_type = $doc->item_type;
                     
                     if(isset($doc->creator[0])){
                         $image->photographer = $doc->creator[0];

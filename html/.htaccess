@@ -1,14 +1,13 @@
 RewriteEngine on
+
+# prevent access to most calls outside our network unless calling image_server or a service
+RewriteCond "%{REMOTE_ADDR}" "!^192.168"
+RewriteCond "%{REQUEST_URI}" "!^/image_server"
+RewriteCond "%{REQUEST_URI}" "!^/service"
+RewriteCond "%{REQUEST_URI}" "!^/srv\.php"
+RewriteRule .* "-" [F]
+
 RewriteRule ^service$ srv.php [NC]
-
-# e.g. http://repo.rbge.org.uk/service/item/xml/cat?id=E00137838
-# RewriteRule ^service/item/([^/]*)/cat srv.php?srv_name=item&response_format=$1&id_kind=cat [QSA,NC]
-
-# e.g. http://repo.rbge.org.uk/service/item/xml/guid?id=http://data.rbge.org.uk/herb/E00137838
-# RewriteRule ^service/item/([^/]*)/guid srv.php?srv_name=item&response_format=$1&id_kind=guid [QSA,NC]
-
-# e.g. http://repo.rbge.org.uk/service/item/xml/146653
-# RewriteRule ^service/item/([^/]*)/([^/]*) srv.php?srv_name=item&response_format=$1&id=$2 [QSA,NC]
 
 # e.g. http://repo.rbge.org.uk/service/item/xml/catalogue_number?val=E00137838
 RewriteRule ^service/item/([^/]*)/([^/]*)/([^/]*) srv.php?srv_name=item&response_format=$1&field_name=$2&field_value=$3 [QSA,NC]
@@ -25,8 +24,6 @@ RewriteRule ^image_server_base64/([^/]*) image_server\.php?path_base64=$1 [QSA,N
 
 # Allow the image server to work with a jpg extension as colourbox uses this
 RewriteRule ^image_server\.jpg image_server\.php [QSA,NC]
-
-
 
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
