@@ -1,0 +1,25 @@
+#  -- herbarium specimens 
+22 1 * * * cd /var/www/ingest/ && php herbarium_specimens.php > /var/log/repo/ingest_herbarium_specimens.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
+# -- accessions
+32 1 * * * cd /var/www/ingest/ && php accessions.php > /var/log/repo/ingest_accessions.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
+# -- plants
+42 1 * * * cd /var/www/ingest/ && php plants.php > /var/log/repo/ingest_plants.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
+# -- kick off indexing of all bgbase stuff at 2am - could take an hour or two
+02 2 * * * cd /var/www/index/ && php indexer.php /bgbase > /var/log/repo/indexer_bgbase.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
+# -- item_images
+50 1 * * * cd /var/www/ingest/ && php item_images.php $(date -d "last month" '+%Y-%m-%d') > /var/log/repo/ingest_item_images.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+02 3 * * * cd /var/www/index/ && php indexer.php /item_images > /var/log/repo/indexer_item_images.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
+# -- herbarium specimen scans
+55 1 * * * cd /var/www/ingest/ && php herbarium_specimen_scans.php $(date -d "last month" '+%Y-%m-%d') > /var/log/repo/ingest_herbarium_specimen_scans.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+02 4 * * * cd /var/www/index/ && php indexer.php /herbarium_specimen_scans > /var/log/repo/indexer_herbarium_specimen_scans.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
+# -- look to the updates
+02 5 * * * cd /var/www/index/ && php indexer.php derived_items.db > /var/log/repo/indexer_derived_items.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
+# remove 7 day and older log files so we don't get our knickers in a twist with disk space
+22 23 * * * find /var/log/repo -name "*" -mtime +7 -exec rm -f {} \;

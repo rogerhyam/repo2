@@ -185,3 +185,10 @@ html, body{
     display: inline-block;
     font-size: 16px;
 }
+
+.repo-doc-page{
+    padding-left:3em;
+    padding-right:3em;
+    padding-top:1em;
+    padding-bottom:1em;
+}

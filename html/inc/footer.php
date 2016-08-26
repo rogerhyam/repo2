@@ -1,3 +1,3 @@
-      </div><!-- page-content -->
+        </div> <!-- page wrap -->
   </body>
 </html>

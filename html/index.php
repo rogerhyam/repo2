@@ -12,8 +12,6 @@
 
 ?>
 
-
-<div id="repo-page-wrap">
      <form class="repo-search-form" method="GET" action="index.php">
 <div id="repo-page-content">
    
@@ -169,7 +167,6 @@
     <p>&nbsp;</p>
 </div><!-- side bar -->
     </form>
-</div> <!-- page wrap -->
 
 <?php include_once('inc/footer.php'); ?>
 

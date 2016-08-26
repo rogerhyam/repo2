@@ -18,10 +18,9 @@
     <div id='cssmenu'>
           <ul>
              <li><a href="/">RBGE Repository</a></li>
-             <li><a href='/search.php' >About</a></li>
-             <li><a href='/md.php?q=contact' >Contact</a></li>
+             <li><a href='/help.php' >Help</a></li>
           </ul>
     </div>
   </header>
-  <div id="page-content">
+      <div id="repo-page-wrap">
   <!-- end inc/header.php -->
