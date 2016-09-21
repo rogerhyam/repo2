@@ -4,3 +4,5 @@ html/cache
 data/
 ._*
 .DS*
+docs/run_once_script/foto_metadata_snap.db
+
