@@ -49,7 +49,7 @@
         $key = $row['key'];
     }
     
-    echo "http://" . $_SERVER['HTTP_HOST'] . "/service/download/$repo_path/" . $key;    
+    echo "http://" . $_SERVER['HTTP_HOST'] . "/service/download/" . $key;    
    
     
 ?>

@@ -10,7 +10,7 @@ RewriteRule .* "-" [F]
 RewriteRule ^service$ srv.php [NC]
 
 # sharing links
-RewriteRule ^service/download/([^/]*)/([^/]*) srv.php?srv_name=sharing&path_base64=$1&key=$2 [QSA,NC]
+RewriteRule ^service/download/([^/]*) srv.php?srv_name=sharing&key=$1 [QSA,NC]
 
 # e.g. http://repo.rbge.org.uk/service/item/xml/catalogue_number?val=E00137838
 RewriteRule ^service/item/([^/]*)/([^/]*)/([^/]*) srv.php?srv_name=item&response_format=$1&field_name=$2&field_value=$3 [QSA,NC]
