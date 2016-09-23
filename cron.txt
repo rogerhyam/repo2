@@ -21,5 +21,12 @@
 # -- look to the updates
 02 5 * * * cd /var/www/index/ && php indexer.php derived_items.db > /var/log/repo/indexer_derived_items.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
 
+# -- fotostation sync - Saturday mornings
+0 6 * * 6 cd /var/www/ingest && rsync -av "/media/fotostation/Images Done/Archive" "/media/repo/fotostation" > /var/log/repo/fotostation_rsync.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+0 7 * * 6 cd /var/www/ingest && php fotostation.php > /var/log/repo/fotostation_ingest.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+0 8 * * 6 cd /var/www/ingest && php indexer.php /fotostation/Archive > /var/log/repo/indexer_fotostation.$(date +\%Y\%m\%d\%H\%M\%S) 2>&1
+
 # remove 7 day and older log files so we don't get our knickers in a twist with disk space
 22 23 * * * find /var/log/repo -name "*" -mtime +7 -exec rm -f {} \;
+
+

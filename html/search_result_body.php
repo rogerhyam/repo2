@@ -133,28 +133,32 @@
             }
             
         }
-        
-        
+           
         $parts = pathinfo($doc->storage_location_path);
         $file_name = $parts['basename'];
         echo "<li>";
         echo "<strong>File:</strong> ";
         if($can_download){
+            
             echo "<a href=\"download.php?path={$doc->storage_location_path}\" >$file_name</a>";
+            
         }else{
             echo $file_name;
         }
+        
+        echo '<button class="repo-sharing-button" data-repo-days="30" data-repo-path="'. base64_encode($doc->storage_location_path) .'">&#x25bc; 30d</button>';
+        echo '<button class="repo-sharing-button" data-repo-days="-1" data-repo-path="'. base64_encode($doc->storage_location_path) .'">&#x25bc; &#x221e;</button>';
+        
         echo "</li>";
+ 
          
-         echo '</ul>';
+        echo '</ul>';
+         
+         // end download
          
          
      }
 
-
-
-    
-    
      // derived from
      $parent_doc = get_solr_parent_item($doc);
      if($parent_doc){

@@ -192,3 +192,7 @@ html, body{
     padding-top:1em;
     padding-bottom:1em;
 }
+
+.repo-sharing-button{
+    margin-left: 0.5em;
+}

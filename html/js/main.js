@@ -37,7 +37,6 @@ var repo = {};
 
 repo.showSearchResultBottom = function(searchResult){
     
-    
     // if we have already loaded the body just show/hide it.
     if(searchResult.find('.repo-search-result-bottom').length > 0){
         searchResult.find('.repo-search-result-bottom').toggle('slow');
@@ -63,6 +62,27 @@ repo.showSearchResultBottom = function(searchResult){
             }
 
             console.log(this);
+        });
+        
+        // bind to the sharing button
+        $('.repo-search-result').on('click', '.repo-sharing-button', function(event) {
+            event.preventDefault();
+            
+            var path = $(this).data('repo-path');
+            var days = $(this).data('repo-days');
+            
+            $.get( "get_sharing_link.php?repo_path=" + path + "&days=" + days, function( data ) {
+            
+               if(days == -1){
+                   var message = 'This link will allow external download. It does not expire.';
+               }else{
+                   var message = 'This link will allow external download for the next ' + days + ' days'
+               }
+               prompt(message, data);
+            
+            });
+            
+           
         });
         
         // show it

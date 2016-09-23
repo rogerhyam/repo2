@@ -12,6 +12,9 @@
         case 'item':
             require_once('inc/srv_item.php');
             break;
+        case 'sharing':
+            require_once('inc/srv_sharing.php');
+            break;
         default:
             header("HTTP/1.0 404 Not Found");
             echo "Unrecognised service name $srv_name";
