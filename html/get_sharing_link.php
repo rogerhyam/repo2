@@ -1,7 +1,5 @@
 <?php
 
-    require_once('../config.php');
-
     /*
         AJAX called to generate an externally shareable link used by inc/sharing.php
         
@@ -34,7 +32,7 @@
     }
     
     // we use a little database to handle this!
-    $db_path = REPO_ROOT . '/housekeeping/sharing_links.db';
+    $db_path = '../data_local/sharing_links.db';
     $db = new SQLite3($db_path);
     
     // make sure it has a table in it

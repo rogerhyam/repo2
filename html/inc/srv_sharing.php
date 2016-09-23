@@ -9,7 +9,7 @@
         
     */    
     
-    $db_path = REPO_ROOT . '/housekeeping/sharing_links.db';
+    $db_path = '../data_local/sharing_links.db';
     $db = new SQLite3($db_path);
     
     // an in date key must exit
