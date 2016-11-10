@@ -70,7 +70,7 @@
                 <tr>
                     <th>Other Catalogue Numbers:</th>
                     <td>
-                        <?php render_multivalue_field('catalogue_number', $doc); ?>
+                        <?php render_multivalue_field('catalogue_number_other', $doc); ?>
                     </td>
                 </tr>
         
@@ -189,6 +189,11 @@ function render_multivalue_field($field_name, $doc){
     $values = array();
     
     if(isset($doc->$field_name)){
+        
+        // there are cases where this has been an object - ingester error?
+        if(is_object($doc->$field_name)){
+            $doc->$field_name = get_object_vars($doc->$field_name);
+        }
         
         if(is_array($doc->$field_name)){
             $values = $doc->$field_name;
