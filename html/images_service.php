@@ -62,9 +62,9 @@
         global $root_item;
         
         if($look_to_derived){
-            $uri = REPO_SOLR_URI . '/query?rows=1000&q=' . urlencode("derived_from:\"$item_id\"");
+            $uri = REPO_SOLR_URI . '/query?rows=1000&q=' . urlencode("derived_from:\"$item_id\"  AND -hidden_b:true");
         }else{
-            $uri = REPO_SOLR_URI . '/query?rows=1000&q=' . urlencode("id:\"$item_id\"");
+            $uri = REPO_SOLR_URI . '/query?rows=1000&q=' . urlencode("id:\"$item_id\"  AND -hidden_b:true");
         }
     
         $ch = curl_init( $uri );

@@ -253,12 +253,39 @@ class CountryNameAugmenter extends BaseAugmenter
         'ZW' => 'Zimbabwe',
     );
     
-    public function augment($doc){        
+    public function augment($doc){
         
-        if(isset($doc->country_iso) && strlen($doc->country_iso) == 2 && array_key_exists($doc->country_iso, $this->countries)){
-           $doc->country_name = $this->countries[$doc->country_iso];
+        // make sure the country name is already an array of names
+        if(isset($doc->country_name) && !is_array($doc->country_name)){
+            $doc->country_name = array($doc->country_name);
+        }else{
+            $doc->country_name = array();
         }
-    
+        
+        // what is the iso field?
+        if(isset($doc->country_iso)){
+            if(!is_array(isset($doc->country_iso))){
+                $codes = $doc->country_iso;
+            }else{
+                $codes = array();
+                $codes[] = $doc->country_iso;
+            }
+            
+            foreach($codes as $code){
+                
+                // if we have a name for that code and it isn't already there add it
+                if(array_key_exists($code, $this->countries)){
+                    $name = $this->countries[$code];
+                    if(!in_array($name, $doc->country_name)){
+                        $doc->country_name[] = $name;
+                    }
+                }
+                
+                
+            }
+            
+        }
+        
     }
 
 }
