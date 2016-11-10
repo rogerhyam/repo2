@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     date_default_timezone_set('UTC');
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -15,6 +17,9 @@
         $solr_core = 'gettingstarted';
         $repo_root_path = '/var/www/data';
     }
+    
+    define('ACTIVE_DIRECTORY_SERVER', "192.168.150.90");
+    define('INDEX_QUEUE_PATH', '/var/www/index/queues' );
     
     // full path to documents directory
     define('REPO_ROOT', $repo_root_path);

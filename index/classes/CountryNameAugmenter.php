@@ -255,7 +255,7 @@ class CountryNameAugmenter extends BaseAugmenter
     
     public function augment($doc){        
         
-        if(isset($doc->country_iso) && array_key_exists($doc->country_iso, $this->countries)){
+        if(isset($doc->country_iso) && strlen($doc->country_iso) == 2 && array_key_exists($doc->country_iso, $this->countries)){
            $doc->country_name = $this->countries[$doc->country_iso];
         }
     

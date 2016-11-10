@@ -7,7 +7,7 @@
     // before we do anything we redirect if we haven't got a q
     // we always need to run a query so we have the facets available.
     if (!@$_GET['q']) {
-         header('Location: index.php?q=_text_:*&repo_type=hidden&' . REPO_SOLR_QUERY_STRING);
+         header('Location: index.php?q=*:* AND -hidden_b:true&repo_type=hidden&' . REPO_SOLR_QUERY_STRING);
     }
 
 ?>
@@ -38,8 +38,9 @@
         // is it a simple query or is there a field name in it?      
         $query_string =  $_SERVER['QUERY_STRING'];
         
-        // remove the repo_type param so it doesn't go to solr
+        // remove the repo_type and repo_show_hidden params so it doesn't go to solr
         $query_string = preg_replace('/&repo_type=[a-z_]+/', '', $query_string);
+        $query_string = preg_replace('/&repo_show_hidden=[a-z_]+/', '', $query_string);
         
         // if we are doing a simple query then we should escape : in the string
         // because that implies a field name
@@ -47,9 +48,19 @@
             $current_q = $_GET['q'];
             $new_q = str_replace('\\', '\\\\', $current_q);
             $new_q = str_replace(':', '\:', $new_q);
-            $query_string = str_replace('q='. urlencode($current_q) . '&', 'q=' . urlencode($new_q) . '&', $query_string);
-        }
             
+            // we look in all fields
+            $new_q = '_text_:"' . $new_q . '"';
+            
+            // we also add in a flag to hide hidden entries - unless we want them
+            if(@$_GET['repo_show_hidden'] != 'true'){
+                $new_q = $new_q . ' AND -hidden_b:true';
+            }
+            
+            $query_string = str_replace('q='. urlencode($current_q) . '&', 'q=' . urlencode($new_q) . '&', $query_string);
+        
+        }
+        
         // call solr
         $uri = REPO_SOLR_URI . '/query?'. $query_string;
         $ch = curl_init($uri);
@@ -156,13 +167,10 @@
         write_facet_select($result, 'genus', "Genus", $facet_queries);
         write_facet_select($result, 'epithet', "Epithet", $facet_queries);
         echo '<hr/>';
-    
+        
     ?>
     
-
-
-
-
+    <input type="checkbox" name="repo_show_hidden" value="true" <?php echo @$_GET['repo_show_hidden'] ? 'checked': ''; ?> /> Show hidden items.
 
     <p>&nbsp;</p>
 </div><!-- side bar -->

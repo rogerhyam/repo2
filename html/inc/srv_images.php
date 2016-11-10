@@ -48,7 +48,7 @@
     $images = array();
     foreach($ids as $cat_id){
         
-        $result = query_solr('catalogue_number:"'.$cat_id.'"');
+        $result = query_solr('catalogue_number:"'.$cat_id.'" AND -hidden_b:true');
         if($result->responseHeader->status == 0){
             
             foreach($result->response->docs as $doc){
@@ -95,14 +95,12 @@
     
     function get_images($parent_id, &$images){
         
-        $result = query_solr('derived_from:"'.$parent_id.'"');
+        $result = query_solr('derived_from:"'.$parent_id.'" AND -hidden_b:true');
                 
         if($result->responseHeader->status == 0){
             
             foreach($result->response->docs as $doc){
             
-               // print_r($doc);
-                
                 // is it a jpeg? - if so add it as an image
                 if( isset($doc->mime_type_s)
                     && $doc->mime_type_s == 'image/jpeg'

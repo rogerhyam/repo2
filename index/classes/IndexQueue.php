@@ -6,7 +6,7 @@ class IndexQueue extends SQLite3{
   
     public function __construct($queue = 'default'){        
         
-        $db_file = "queues/$queue.db";
+        $db_file = INDEX_QUEUE_PATH . "/$queue.db";
         
         $this->open($db_file);
         

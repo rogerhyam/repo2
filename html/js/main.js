@@ -18,18 +18,13 @@ $( document ).ready(function() {
     // follow links to items in list
     $('.repo-search-result').on('click', '.repo-search-result-bottom .repo-item-list li', function() {
         window.location.href = $(this).data('repo-doc-uri');
-    });
-    
-    // display the debug code
-    $('.repo-search-result').on('click', '.repo-search-result-bottom-footer', function() {
-        $(this).find('pre').show();
-    }); 
-    
+    });    
     
     /* populate image placeholders in the main page*/
     $('.repo-image-placeholder').each(function(){
             repo.loadImages($(this));    
-    }); 
+    });
+    
 
 });
 

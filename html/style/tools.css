@@ -1,0 +1,31 @@
+#login-dialogue{
+    text-align: left;
+    color: gray;
+}
+#login-dialogue table{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#repo-tools-spot-edit form table{
+    width: 100%;
+    color: white;
+}
+
+#repo-tools-spot-edit form th{
+    text-align: right;
+    width: 20%;
+    vertical-align: top;
+    color: white;
+}
+
+#repo-tools-spot-edit .repo-text-field,
+#repo-tools-spot-edit textarea{
+    width: 80%;
+}
+
+.spot-edit-raw{
+    overflow-x: scroll;
+    background-color: white;
+    color: black;
+}

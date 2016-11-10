@@ -19,7 +19,7 @@
     if(!$field_value) $field_value = '';
     
     // fetch the record(s)
-    $query = $field_name . ':"' . $field_value . '"';
+    $query = $field_name . ':"' . $field_value . '"  AND -hidden_b:true';
     $response = query_solr($query);
     
     // do we get an error?
@@ -72,7 +72,7 @@
     
     function add_derivatives_recursively($doc){
         
-        $response = query_solr('derived_from:"'. $doc->id .'"');
+        $response = query_solr('derived_from:"'. $doc->id .'"  AND -hidden_b:true');
               
         if($response->responseHeader->status == 0 && count($response->response->docs) > 0){
             $doc->derivatives = $response->response->docs;

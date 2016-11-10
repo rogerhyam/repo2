@@ -7,11 +7,11 @@
     $doc = get_solr_item_by_id($_GET['id']);
     
     // body of the search result
-     echo '<div class="repo-search-result-bottom">';
-
+     echo '<div class="repo-search-result-bottom">'; 
      $right_col_width = "auto";
-
      echo "<div class=\"repo-search-result-bottom-right-col\">";
+     
+
      
      // insert a map if we have lat and lon
      if(isset($doc->geolocation)){
@@ -47,7 +47,6 @@
          echo "<br/><img class=\"repo-large-image\" src=\"$src\" />";
          $right_col_width = "320px";
      }
-
 
      echo "</div>"; // repo-search-result-bottom-right-col
 
@@ -199,10 +198,9 @@
          echo '</ul>';
      }
 
-     echo '<div class="repo-search-result-bottom-footer">&nbsp;';
-     echo "<pre>";
-     var_dump($doc);
-     echo "</pre>";
+     
+     echo '<div class="repo-search-result-bottom-footer">';
+     echo '<a target="spot_edit" href="/tools/spot_edit/index.php?data_location='. base64_encode($doc->data_location)  .'&id='. base64_encode($doc->id) .'">&#9998;</a>';
      echo '</div>';
 
      echo '</div>'; // repo-search-result-bottom-content
