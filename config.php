@@ -55,6 +55,14 @@
         
     }
     
+    /*
+        useful for on/off permissions in front end
+    */
+    function has_permission($tool_name){
+        if(isset($_SESSION['repo-tools-permissions']) && in_array('_admin_', $_SESSION['repo-tools-permissions'])) return true;
+        if(isset($_SESSION['repo-tools-permissions']) && in_array($tool_name, $_SESSION['repo-tools-permissions'])) return true;
+        return false;
+    }
     
     
 ?>

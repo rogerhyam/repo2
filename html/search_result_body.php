@@ -200,7 +200,9 @@
 
      
      echo '<div class="repo-search-result-bottom-footer">';
-     echo '<a target="spot_edit" href="/tools/spot_edit/index.php?data_location='. base64_encode($doc->data_location)  .'&id='. base64_encode($doc->id) .'">&#9998;</a>';
+     if(has_permission('spot_edit')){
+         echo '<a target="spot_edit" href="/tools/spot_edit/index.php?data_location='. base64_encode($doc->data_location)  .'&id='. base64_encode($doc->id) .'">&#9998;</a>';
+     }
      echo '</div>';
 
      echo '</div>'; // repo-search-result-bottom-content

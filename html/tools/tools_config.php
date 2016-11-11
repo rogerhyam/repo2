@@ -40,11 +40,5 @@
         
     }
     
-    function has_permission($tool_name){
-        if(in_array('_admin_', $_SESSION['repo-tools-permissions'])) return true;
-        if(in_array($tool_name, $_SESSION['repo-tools-permissions'])) return true;
-        return false;
-    }
-    
 ?>
 <span id="repo-show-login-flag" data-repo-login-flag="<?php echo $show_login ?>">

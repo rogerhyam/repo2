@@ -64,7 +64,7 @@
         if($look_to_derived){
             $uri = REPO_SOLR_URI . '/query?rows=1000&q=' . urlencode("derived_from:\"$item_id\"  AND -hidden_b:true");
         }else{
-            $uri = REPO_SOLR_URI . '/query?rows=1000&q=' . urlencode("id:\"$item_id\"  AND -hidden_b:true");
+            $uri = REPO_SOLR_URI . '/query?rows=1000&q=' . urlencode("id:\"$item_id\"");
         }
     
         $ch = curl_init( $uri );
