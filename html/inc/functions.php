@@ -15,6 +15,9 @@ function write_doc($doc, $index){
     
     // item_type
     echo '<span class="repo-item-type">';
+    if(isset($doc->hidden_b) && $doc->hidden_b){
+        echo " <strong>~ Hidden ~ </strong>";
+    }
     echo $doc->item_type;
     if(isset($doc->link_out)){
         echo " [<a href=\"{$doc->link_out}\">Link Out</a>]";

@@ -11,8 +11,6 @@
      $right_col_width = "auto";
      echo "<div class=\"repo-search-result-bottom-right-col\">";
      
-
-     
      // insert a map if we have lat and lon
      if(isset($doc->geolocation)){
          
@@ -52,6 +50,12 @@
 
      // a wrapper div for the content
      echo "<div style=\"margin-right: $right_col_width;\" class=\"repo-search-result-bottom-content\">"; //
+
+     if(isset($doc->hidden_b) && $doc->hidden_b){
+         echo "<hr/>";
+         echo "<p><strong>~ Hidden ~ </strong> This item has been suppressed in the index and will not be returned in searches or published through web services</p>";
+         echo "<hr/>";
+     }
 
      if(isset($doc->content)){
          echo '<div class="repo-content-field">';
