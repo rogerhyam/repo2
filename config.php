@@ -64,5 +64,18 @@
         return false;
     }
     
+    // really commonly needed function
+    function get_field_value_as_string($doc, $field_name, $separator = ' | '){
+        if(isset($doc->$field_name)){
+            if(is_array($doc->$field_name)){
+                return implode($separator, $doc->$field_name);
+            }else{
+                return $doc->$field_name;
+            }
+        }else{
+            return '';
+        }
+    }
+    
     
 ?>

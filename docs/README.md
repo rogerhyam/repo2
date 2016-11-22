@@ -83,13 +83,9 @@ curl http://localhost:8983/solr/rbge01/update --data '<delete><query>indexed_at:
 curl http://localhost:8983/solr/gettingstarted/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
 curl http://localhost:8983/solr/rbge01/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
 
-
 sudo cp /var/solr/data/gettingstarted/conf/managed-schema /var/www/
 
 sudo cp  /var/www/managed-schema /var/solr/data/rbge01/conf/managed-schema
-
-
-
 
 # Indexing Stories.
 http://stories.rbge.org.uk/feed?modified=true&paged=0&orderby=modified&order=ASC

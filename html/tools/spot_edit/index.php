@@ -1,8 +1,16 @@
 <?php
+  
     require_once( '../../../config.php' );
     require_once( '../tools_config.php' );
-    require_once( '../../inc/header.php' );
     require_once( '../../inc/functions.php' );
+    
+    
+    $include_css[] = "/tools/spot_edit/spot_edit.css";
+    $include_scripts[] = "/tools/spot_edit/spot_edit.js";
+    require_once( '../../inc/header.php' );
+    
+
+
 ?>
 <div class="repo-doc-page" id="repo-tools-spot-edit">
     <h2>Spot Edit</h2>
@@ -141,7 +149,7 @@
                 <tr>
                     <td colspan="2" style="text-align:center;">
                         <button type="button" onclick="window.location.href = '/index.php?q=<?php echo urlencode('id:"'. $doc->id .'"' ) . '&repo_type=hidden&' . REPO_SOLR_QUERY_STRING ?>'">View</button>
-                        <input type="submit" value="Save" />
+                        <button type="submit" >Save</button>
                     </td>
                 </tr>
 

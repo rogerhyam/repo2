@@ -2,12 +2,6 @@ $( document ).ready(function() {
     
     // show the dialogue box if we need to login
     
-    $( "#tabs" ).tabs();
-    
-    console.log("#tabs");
-    
-    console.log($('#repo-show-login-flag').data('repo-login-flag'));
-    
     if($('#repo-show-login-flag').data('repo-login-flag')){
 	    $( "#login-dialogue" ).dialog(
 	        { 

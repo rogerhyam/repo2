@@ -1,12 +1,3 @@
-#login-dialogue{
-    text-align: left;
-    color: gray;
-}
-#login-dialogue table{
-    margin-right: auto;
-    margin-left: auto;
-}
-
 #repo-tools-spot-edit form table{
     width: 100%;
     color: white;

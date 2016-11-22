@@ -1,0 +1,141 @@
+
+body{
+    text-align: center; /* for ie centering */
+}
+
+#tabs{
+    margin: 0em auto;
+    text-align: left;
+    padding: 0em;
+    height: 800px;
+    width: 1000px;
+}
+
+#formPanel{
+    float: left;
+    height: 700px;
+    width: 70%;
+    border:solid 1px gray;
+    font-size: 83%;
+}
+
+#recentImages{
+     height: 690px;
+     width: 100%;
+     overflow: auto;
+}
+
+#imageListPanel{
+    border:solid 1px gray;
+    margin-left: 72%;
+    height: 700px;
+    width: 250px;
+    overflow: auto;
+}
+
+#lookupTable{
+    margin: 1em;
+}
+
+#lookupTable th{
+    text-align: right;
+    vertical-align: top;
+}
+
+#lookupTable td{
+    text-align: left;
+    vertical-align: top;
+    padding-left: 1em;
+}
+
+#lookupTable{
+    color: gray;
+}
+
+.imagePreview{
+    border-bottom: solid gray 1px;
+    padding: 0.3em;
+    text-align: center;
+    color: gray;
+    font-size: 90%;
+}
+
+.imagePreview .controlButton span{
+   padding-top: 0.1em;
+   padding-right: 0.2em;
+   padding-bottom: 0.1em;
+   padding-left: 0.2em;
+   font-weight: normal;
+   font-size: 80%;
+   margin: 0.2em;
+}
+
+.imagePreview .controls{
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    text-align: left;
+    padding-left: 1em;
+    
+}
+
+
+.imagePreview input{
+    color: gray;
+    background-color: black;
+    border: none;
+}
+
+.imagePreview .originalFile{
+    color: gray;
+}
+
+
+.singleBrowseImage{
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    height: 200px;
+    width: 200px;
+    margin: 5px;
+    border: solid gray 1px;
+}
+
+#helpDialogue{
+    
+    text-align: left;
+    font-weight: normal;
+    color: gray;
+    
+}
+
+#logoutLink,
+#helpLink{
+    color: gray;
+    cursor: help;
+    text-decoration: underline;
+}
+
+#logoutLink:hover,
+#helpLink:hover{
+    color: white;
+}
+
+#loginDialogue{
+    text-align: left;
+    color: gray;
+}
+#loginDialogue table{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.alert{
+    color: red;
+}
+
+.repo-recent-image{
+    float: left;
+    margin: 1em;
+}
+
+*:focus {outline: 0;}

@@ -11,7 +11,16 @@
     <link rel="stylesheet" href="/style/cssmenu/styles.css" type="text/css" >
     <link rel="stylesheet" href="/js/jquery-ui.min.css"     type="text/css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="/style/main.css"           type="text/css" />
-    <link rel="stylesheet" href="/style/tools.css"          type="text/css" />
+    
+    <?php
+        // if we have set some extra css to include put it here
+        if(isset($include_css)){
+            foreach($include_css as $css){
+                echo "<link rel=\"stylesheet\" href=\"$css\" type=\"text/css\" />";
+            }
+        }
+    ?>
+    
     
     <script src="/js/jquery-1.11.3.min.js"  type="text/javascript"></script>
     <script src="/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
@@ -19,6 +28,16 @@
     <script src="/style/cssmenu/script.js"  type="text/javascript"></script>
     <script src="/js/main.js"               type="text/javascript" ></script>    
     <script src="/tools/tools.js" type="text/javascript" charset="utf-8"></script>
+    
+    <?php
+        // if we have set some extra js to include put it here
+        if(isset($include_scripts)){
+            foreach($include_scripts as $script){
+                echo "<script src=\"$script\" type=\"text/javascript\" charset=\"utf-8\"></script>";
+            }
+        }
+    ?>
+    
     
   </head>
   <body>

@@ -1,6 +1,11 @@
 <?php
+    
+    $include_css[] = "/tools/tools.css";
+    $include_scripts[] = "/tools/tools.js";
+    
     require_once( '../inc/header.php' );
     require_once( 'tools_config.php' );
+
 ?>
 <script src="tools.js" type="text/javascript" charset="utf-8"></script>
 <div class="repo-doc-page">
