@@ -12,7 +12,7 @@
     // switch to tell if we are live or not
     if($live){
         $solr_core = 'rbge01';
-        $repo_root_path = '/media/repo';
+        $repo_root_path = '/media/repo_disk';
     }else{
         $solr_core = 'gettingstarted';
         $repo_root_path = '/var/www/data';
