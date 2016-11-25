@@ -5,7 +5,12 @@
     $user = @$_SESSION['repo-tools-username'];
 
     // get a list of recently added images from their history
-    $image_paths = file("images/$user/history.txt");
+    if(file_exists("images/$user/history.txt")){
+        $image_paths = file("images/$user/history.txt");
+    }else{
+        $image_paths = array();
+    }
+    
     $new_history = array();
     
     foreach($image_paths as $image_path){
@@ -23,7 +28,7 @@
     }
     
     // write the altered array back out
-    
+    if(!file_exists("images/$user")) mkdir("images/$user");
     file_put_contents( "images/$user/history.txt", $new_history );
 
 
