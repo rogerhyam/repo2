@@ -82,7 +82,7 @@
             	            </tr>
             	            <tr>
             	                    <th>&nbsp;</th>
-            	                    <td colspan="2">Max. <?php echo get_max_file_upload_size() ?> combined.</td>
+            	                    <td colspan="2">Max. <?php echo ini_get('upload_max_filesize') ?> combined.</td>
             	            </tr>
             	            <tr>
             	                    <td colspan="3">&nbsp;</td>
