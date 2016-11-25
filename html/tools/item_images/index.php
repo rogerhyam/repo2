@@ -79,7 +79,14 @@
             	                    <th>Select Files:</th>
             	                    <td><input  id="fileUploadField" type="file" multiple="true" name='files[]' accept="image/jpeg" /></td>
             	                    <td><button id="uploadButton" />Upload Files</button></td>
-            	                </tr>
+            	            </tr>
+            	            <tr>
+            	                    <th>&nbsp;</th>
+            	                    <td colspan="2">Max. <?php echo get_max_file_upload_size() ?> combined.</td>
+            	            </tr>
+            	            <tr>
+            	                    <td colspan="3">&nbsp;</td>
+            	            </tr>
             	                <tr>
             	                    <td colspan="3">
             	                        <h3>Commit to Repository</h3>
