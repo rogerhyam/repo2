@@ -15,7 +15,7 @@
         
         echo "Starting at offset = $offset\n";
         
-        $sql = "SELECT * FROM darwin_core_living ORDER BY GloballyUniqueIdentifier LIMIT $page_size OFFSET " . $offset;
+        $sql = "SELECT dwc.*, a.COLL_ID AS coll_id, a.COLL_NUM AS coll_num FROM darwin_core_living as dwc JOIN accessions as a on dwc.CatalogNumber = a.ACC_NUM ORDER BY GloballyUniqueIdentifier LIMIT $page_size OFFSET " . $offset;
         $response = $mysqli->query($sql);
         echo "\tGot {$response->num_rows}\n";
         
@@ -69,6 +69,10 @@
         if(isset($row['CatalogNumberNumeric'])) $doc['catalogue_number_other'][] = $row['CatalogNumberNumeric'];
         if(isset($row['CollectorNumber'])) $doc['catalogue_number_other'][] = $row['CollectorNumber'];
         if(isset($row['OtherCatalogNumbers'])) $doc['catalogue_number_other'][] = $row['OtherCatalogNumbers'];
+        
+        // coll books data
+        if(isset($row['coll_id'])) $doc['collector_id_s'] = $row['coll_id'];
+        if(isset($row['coll_num'])) $doc['collector_number_s'] = $row['coll_num'];
         
         // scientific name - always have?
         $doc['scientific_name_html'] = $row['ScientificName'];

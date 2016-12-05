@@ -1,0 +1,105 @@
+
+sudo systemctl reboot
+
+In summary - now we have LVM it is simple! Only five commands...
+
+Use cfdisk to create a new partition to fill the new space - it is a cell based GUI
+Create a physical volume to fill that new partition - pvcreate
+Add the new pv to the Volume Group - vgextend
+Extend the Logical Volume you are interested in to use that space - lvextend
+Expand the file system to use the whole of the LV - resize2fs
+
+--------------- In more detail ---------------
+
+
+## find the devices
+
+sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+
+## create a new partition for the free space
+
+sudo cfdisk
+
+## reboot
+
+## create a physical volume for the new device
+
+sudo pvcreate /dev/sda3
+
+## have a look at what we have by way of physical volumes
+
+sudo pvdisplay
+
+--- Physical volume ---
+PV Name               /dev/sda5
+VG Name               repo2-vg
+PV Size               99.52 GiB / not usable 2.00 MiB
+Allocatable           yes (but full)
+PE Size               4.00 MiB
+Total PE              25477
+Free PE               0
+Allocated PE          25477
+PV UUID               1MabNo-Fwcd-ZdKk-gxoF-YhED-GbEo-1T65Zs
+ 
+"/dev/sda3" is a new physical volume of "156.00 GiB"
+--- NEW Physical volume ---
+PV Name               /dev/sda3
+VG Name               
+PV Size               156.00 GiB
+Allocatable           NO
+PE Size               0   
+Total PE              0
+Free PE               0
+Allocated PE          0
+PV UUID               REKmVh-KvTx-Wc15-h2fT-WfVL-im9J-voSvxV
+
+## have a look at the volume groups we have
+
+sudo vgdisplay
+
+--- Volume group ---
+VG Name               repo2-vg
+System ID             
+Format                lvm2
+Metadata Areas        1
+Metadata Sequence No  3
+VG Access             read/write
+VG Status             resizable
+MAX LV                0
+Cur LV                2
+Open LV               2
+Max PV                0
+Cur PV                1
+Act PV                1
+VG Size               99.52 GiB
+PE Size               4.00 MiB
+Total PE              25477
+Alloc PE / Size       25477 / 99.52 GiB
+Free  PE / Size       0 / 0   
+
+## extend the volume group
+
+sudo vgextend repo2-vg /dev/sda3
+
+## extend the logical volume itself (by the size of the new physical volume)
+
+sudo lvextend /dev/repo2-vg/root /dev/sda3
+
+## resize the file system
+
+sudo resize2fs /dev/mapper/repo2--vg-root
+
+## take a look
+
+df 
+
+
+
+
+
+
+
+
+
+
+

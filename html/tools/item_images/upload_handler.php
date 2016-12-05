@@ -13,6 +13,9 @@ function handleUploads(){
 
     for($i = 0; $i < $fileCount; $i++){
 
+
+        
+
         if($_FILES["files"]["type"][$i] != "image/jpeg"){
             echo $_FILES["files"]["name"][$i] . " is not a jpeg - ignoring\n";
             continue;

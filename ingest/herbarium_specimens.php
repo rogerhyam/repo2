@@ -4,6 +4,7 @@
     require_once('../config_bgbase_dump.php');
     
     $page_size = 100000;
+    // $page_size = 100; // debug
   
     $now = new DateTime();
     echo "Herbarium Specimens Start: " . $now->format(DATE_ATOM) . "\n";
@@ -15,7 +16,7 @@
         
         echo "Starting at offset = $offset\n";
         
-        $sql = "SELECT * FROM darwin_core ORDER BY GloballyUniqueIdentifier LIMIT $page_size OFFSET " . $offset;
+        $sql = "SELECT s.COLL_ID as coll_id, s.coll_num as coll_num, dwc.* FROM darwin_core as dwc join specimens as s on dwc.CatalogNumber = s.BARCODE ORDER BY GloballyUniqueIdentifier LIMIT $page_size OFFSET " . $offset;
         $response = $mysqli->query($sql);
         echo "\tGot {$response->num_rows}\n";
         
@@ -31,6 +32,7 @@
         $file_count++;
         $offset = $offset + $page_size;
 
+        // break; // debug
     }
     
     $now = new DateTime();
@@ -60,6 +62,9 @@
         $doc["link_out"] = $row['GloballyUniqueIdentifier'];
         $doc['catalogue_number'] = $row['CatalogNumber'];
         $doc['derivation_rank_i'] = 0;
+        
+        if(isset($row['coll_id'])) $doc['collector_id_s'] = $row['coll_id'];
+        if(isset($row['coll_num'])) $doc['collector_number_s'] = $row['coll_num'];
         
         // other catalogue numbers
         $doc['catalogue_number_other'] = array();

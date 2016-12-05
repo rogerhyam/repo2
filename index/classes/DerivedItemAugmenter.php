@@ -26,7 +26,10 @@ class DerivedItemAugmenter extends BaseAugmenter
         'country_iso',
         'country_name',
         'scientific_name_plain',
-        'scientific_name_html'
+        'scientific_name_html',
+        'collector_id_s',
+        'collector_number_s'
+        
     );
     
     

@@ -264,7 +264,8 @@ class CountryNameAugmenter extends BaseAugmenter
         
         // what is the iso field?
         if(isset($doc->country_iso)){
-            if(!is_array(isset($doc->country_iso))){
+            
+            if(is_array($doc->country_iso)){
                 $codes = $doc->country_iso;
             }else{
                 $codes = array();

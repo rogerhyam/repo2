@@ -4,7 +4,7 @@
   require_once('../config_bgbase_dump.php');
   
   $page_size = 10000;
-  //$page_size = 10; // debug
+  // $page_size = 100; // debug
   
   $now = new DateTime();
   echo "Plants Start: " . $now->format(DATE_ATOM) . "\n";
@@ -37,10 +37,7 @@
             dwc.EarliestDateCollected
         from
           plants as p 
-        join
-          darwin_core_living as dwc
-        on 
-          ACC_NUM = CatalogNumber
+        join darwin_core_living as dwc on p.ACC_NUM = dwc.CatalogNumber
   	  left join 
           locations as l
         on l.LOC_CODE = p.LOCATION_NOW
@@ -64,7 +61,7 @@
       $file_count++;
       $offset = $offset + $page_size;
 
-      //break; // debug
+      // break; // debug
   }
   
   $now = new DateTime();
