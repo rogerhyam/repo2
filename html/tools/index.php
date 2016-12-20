@@ -17,23 +17,17 @@
     </h2>
     
     <ul>
-        <!--
         <li>
-            <?php if(has_permission('file_drop')){ ?>
-                <a href="file_drop/index.php"><strong>File Drop:</strong></a>
-            <?php }else { ?>
-                <strong>File Drop</strong>
-            <?php } ?>
-            Upload images and PDF documents to the repository. Do <strong>NOT</strong> use this for images of garden accessions/plants of specimens with barcodes.
+            <a href="file_drop/index.php"><strong>File Drop:</strong></a>
+            Upload JPG images and PDF documents to the repository. Do <strong>NOT</strong> use this for images of garden accessions/plants of specimens which can be linked to specific accession number or barcodes.
         </li>
-        -->
         <li>
             <?php if(has_permission('item_images')){ ?>
                 <a href="item_images/index.php"><strong>Item Images:</strong></a>
             <?php }else { ?>
                 <strong>Item Images:</strong>
             <?php } ?>
-            Upload images of existing repository item such as accessions, plants, herbarium specimens.
+            Upload images of existing repository item such as accessions, plants, herbarium specimens that can be linked to a specific accession number or barcode.
         </li>        
         <li>
             <?php if(has_permission('authorisation')){ ?>
