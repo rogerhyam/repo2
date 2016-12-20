@@ -162,7 +162,7 @@
                 <p>These are images that you have recently uploaded that are now queued for indexing. You can't change them while the indexer may be working on them. To view your uploaded images that <strong>have</strong> been indexed <a 
                     href="<?php echo $my_images_uri ?>">click here</a>.
                 </p>
-                <div id="recent-images">No images to display.</div>
+                <ul id="recent-images">No images to display.</ul>
                               
                 
             </div>

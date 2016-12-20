@@ -49,7 +49,7 @@
                 $src =  $image_loc;
             }else{
                 // it is a path within the repo
-                $src = "image_server.jpg?kind=$kind&path=" . $image_loc;
+                $src = "image_server.jpg?kind=$kind&path_base64=" . base64_encode($image_loc);
             }
             
             echo "<img src=\"$src\" />";

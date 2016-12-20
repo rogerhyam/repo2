@@ -3,8 +3,8 @@
   require_once('../config.php');
   require_once('../config_bgbase_dump.php');
   
-  //$page_size = 10000;
-  $page_size = 1000; // debug
+  $page_size = 10000;
+  // $page_size = 1000; // debug
   
   $now = new DateTime();
   echo "Collector Books Start: " . $now->format(DATE_ATOM) . "\n";
@@ -63,7 +63,7 @@
       $file_count++;
       $offset = $offset + $page_size;
 
-      break; // debug
+      // break; // debug
   }
   
   $now = new DateTime();

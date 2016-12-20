@@ -199,3 +199,7 @@ html, body{
 .repo-sharing-button{
     margin-left: 0.5em;
 }
+
+.repo-help-dialogue{
+    display:none;
+}

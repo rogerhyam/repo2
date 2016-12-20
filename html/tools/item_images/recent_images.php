@@ -21,7 +21,10 @@
         // check if it has been indexed. If so remove it from the list if it is in the index
         if(is_in_index(trim($image_path))) continue;
         
-        echo "<img class=\"repo-recent-image\" src=\"/image_server.php?kind=200&path=$image_path\" />";
+        // echo "<img class=\"repo-recent-image\" src=\"/image_server.php?kind=200&path=$image_path\" />";
+        
+        $path_parts = pathinfo($image_path);
+        echo "<li><img class=\"repo-recent-image\" src=\"/image_server.php?kind=100-square&path=$image_path\" />{$path_parts['basename']}</li>";
         
         $new_history[] = $image_path;
         

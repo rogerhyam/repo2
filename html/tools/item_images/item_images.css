@@ -133,9 +133,15 @@ body{
     color: red;
 }
 
-.repo-recent-image{
-    float: left;
-    margin: 1em;
+#recent-images{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#recent-images li img{
+    vertical-align: middle;
+    margin-top: 1em;
+    margin-right: 1em;
 }
 
 *:focus {outline: 0;}

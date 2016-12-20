@@ -10,7 +10,7 @@
     
     // we may be passed a base64 encoded path
     if(@$_GET['path_base64']){
-        $within_repo = base64_decode($_GET['path_base64']);
+        $within_repo = trim(base64_decode($_GET['path_base64']));
     }
     
     $kind = @$_GET['kind'];
@@ -86,19 +86,41 @@
         } else {
            $height = $width/$ratio_orig;
         }
-
-        $image_p = imagecreatetruecolor($width, $height);
-        $image = imagecreatefromjpeg($src_path);
-        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
-
+        
+        //where we will put it 
         $path_parts = pathInfo($dest_path); 
         @mkdir($path_parts['dirname'], 0777, true);
         
+        // Imagick way
+        $thumb = new Imagick($src_path);
+        $thumb->resizeImage($width,$height,Imagick::FILTER_LANCZOS,1);
+        auto_rotate_image($thumb);
+        $thumb->writeImage($dest_path);
+        $thumb->destroy();
+
+        /* 
+        $image_p = imagecreatetruecolor($width, $height);
+        $image = imagecreatefromjpeg($src_path);
+        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
         imagejpeg($image_p, $dest_path, 90);
+        */
+
         
     }
 
     function make_square_file($scrFile, $thumbFile, $thumbSize){
+      
+        // make a home for it
+        $path_parts = pathInfo($thumbFile); 
+        @mkdir($path_parts['dirname'], 0777, true);
+      
+        $imagick = new Imagick($scrFile);
+        auto_rotate_image($imagick);
+        $imagick->cropThumbnailImage($thumbSize, $thumbSize, true);
+        $imagick->writeImage($thumbFile); 
+        $imagick->clear();
+      
+        /*
       
         $src = imagecreatefromjpeg( $scrFile );
 
@@ -126,7 +148,31 @@
 
         imagedestroy( $new );
         imagedestroy( $src );
+        
+        */
 
     }
+    
+    function auto_rotate_image($image) {
+        $orientation = $image->getImageOrientation();
+
+        switch($orientation) {
+            case imagick::ORIENTATION_BOTTOMRIGHT: 
+                $image->rotateimage("#000", 180); // rotate 180 degrees
+                break;
+
+            case imagick::ORIENTATION_RIGHTTOP:
+                $image->rotateimage("#000", 90); // rotate 90 degrees CW
+                break;
+
+            case imagick::ORIENTATION_LEFTBOTTOM: 
+                $image->rotateimage("#000", -90); // rotate 90 degrees CCW
+                break;
+        }
+
+        // Now that it's auto-rotated, make sure the EXIF data is correct in case the EXIF gets saved with the image!
+        $image->setImageOrientation(imagick::ORIENTATION_TOPLEFT);
+    }
+    
 
 ?>

@@ -106,3 +106,9 @@ curl "http://localhost:8983/solr/gettingstarted/update/extract?&extractOnly=true
 # icons
 
  http://bbc.github.io/gel-iconography/
+ 
+ # fix a sqlite3 db that is stuck after crash
+ 
+ echo ".dump" | sqlite old.db | sqlite new.db
+ 
+ 

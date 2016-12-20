@@ -1,0 +1,154 @@
+*:focus {outline: 0;}
+
+#tabs{
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+#upload-file{
+    border: solid gray 1px;
+    float: right;
+    width: 33%;
+    padding: 1em;
+    margin-bottom: 1em;
+    height: 800px;
+}
+
+#upload-form{
+    width: 63%;
+    
+}
+
+#upload-form td{
+    color: white;
+    /* border: solid 1px white; */
+}
+
+
+#upload-form table{
+   /* border: solid 1px white; */
+    width: 100%;
+}
+
+#upload-form .help-cell{
+    width: 2em;
+}
+#upload-form .button-cell{
+    width: 3em;
+}
+
+#upload-form .commit-cell{
+    text-align: right;
+}
+
+#upload-form textarea,
+#upload-form input{
+    width: 100%;
+}
+
+#upload-form input#geolocation{
+    width: 60%;
+}
+
+#upload-form input#geolocation_accuracy_i{
+    width: 4em;
+}
+
+#coordinates-cell input{
+    width: 20;
+}
+
+
+#upload-form th{
+   color: white;
+   text-align: right;
+   padding-right: 0.5em;
+   width: 20%;
+   vertical-align: top;
+}
+
+#upload-form h3{
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: orange;
+}
+
+#upload-form  p{
+    color: white;
+}
+
+#fileUploadField{
+    color: white;
+}
+
+.repo-context-help{
+    color: black;
+    background-color: gray;
+    border: solid white 1px;
+    border-radius: 1em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    margin-left: 0.3em;
+    text-decoration: none;
+}
+
+.repo-lookup-globe{
+    font-size: 110%;
+    color: white;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    margin-left: 0.3em;
+    text-decoration: none;
+    
+}
+
+.repo-failed{
+    color: red;
+    border-color: red;
+    background-color: #FFDDDD;
+}
+
+textarea:disabled,
+input:disabled {
+    background: #cccccc;
+}
+
+.repo-warning{
+    border: solid 1px red;
+    background-color: white;
+    padding: 0.5em;
+    color: red;
+}
+.repo-warning a{
+    color: red;
+}
+
+#recent-files{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#recent-files li img{
+    vertical-align: middle;
+    margin-top: 1em;
+    margin-right: 1em;
+}
+
+
+#repo-file-upload{
+    color: gray;
+    border: solid gray 1px;
+    padding: 1em;
+    width: 100%;
+}
+
+#repo-file-upload.repo-drop-target{
+    border: solid orange 1px;
+    color: orange;
+}
+
+#repo-file-upload.repo-drop-target * {
+    color:red;
+    pointer-events: none;
+}

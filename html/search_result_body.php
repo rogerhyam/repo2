@@ -35,13 +35,13 @@
      
      // insert image if we have one
      if(isset($doc->mime_type_s) && $doc->mime_type_s == 'image/jpeg'){
-         $src = 'image_server.php?kind=300&path=' . $doc->storage_location_path;
+         $src = 'image_server.php?kind=300&path_base64=' . base64_encode($doc->storage_location_path);
          echo "<br/><img class=\"large-image\" src=\"$src\" />";
          $right_col_width = "320px";
      }
 
      if(isset($doc->summary_image_s)){
-         $src = 'image_server.php?kind=300&path=' . $doc->summary_image_s;
+         $src = 'image_server.php?kind=300&path_base64=' . base64_encode($doc->summary_image_s);
          echo "<br/><img class=\"repo-large-image\" src=\"$src\" />";
          $right_col_width = "320px";
      }

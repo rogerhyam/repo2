@@ -25,6 +25,42 @@ $( document ).ready(function() {
             repo.loadImages($(this));    
     });
     
+    /* autocomplete generic mechanism based on value in inputs */
+
+    // initialise the autocompletes
+    $( ".repo-autocomplete" ).autocomplete({
+        minLength: 2,
+    });
+    
+    // add the sources dependent on the content of the input
+    $( ".repo-autocomplete" ).each(function(){
+        
+        var source = "/autocomplete.php?field=";
+        
+        var field = $(this).data('repo-field');
+        if(field) source += field;
+        
+        var termCase = $(this).data('repo-case');
+        if(termCase) source += '&case=' + termCase;
+        
+        $(this).autocomplete( "option", "source", source);
+
+    });
+    
+    
+    /* help dialogues */
+    $('.repo-context-help').on('click', function(){
+        
+        // do we already have an associated dialogue?
+        var dialogueInstance = $(this).data('repo-help-dialogue');
+        if(dialogueInstance){
+            dialogueInstance.dialog('open');
+        }else{
+            var d = $(this).parent().find('.repo-help-dialogue').dialog();
+            $(this).data('repo-help-dialogue', d);
+        }
+    
+    });
 
 });
 
