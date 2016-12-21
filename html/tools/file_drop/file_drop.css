@@ -32,7 +32,8 @@
 }
 
 #upload-form .help-cell{
-    width: 2em;
+    width: 3em;
+    vertical-align: top;
 }
 #upload-form .button-cell{
     width: 3em;
@@ -42,9 +43,14 @@
     text-align: right;
 }
 
+
 #upload-form textarea,
 #upload-form input{
     width: 100%;
+}
+
+#upload-form .checkbox-cell input{
+    width: auto;
 }
 
 #upload-form input#geolocation{

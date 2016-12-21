@@ -121,7 +121,7 @@
             	                        class="repo-needs-file" 
             	                        type="text"
             	                        value="<?php
-            	                     if(@$creator_from_file){
+            	                     if(@$creator_from_file && strlen(trim($creator_from_file)) > 0 ){
      	                                echo $creator_from_file;
             	                     }elseif (@$_SESSION['repo-tools-file-drop']){
             	                         echo $_SESSION['repo-tools-file-drop']['creator'];
@@ -178,7 +178,7 @@
             	                        name="date"
             	                        id="date"
             	                        type="text"
-            	                        data-repo-regex="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+            	                        data-repo-regex="(^[0-9]{4}-[0-9]{2}-[0-9]{2}$)|(^[0-9]{4}$)"
             	                        value="<?php 
             	                          if(@$date_from_file){
              	                                echo $date_from_file;
@@ -265,7 +265,7 @@
             	                                }
             	                                ?></textarea>
             	                    </td>
-            	                    <td>
+            	                    <td class="help-cell">
             	                        <a href="#" class="repo-context-help" >?</a>
             	                        <div class="repo-help-dialogue" title="Description field">
                                           <p>
@@ -279,8 +279,8 @@
             	                </tr>
 <?php if(@$meta->type == 'pdf'){ ?>
             	                <tr>
-            	                    <th>Compliance Document:</th>
-            	                    <td colspan="2" ><input
+            	                    <th>Compliance&nbsp;Doc:</th>
+            	                    <td colspan="2" class="checkbox-cell" ><input
             	                        size="30"
             	                        name="compliance_doc_b"
             	                        id="compliance_doc_b"
@@ -289,7 +289,7 @@
             	                        value="1"
             	                        <?php  if (@$_SESSION['repo-tools-file-drop'] && @$_SESSION['repo-tools-file-drop']['compliance_doc_b'] ==  1) echo 'checked'; ?> />
             	                    </td>
-            	                    <td>
+            	                    <td class="help-cell" >
             	                        <a href="#" class="repo-context-help" >?</a>
             	                        <div class="repo-help-dialogue" title="Collector Code field">
                                           <p>
@@ -437,7 +437,7 @@
             	                    <td>
             	                        <a href="#" id="repo-map-dialogue-eye" class="repo-lookup-globe" >&#127760;</a>
             	                    </td>
-            	                    <td>
+            	                    <td class="help-cell">
             	                        <a href="#" class="repo-context-help" >?</a>
             	                        <div class="repo-help-dialogue" title="Coordinates">
                                           <p>
@@ -527,7 +527,7 @@ function render_repeat_field_rows($field_name, $field_title, $field_case, $field
     <td class="button-cell">
         <button class="repo-field-add-button repo-needs-file" /><?php echo (count($values) > 1 && $values[0] != $value ? '-' : '+'); ?></button>
     </td>
-    <td>
+    <td class="help-cell">
         <a href="#" class="repo-context-help" >?</a>
         <div class="repo-help-dialogue" title="<?php echo $field_title ?>"><?php echo $help_html ?></div>
     </td>

@@ -62,9 +62,7 @@
     function queue_scan($queue_name){
         
         echo "Processing queue: $queue_name\n";
-        
         $queue = new IndexQueue($queue_name);
-        
         while($relative_path = $queue->get_priority_file()){
             $full_path = REPO_ROOT . $relative_path;
             index_file($full_path, $queue);
@@ -113,19 +111,20 @@
         global $uploader;
         
         echo "Processing file: $file_path\n";
+        $relative_file_path = str_replace(REPO_ROOT, '', $file_path);
         
         // get the contents of the file
         $json = @file_get_contents($file_path);
         if(!$json){
             echo "ERROR can't access $file_path\n";
-            if($queue)$queue->shelve($file_path);
+            if($queue)$queue->shelve($relative_file_path);
             return;
         }
         
         $docs = json_decode($json);
         if(!$docs){
             echo "ERROR can't parse JSON in $file_path\n";
-            if($queue)$queue->shelve($file_path);
+            if($queue)$queue->shelve($relative_file_path);
             return;
         }
         
@@ -133,7 +132,6 @@
 
             // we have to have the location of the file containing the data
             // but this should be within the scope of the repository - the full path might change
-            $relative_file_path = str_replace(REPO_ROOT, '', $file_path);
             $doc->data_location = $relative_file_path;
 
             // we tag when it is being indexed

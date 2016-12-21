@@ -7,7 +7,7 @@ class IndexQueue extends SQLite3{
     public function __construct($queue = 'default'){        
         
         $db_file = INDEX_QUEUE_PATH . "/$queue.db";
-        
+           
         $this->open($db_file);
         
         // make sure it has a table in it
@@ -50,9 +50,11 @@ class IndexQueue extends SQLite3{
     /**
     *   returns the most important file to index
     */
-    public function get_priority_file(){
-        $result = $this->query("SELECT data_file FROM index_queue WHERE priority > 0 GROUP BY data_file ORDER BY SUM(priority) DESC, created ASC LIMIT 1");   
+    public function get_priority_file(){      
+                  
+        $result = $this->query("SELECT data_file FROM index_queue WHERE priority > 0 GROUP BY data_file ORDER BY SUM(priority) DESC, created ASC LIMIT 1;");   
         $row = $result->fetchArray(SQLITE3_ASSOC);     
+        
         if($row){       
             return $row['data_file'];
         }else{
