@@ -44,12 +44,22 @@ $( document ).ready(function() {
         
         // get the parent the
         var newRow = row.clone();
+        var newInput = newRow.find('input');
+        //var oldInput = row.find('input');
         
         newRow.find('button').html('-');
-        newRow.find('input').val('');
-
         newRow.insertAfter(row);
+        
+        newInput.val('');
+        newInput.attr('id', newInput.attr('id') + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1));
+                
+        //repo.bindAutoComplete(oldInput);
+        repo.bindAutoComplete(newInput);
+        
+        // stop form submit
         event.preventDefault();
+        
+        
     });
     
     

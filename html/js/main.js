@@ -28,23 +28,16 @@ $( document ).ready(function() {
     /* autocomplete generic mechanism based on value in inputs */
 
     // initialise the autocompletes
+    /*
     $( ".repo-autocomplete" ).autocomplete({
         minLength: 2,
     });
+    */
+    
     
     // add the sources dependent on the content of the input
     $( ".repo-autocomplete" ).each(function(){
-        
-        var source = "/autocomplete.php?field=";
-        
-        var field = $(this).data('repo-field');
-        if(field) source += field;
-        
-        var termCase = $(this).data('repo-case');
-        if(termCase) source += '&case=' + termCase;
-        
-        $(this).autocomplete( "option", "source", source);
-
+        repo.bindAutoComplete($(this));
     });
     
     
@@ -65,6 +58,23 @@ $( document ).ready(function() {
 });
 
 var repo = {};
+
+repo.bindAutoComplete = function(input){
+    
+    var source = "/autocomplete.php?field=";
+
+    var field = input.data('repo-field');
+    if(field) source += field;
+
+    var termCase = input.data('repo-case');
+    if(termCase) source += '&case=' + termCase;
+    
+    input.autocomplete({
+        minLength: 2,
+    });
+
+    input.autocomplete( "option", "source", source);
+}
 
 repo.showSearchResultBottom = function(searchResult){
     
