@@ -64,7 +64,7 @@
     $doc['epithet'] = $_POST['epithet'];
 
     // keywords
-    $doc['keyword_ss'] = $_POST['keyword_ss'];
+    $doc['keywords_ss'] = $_POST['keywords_ss'];
     
     // geographic stuff
     $doc['country_iso'] = $_POST['country_iso'];

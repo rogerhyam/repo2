@@ -7,7 +7,7 @@
     // before we do anything we redirect if we haven't got a q
     // we always need to run a query so we have the facets available.
     if (!@$_GET['q']) {
-         header('Location: index.php?q=*:* AND -hidden_b:true&repo_type=hidden&' . REPO_SOLR_QUERY_STRING);
+         header('Location: index.php?q=*:* AND -hidden_b:true&repo_type=hidden&sort=indexed_at+desc&' . REPO_SOLR_QUERY_STRING);
     }
 
 ?>
@@ -29,6 +29,7 @@
         <input type="hidden" name="facet.field" value="country_name" />
         <input type="hidden" name="facet.field" value="item_type" />
         <input type="hidden" name="facet.field" value="object_created_year" />
+        <input type="hidden" name="facet.field" value="keywords_ss" />
         
         <input type="submit" id="repo-input-submit" value="Search"/>
     
@@ -162,14 +163,14 @@
         write_facet_select($result, 'item_type', "Item Type", $facet_queries);
         write_facet_select($result, 'country_name', "Country", $facet_queries);
         write_facet_select($result, 'object_created_year', "Year", $facet_queries);
+        write_facet_select($result, 'keywords_ss', "Keyword", $facet_queries);
         echo '<hr/>';
         write_facet_select($result, 'family', "Family", $facet_queries);
         write_facet_select($result, 'genus', "Genus", $facet_queries);
         write_facet_select($result, 'epithet', "Epithet", $facet_queries);
-        echo '<hr/>';
         
     ?>
-    
+    <hr/>
     <input type="checkbox" name="repo_show_hidden" value="true" <?php echo @$_GET['repo_show_hidden'] ? 'checked': ''; ?> /> Show hidden items.
 
     <p>&nbsp;</p>
