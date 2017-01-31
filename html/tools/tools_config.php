@@ -29,7 +29,7 @@
             $matches = array();
             if(preg_match('/\/tools\/([a-zA-Z0-9_]+)\//', $_SERVER['SCRIPT_NAME'], $matches)){
                 $current_tool = $matches[1];
-                if(!in_array($current_tool, $_SESSION['repo-tools-permissions'])){
+                if(!in_array($current_tool, $_SESSION['repo-tools-permissions']) && $current_tool != 'file_drop'){
                     header('HTTP/1.0 403 Forbidden');
                     echo "Sorry: You don't have permission to access this tool.";
                     exit;
