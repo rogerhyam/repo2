@@ -50,6 +50,9 @@
     
     // creator
     $doc['creator'] = explode(';', $_POST['creator']);
+
+    // Copyright statement
+    $doc['copyright_s'] = $_POST['copyright_s'];
     
     // coll_books_id
     $doc['collector_id_s'] = $_POST['collector_id_s'];

@@ -87,12 +87,17 @@
             	            <tr>
             	                    <td colspan="3">&nbsp;</td>
             	            </tr>
-            	                <tr>
-            	                    <td colspan="3">
-            	                        <h3>Commit to Repository</h3>
-            	                    </td>
-            	                </tr>
-
+                            <tr>
+                                <td colspan="3">
+                                    <h3>Commit to Repository</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <p>In adding this content to the RBGE Digital Repository I am giving the RBGE permission to use it for any purpose, including but not limited to commercial purposes.</p>
+                                    <p>&nbsp;</p>
+                                </td>
+                            </tr>
         	                 <tr>
             	                    <th></th>
             	                    <td id="statusLabel"></td>

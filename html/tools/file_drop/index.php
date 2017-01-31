@@ -243,8 +243,36 @@
                                          </div>
              	                    </td>
             	                </tr>
-
+            	                
             	                <tr>
+            	                    <th>Copyright:</th>
+            	                    <?php $copyright_statement = "In adding this content to the RBGE Digital Repository I am giving the RBGE permission to use it for any purpose, including but not limited to commercial purposes." ?>
+            	                    <td colspan="2" id="copyright-cell" >
+            	                       <select
+            	                        name="copyright_s"
+            	                        id="copyright_s"
+            	                        class="repo-needs-file"
+            	                        data-repo-regex="[A-Za-z]{2}"
+            	                        value="<?php echo $copyright_statement?>"
+            	                       >
+            	                            <option value="">Disagree</option>
+            	                            <option value="<?php echo $copyright_statement?>" <?php  if (@$_SESSION['repo-tools-file-drop']['copyright_s'] ==  $copyright_statement) echo 'selected'; ?> >Agree</option>
+            	                       </select>
+            	                       <?php echo $copyright_statement?>
+            	                    </td>
+            	                    <td>
+             	                        <a href="#" class="repo-context-help" >?</a>
+             	                        <div class="repo-help-dialogue" title="Title">
+                                           <p>
+                                               You MUST agree to the material you are adding to the repository being used by RBGE in the future including for commercial purposes.
+                                           </p>
+                                           <p>
+                                               Without this agreement we can't make use of the contents of the repository in our work.
+                                           </p>
+                                         </div>
+             	                    </td>
+            	                </tr>
+       	                        <tr>
                 	                    <td colspan="4">
                 	                        <h3>3) Additional Data</h3>
                 	                    </td>

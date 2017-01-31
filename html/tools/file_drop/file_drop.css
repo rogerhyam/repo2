@@ -64,7 +64,14 @@
 #coordinates-cell input{
     width: 20;
 }
-
+#copyright-cell select{
+    width: auto;
+    margin-right: 0.5em;
+    margin-left: 0px;
+}
+#copyright-cell{
+    font-size: 90%;
+}
 
 #upload-form th{
    color: white;
