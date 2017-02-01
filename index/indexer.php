@@ -2,7 +2,7 @@
 
     require_once('../config.php');
     require_once('classes/Uploader.php');
-    require_once('classes/IndexQueue.php');
+    require_once('classes/IndexQueueMySQL.php');
     require_once('augmenter_switch.php');
 
     // starting off
@@ -62,7 +62,7 @@
     function queue_scan($queue_name){
         
         echo "Processing queue: $queue_name\n";
-        $queue = new IndexQueue($queue_name);
+        $queue = new IndexQueueMySQL($queue_name);
         while($relative_path = $queue->get_priority_file()){
             $full_path = REPO_ROOT . $relative_path;
             index_file($full_path, $queue);

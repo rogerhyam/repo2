@@ -1,7 +1,7 @@
 <?php
 
 include_once('classes/BaseAugmenter.php');
-include_once('classes/IndexQueue.php');
+include_once('classes/IndexQueueMySQL.php');
 
 /*
     This implements derivation relationships.
@@ -48,7 +48,7 @@ class DerivedItemAugmenter extends BaseAugmenter
     
     public function __construct(){
         parent::__construct();
-        $this->queue = new IndexQueue('derived_items');
+        $this->queue = new IndexQueueMySQL('derived_items');
     }
 
     public function augment($doc){

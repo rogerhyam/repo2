@@ -145,10 +145,9 @@
            
            // queue it for indexing
            $data_location = str_replace(REPO_ROOT, '', $json_repo_path); // json path within repo
-           require_once('../../../index/classes/IndexQueue.php');
-           $queue = new IndexQueue('edited_items');
+           require_once('../../../index/classes/IndexQueueMySQL.php');
+           $queue = new IndexQueueMySQL('edited_items');
            $queue->enqueue($doc['id'], $data_location);
-//           chmod(INDEX_QUEUE_PATH . "/edited_items.db", 0777); // just incase we just created it.
    
        } // while file
 

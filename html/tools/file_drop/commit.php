@@ -156,13 +156,9 @@
         }
         
         // queue it for re-indexing
-        require_once('../../../index/classes/IndexQueue.php');
-        $queue = new IndexQueue('edited_items');
+        require_once('../../../index/classes/IndexQueueMySQL.php');
+        $queue = new IndexQueueMySQL('edited_items');
         $queue->enqueue($doc['id'], str_replace(REPO_ROOT, '', $json_repo_path));
-
-        // because we may be creating this file as www-data which would prevent the indexer accessing it
-        // we make it very permissive - this is a bit hacky as we shouldn't know about the location of the file
-        chmod(INDEX_QUEUE_PATH . "/edited_items.db", 0777);
 
         // send them back to the form
         header("Location: index.php?success=" . urlencode($meta->file_name));

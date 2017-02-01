@@ -19,7 +19,12 @@
     }
     
     define('ACTIVE_DIRECTORY_SERVER', "192.168.150.90");
-    define('INDEX_QUEUE_PATH', '/var/www/index/queues' );
+    define('INDEX_QUEUE_PATH', '/var/www/index/queues' ); // this is deprecated in favour of mysql
+    
+    define('REPO_DB_HOST', 'localhost' );
+    define('REPO_DB_DATABASE', 'repo' );
+    define('REPO_DB_USER', 'repo' );
+    define('REPO_DB_PASSWORD', 'repobanana' );
     
     // full path to documents directory
     define('REPO_ROOT', $repo_root_path);

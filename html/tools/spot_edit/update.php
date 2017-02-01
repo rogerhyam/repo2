@@ -38,13 +38,9 @@ $json_out = json_encode($all_docs);
 file_put_contents($data_path, $json_out);
 
 // queue it for re-indexing
-require_once('../../../index/classes/IndexQueue.php');
-$queue = new IndexQueue('edited_items');
+require_once('../../../index/classes/IndexQueueMySQL.php');
+$queue = new IndexQueueMySQL('edited_items');
 $queue->enqueue($_POST['id'], base64_decode($_POST['data_location']));
-
-// because we may be creating this file as www-data which would prevent the indexer accessing it
-// we make it very permissive - this is a bit hacky as we shouldn't know about the location of the file
-chmod(INDEX_QUEUE_PATH . "/edited_items.db", 0777);
 
 // return to the form
 $form_uri = '/tools/spot_edit/index.php?data_location=' . $_POST['data_location'];

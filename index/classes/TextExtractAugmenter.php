@@ -1,7 +1,6 @@
 <?php
 
 include_once('classes/BaseAugmenter.php');
-include_once('classes/IndexQueue.php');
 
 /*
     This extracts text from files an populates the extracted_text_s field.
