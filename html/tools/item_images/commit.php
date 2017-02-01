@@ -148,7 +148,7 @@
            require_once('../../../index/classes/IndexQueue.php');
            $queue = new IndexQueue('edited_items');
            $queue->enqueue($doc['id'], $data_location);
-           chmod(INDEX_QUEUE_PATH . "/edited_items.db", 0777); // just incase we just created it.
+//           chmod(INDEX_QUEUE_PATH . "/edited_items.db", 0777); // just incase we just created it.
    
        } // while file
 

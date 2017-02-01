@@ -407,7 +407,7 @@
                                         </p>");
                                         
                                     // Keyword
-                                    render_repeat_field_rows('keywords_ss', 'Keyword', 'Title',  "(^[A-Z]{1}[A-Z0-9a-z ]+$)|(^$)", "
+                                    render_repeat_field_rows('keywords_ss', 'Keyword', 'Title',  "(^[A-Z0-9a-z ]+$)|(^$)", "
                                           <p>
                                               Use this field to tag the file with a keyword.
                                           </p>

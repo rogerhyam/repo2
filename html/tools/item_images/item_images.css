@@ -144,4 +144,8 @@ body{
     margin-right: 1em;
 }
 
+tabs-2{
+  overflow-y: scroll;
+}
+
 *:focus {outline: 0;}
