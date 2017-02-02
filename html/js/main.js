@@ -54,6 +54,20 @@ $( document ).ready(function() {
         }
     
     });
+    
+    /* image dialogues */
+    $(document).on('click', '.repo-image-dialogue-link', function(event){
+        
+        event.preventDefault();
+
+        $('#repo-image-dialogue img').attr('src', $(this).data('repo-image-src') );
+        $('#repo-image-dialogue').dialog({
+          height: "auto",
+          width: "auto",
+          position: { my: "top center", at: "top center", of: window }
+        });
+
+    });
 
 });
 

@@ -140,7 +140,11 @@
     copy($file_path, $file_repo_path);
     
     // check everything is in place and clean up.
-    if(file_exists($file_repo_path) && file_exists($json_repo_path)){
+    if( file_exists($file_repo_path)
+        && file_exists($json_repo_path)
+        && !is_dir($json_repo_path)
+        && !is_dir($file_repo_path)
+       ){
 
         // put it in the list of completed files
         file_put_contents("$dir_path/history.txt", $doc["storage_location_path"] . "\n", FILE_APPEND);

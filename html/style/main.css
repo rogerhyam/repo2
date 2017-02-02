@@ -203,3 +203,7 @@ html, body{
 .repo-help-dialogue{
     display:none;
 }
+
+#repo-image-dialogue{
+    display: none;
+}

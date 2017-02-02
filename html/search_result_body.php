@@ -36,13 +36,15 @@
      // insert image if we have one
      if(isset($doc->mime_type_s) && $doc->mime_type_s == 'image/jpeg'){
          $src = 'image_server.php?kind=300&path_base64=' . base64_encode($doc->storage_location_path);
-         echo "<br/><img class=\"large-image\" src=\"$src\" />";
+         $src_big = 'image_server.php?kind=1000&path_base64=' . base64_encode($doc->storage_location_path);
+         echo "<br/><a data-repo-image-src=\"$src_big\" class=\"repo-image-dialogue-link\" ><img class=\"large-image\" src=\"$src\" /></a>";
          $right_col_width = "320px";
      }
 
      if(isset($doc->summary_image_s)){
          $src = 'image_server.php?kind=300&path_base64=' . base64_encode($doc->summary_image_s);
-         echo "<br/><img class=\"repo-large-image\" src=\"$src\" />";
+         $src_big = 'image_server.php?kind=1000&path_base64=' . base64_encode($doc->summary_image_s);
+         echo "<br/><a data-repo-image-src=\"$src_big\" class=\"repo-image-dialogue-link\" ><img class=\"repo-large-image\" src=\"$src\" /></a>";
          $right_col_width = "320px";
      }
 
@@ -83,19 +85,28 @@
      write_field_li($doc, 'elevation', 'Elevation', 'Elevations', false);
      echo '</ul>';
      
-     echo "<h3>Metadata:</h3>";
+     echo "<h3>Item Metadata:</h3>";
      echo '<ul class="repo-field-list">';
+     write_field_li($doc, 'creator', 'Created by', 'Created by', false);
+     write_field_li($doc, 'object_created', 'Created on', 'Created on', false);
      write_field_li($doc, 'catalogue_number', 'Catalogue number', 'Catalogue numbers');
      write_field_li($doc, 'catalogue_number_other', 'Other identifiers', 'Other identifiers');
      write_field_li($doc, 'image_width_pixels_i', 'Width (pixels)', 'Width (pixels)', false);
      write_field_li($doc, 'image_height_pixels_i', 'Height (pixels)', 'Height (pixels)', false);
+     write_field_li($doc, 'keywords_ss', 'Keyword', 'Keywords', false);
+     write_field_li($doc, 'embargo_date', 'Embargoed till', 'Embargoed till', false);
+     write_field_li($doc, 'copyright_s', 'Copyright', 'Copyright', false);
+     echo '</ul>';
+
+     echo "<h3>Index Metadata:</h3>";
+     echo '<ul class="repo-field-list">';
+     write_field_li($doc, 'submitted_by_s', 'Submitted by', 'Submitted by', false);
+     write_field_li($doc, 'submitted_on_dt', 'Submitted on', 'Submitted on', false);
+     write_field_li($doc, 'indexed_at', 'Indexed', 'Indexed', false);
      write_field_li($doc, 'storage_location_garden_s', 'Garden', 'Gardens', false);
      write_field_li($doc, 'storage_location', 'Managed by', 'Managed', false);
      write_field_li($doc, 'storage_location_path', 'Path', 'Paths', false);
      write_field_li($doc, 'storage_location_description_s', 'Find', 'Find', false);
-     write_field_li($doc, 'object_created', 'Object created', 'Object created', false);
-     write_field_li($doc, 'embargo_date', 'Embargoed till', 'Embargoed till', false);
-     write_field_li($doc, 'indexed_at', 'Indexed', 'Indexed', false);
      echo '</ul>';
 
      if(
@@ -154,7 +165,6 @@
         
         echo "</li>";
  
-         
         echo '</ul>';
          
          // end download
