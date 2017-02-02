@@ -29,7 +29,7 @@ class IndexQueueMySQL{
         $this->table = 'index_queue_' . $queue;
         
         // if the queue table doesn't exist create it.
-        $this->mysqli->query("CREATE TABLE IF NOT EXISTS $this->table (item_id VARCHAR(500) PRIMARY KEY, data_file VARCHAR(500), priority INT DEFAULT 0, created DATETIME DEFAULT CURRENT_TIMESTAMP );");
+        $this->mysqli->query("CREATE TABLE IF NOT EXISTS $this->table (item_id VARCHAR(500) PRIMARY KEY, data_file VARCHAR(500), priority INT DEFAULT 0, created DATETIME DEFAULT CURRENT_TIMESTAMP, INDEX `item_id` (`item_id`), INDEX `data_file` (`data_file`) );");
         
         // set up the statements we will be using
         $this->enqueue_stmt = $this->mysqli->prepare("INSERT INTO $this->table (item_id, data_file, priority) VALUES (?, ? , 1) ON DUPLICATE KEY UPDATE priority = priority + 1");
