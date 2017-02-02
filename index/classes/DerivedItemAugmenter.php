@@ -119,8 +119,15 @@ class DerivedItemAugmenter extends BaseAugmenter
                    // echo $source->$field_name . ":" .$target->$field_name. "\n";
                     
                     // if the values in fields are different queue for indexing
-                    if($target->$field_name != $source->$field_name){
-                        // echo $source->$field_name . ":" .$target->$field_name. "\n";
+                    $target_val = $target->$field_name;
+                    if(!is_array($target_val)) $target_val = array($target_val);
+
+                    $source_val = $source->$field_name;
+                    if(!is_array($source_val)) $source_val = array($source_val);
+                        
+                    if($target_val != $source_val){
+                        // print_r($source_val);
+                        // print_r($target_val);
                         $this->queue->enqueue($target->id, $target->data_location);
                         break;
                     }
@@ -160,7 +167,15 @@ class DerivedItemAugmenter extends BaseAugmenter
             if(!isset($target->$field_name)) $target->$field_name = "";
             
             // if the values in fields are different queue for indexing
-            if($target->$field_name != $source->$field_name){
+            $target_val = $target->$field_name;
+            if(!is_array($target_val)) $target_val = array($target_val);
+
+            $source_val = $source->$field_name;
+            if(!is_array($source_val)) $source_val = array($source_val);
+    
+            if($target_val != $source_val){
+                // print_r($source_val);
+                // print_r($target_val);
                 $this->queue->enqueue($target->id, $target->data_location);
                 break;
             }
