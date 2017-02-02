@@ -8,6 +8,7 @@ class IndexQueueMySQL{
     var $dequeue_stmt;
     var $get_file_stmt;
     var $shelve_stmt;
+    var $get_data_file_for_id;
   
     public function __construct($queue = 'default'){        
         
@@ -32,8 +33,9 @@ class IndexQueueMySQL{
         
         // set up the statements we will be using
         $this->enqueue_stmt = $this->mysqli->prepare("INSERT INTO $this->table (item_id, data_file, priority) VALUES (?, ? , 1) ON DUPLICATE KEY UPDATE priority = priority + 1");
-        $this->dequeue_stmt = $this->mysqli->prepare("DELETE FROM $this->table WHERE item_id = ?");
-        $this->get_file_stmt = $this->mysqli->prepare("SELECT data_file FROM $this->table WHERE priority > 0 GROUP BY data_file ORDER BY SUM(priority) DESC LIMIT 1;");
+        $this->get_data_file_for_id = $this->mysqli->prepare("SELECT data_file FROM $this->table WHERE item_id = ? ");
+        $this->dequeue_stmt = $this->mysqli->prepare("DELETE FROM $this->table WHERE data_file = ?");
+        $this->get_file_stmt = $this->mysqli->prepare("SELECT data_file FROM $this->table WHERE priority > 0 ORDER BY priority DESC LIMIT 1;");
         $this->shelve_stmt = $this->mysqli->prepare("DELETE FROM $this->table WHERE data_file = ?");
         
     }
@@ -64,11 +66,22 @@ class IndexQueueMySQL{
     */
     public function dequeue($item_id){
         
-        $this->dequeue_stmt->bind_param("s", $item_id);
+        // delete all for this datafile as the whole file will have been indexed
+        $this->get_data_file_for_id->bind_param('s', $item_id);
+        if(!$this->get_data_file_for_id->execute()){
+            error_log("IndexQueueMySQL: Failed to find priority item. " . $this->get_data_file_for_id->error);
+        }
+        $this->get_data_file_for_id->bind_result($data_file);
+        $this->get_data_file_for_id->fetch();
+        $this->get_data_file_for_id->reset();
+        
+        // remove all the rows for this data_file
+        $this->dequeue_stmt->bind_param("s", $data_file);
         if(!$this->dequeue_stmt->execute()){
-            error_log("IndexQueueMySQL: Failed to dequeue item. $item_id " . $this->dequeue_stmt->error);
+            error_log("IndexQueueMySQL: Failed to dequeue data file. $data_file " . $this->dequeue_stmt->error);
         }
         $this->dequeue_stmt->reset();
+    
     }
     
     /**
