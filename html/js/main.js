@@ -59,14 +59,19 @@ $( document ).ready(function() {
     $(document).on('click', '.repo-image-dialogue-link', function(event){
         
         event.preventDefault();
+        
+        var winW = $(window).width() - 180;
+        var winH = $(window).height() - 180;
 
         $('#repo-image-dialogue img').attr('src', $(this).data('repo-image-src') );
         $('#repo-image-dialogue').dialog({
-          height: "auto",
-          width: "auto",
-          position: { my: "top center", at: "top center", of: window }
+            height: "auto",
+            width: "auto",
+            "max-height": winH,
+            "max-width": winW,
+            position: { my: "center top", at: "center top", of: window },
+            modal: true
         });
-
     });
 
 });
