@@ -117,14 +117,14 @@
         $json = @file_get_contents($file_path);
         if(!$json){
             echo "ERROR can't access $file_path\n";
-            if($queue)$queue->shelve($relative_file_path);
+            if($queue)$queue->dequeue_file($relative_file_path);
             return;
         }
         
         $docs = json_decode($json);
         if(!$docs){
             echo "ERROR can't parse JSON in $file_path\n";
-            if($queue)$queue->shelve($relative_file_path);
+            if($queue)$queue->dequeue_file($relative_file_path);
             return;
         }
         
