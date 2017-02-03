@@ -75,14 +75,24 @@ class IndexQueueMySQL{
         $this->get_data_file_for_id->fetch();
         $this->get_data_file_for_id->reset();
         
+        echo "Dequeue item: $item_id\n";
+        if($data_file) $this->dequeue_file($data_file);
+    
+    }
+    
+    /**
+     * remove items by data file 
+     */
+    public function dequeue_file($data_file){
         // remove all the rows for this data_file
+        echo "Dequeue file: $data_file\n"; 
         $this->dequeue_stmt->bind_param("s", $data_file);
         if(!$this->dequeue_stmt->execute()){
             error_log("IndexQueueMySQL: Failed to dequeue data file. $data_file " . $this->dequeue_stmt->error);
         }
         $this->dequeue_stmt->reset();
-    
     }
+    
     
     /**
     *   returns the most important file to index

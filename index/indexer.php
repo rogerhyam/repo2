@@ -149,15 +149,15 @@
            
            $uploader->add_document($doc);
 
-           // we pop it off the queue (if we are doing this as part of the queue)
-           // slight danger here in that if the upload fails we have removed it from the index queue
-           if($queue){
-               $queue->dequeue($doc->id);
-           }
-
         }
 
         $uploader->submit_now();
+        
+        // we pop it off the queue (if we are doing this as part of the queue)
+        // slight danger here in that if the upload fails we have removed it from the index queue
+        if($queue){
+            $queue->dequeue_file($relative_file_path);
+        }
         
         
     }
