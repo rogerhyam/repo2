@@ -79,13 +79,22 @@
         // load the original image
         list($width_orig, $height_orig) = getimagesize($src_path);
 
-        $ratio_orig = $width_orig/$height_orig;
+        // only resize smaller - otherwize return max
+        if($width_orig > $width || $height_orig > $height){
+            
+            $ratio_orig = $width_orig/$height_orig;
 
-        if ($width/$height > $ratio_orig) {
-           $width = $height*$ratio_orig;
-        } else {
-           $height = $width/$ratio_orig;
+            if ($width/$height > $ratio_orig) {
+               $width = $height*$ratio_orig;
+            } else {
+               $height = $width/$ratio_orig;
+            }
+            
+        }else{
+            $width = $width_orig;
+            $height = $height_orig;
         }
+
         
         //where we will put it 
         $path_parts = pathInfo($dest_path); 
@@ -98,12 +107,6 @@
         $thumb->writeImage($dest_path);
         $thumb->destroy();
 
-        /* 
-        $image_p = imagecreatetruecolor($width, $height);
-        $image = imagecreatefromjpeg($src_path);
-        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
-        imagejpeg($image_p, $dest_path, 90);
-        */
 
         
     }

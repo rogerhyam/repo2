@@ -111,4 +111,7 @@ curl "http://localhost:8983/solr/gettingstarted/update/extract?&extractOnly=true
  
  echo ".dump" | sqlite old.db | sqlite new.db
  
+# check out the validity of jpegs
+ nohup find . -name "*.jpg" | jpeginfo -c -f - > ~/jpeg_check.jpg &
+ 
  
