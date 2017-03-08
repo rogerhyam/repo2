@@ -33,6 +33,14 @@ function write_doc($doc, $index){
     }
     echo "</h3>";
     
+    // put a summary of the description in
+    if(isset($doc->content)){
+        if (preg_match('/^.{1,260}\b/s', $doc->content, $match)){
+            echo "<p>" . $match[0] . "</p>";
+        }
+    }
+
+    
     echo '</div>'; // search result top
     echo '<div class="repo-bottom-placeholder"></div>';
     echo "</div>"; // search result

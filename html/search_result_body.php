@@ -60,8 +60,9 @@
      }
 
      if(isset($doc->content)){
+         echo "<h3>Description:</h3>";
          echo '<div class="repo-content-field">';
-         echo $doc->content;
+         echo nl2br($doc->content);
          echo "</div>";
      }
 

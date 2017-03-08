@@ -46,7 +46,7 @@ echo "Starting update from $last_date\n" ;
 
 // how many rows in each page
 $repo_query =  REPO_SOLR_URI 
-    . '/query?start=0&rows=100&sort=indexed_at+desc&q='
+    . '/query?start=0&rows=100&sort=indexed_at+asc&q='
     . urlencode('indexed_at: ['. $last_date .' TO NOW] AND (item_type:"Specimen Photo" OR item_type:"Accession Photo")');
 
 // we need a mysqli prepared statement to use repeatedly.
@@ -73,6 +73,7 @@ while(true){
     foreach($result->response->docs as $doc){
         
         // get an identifier for it.
+        if(!isset($doc->derived_from)) continue;
         $parts = explode('/', $doc->derived_from);
         $accession_barcode = array_pop($parts);
         
@@ -85,7 +86,11 @@ while(true){
         // image url - max size 4,000 pixels in one dir (will not enlarge beyond original size)
         $image_url = "http://repo.rbge.org.uk/image_server.php?kind=4000&path_base64="  . base64_encode($doc->storage_location_path);
         
-        $creator = implode(';', $doc->creator);
+        if(isset($doc->creator)){
+            $creator = implode(';', $doc->creator);
+        }else{
+            $creator = '';
+        }
         
         $d = new DateTime($doc->indexed_at);
         $repo_last_indexed = $d->format('Y-m-d H:i:s');
@@ -108,7 +113,7 @@ while(true){
         }
         
         
-        echo "\t$accession_barcode => $accession_barcode_numeric\n";
+     //   echo "\t$accession_barcode => $accession_barcode_numeric\n";
     
         // clear the statement for next time
         $insert_stmt->reset();
@@ -123,11 +128,6 @@ while(true){
     echo "$rows from $start\n";
     
 } // while true
-
-
-
-
-
 
 
 // get the ones that have changed since last run

@@ -54,6 +54,9 @@
     // Copyright statement
     $doc['copyright_s'] = $_POST['copyright_s'];
     
+    // content
+    $doc['content'] = $_POST['content'];
+    
     // coll_books_id
     $doc['collector_id_s'] = $_POST['collector_id_s'];
     
@@ -94,7 +97,7 @@
         $doc['item_type'] = 'Image';
         
         $size = getimagesize($file_path);
-        $doc['image_width_pixels_i'] = $size[0];        
+        $doc['image_width_pixels_i'] = $size[0];
         $doc['image_height_pixels_i'] = $size[1];
         $doc['mime_type_s'] = $size['mime'];
 
@@ -125,10 +128,10 @@
         }
         
     }
-
+    
     // ZIP specific stuff
     if($meta->type == 'zip'){
-        // FIXME
+        $doc['item_type'] = 'Zip Archive';
     }
     
     // write the json file there

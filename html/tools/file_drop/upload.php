@@ -36,14 +36,20 @@
     
     // create a thumbnail
     switch ($file_mime) {
+        
         case 'image/jpeg':
             create_jpeg_thumb($dir_path, $file_path);
             create_jpeg_meta($dir_path, $file_path, $_FILES["file"]["name"]);
             break;
+            
         case 'application/pdf':
             create_pdf_thumb($dir_path, $file_path);
             create_pdf_meta($dir_path, $file_path, $_FILES["file"]["name"]);
             break;
+
+        case 'application/zip':
+            create_zip_meta($dir_path, $file_path, $_FILES["file"]["name"]);
+            break;        
         
         default:
             echo "Unknown mime type: " . $file_mime;
@@ -118,7 +124,6 @@
 
          file_put_contents($dir_path . '/_extract.json', json_encode($result, JSON_PRETTY_PRINT));
 
-
          // was it successful
          $meta_path = $full_path . '_metadata';
          if($result->responseHeader->status == 0 && isset($result->$meta_path)){
@@ -147,6 +152,29 @@
         
         
         
+    }
+    
+    function create_zip_meta($dir_path, $file_path, $file_name){
+        
+        global $meta;
+        
+        $meta['type'] = 'zip';
+        $meta['title'] = trim(str_replace(array('_','.','-','zip', 'ZIP'), ' ', $file_name));
+        $meta['file_name'] = $file_name;
+        
+        // put a list of the files in the description field
+        $base = basename($file_name,'zip');
+        $zip = zip_open($file_path);
+        if ($zip) {
+            $meta['description'] .= "File List: \n";
+            while ($zip_entry = zip_read($zip)) {
+                $meta['description'] .=  zip_entry_name($zip_entry) . "\n";
+            }
+            $meta['description'] .= "\n";
+            zip_close($zip);
+        }
+        
+        file_put_contents($dir_path . '/_exif.json', json_encode($exif, JSON_PRETTY_PRINT));
     }
     
     function get_date_from_exif($exif){

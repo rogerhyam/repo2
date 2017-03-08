@@ -19,7 +19,7 @@
     <ul>
         <li>
             <a href="file_drop/index.php"><strong>File Drop:</strong></a>
-            Upload JPG images and PDF documents to the repository. Do <strong>NOT</strong> use this for images of garden accessions/plants of specimens which can be linked to specific accession number or barcodes.
+            Upload JPG images, PDF documents and ZIP archive files to the repository. Do <strong>NOT</strong> use this for images of garden accessions/plants of specimens which can be linked to specific accession number or barcodes.
         </li>
         <li>
             <?php if(has_permission('item_images')){ ?>

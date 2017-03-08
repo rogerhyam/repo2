@@ -277,6 +277,15 @@
                 	                        <h3>3) Additional Data</h3>
                 	                    </td>
                 	            </tr>
+<?php if(@$meta->type == 'zip'){ ?>
+                                <tr>
+                                    <th>Zip Archives:</th>
+                                    <td colspan="2" >
+                                       <p>Please edit the description to describe the content of the archive as individual files are not indexed.</p>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                </tr>
+<?php } // end test for a document ?>
             	                <tr>
             	                    <th>Description:</th>
             	                    <td colspan="2" >

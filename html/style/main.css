@@ -169,7 +169,9 @@ html, body{
 }
 
 .repo-content-field{
-    margin-top: 0.6em;
+    max-height: 10em;
+    overflow-y: scroll;
+   
 }
 
 #repo-input-q{
