@@ -39,6 +39,6 @@
         }
         
     }
-    
+
+    if($show_login != 'false') echo "<span id=\"repo-show-login-flag\" data-repo-login-flag=\"$show_login\">"
 ?>
-<span id="repo-show-login-flag" data-repo-login-flag="<?php echo $show_login ?>">

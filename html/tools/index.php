@@ -30,6 +30,14 @@
             Upload images of existing repository item such as accessions, plants, herbarium specimens that can be linked to a specific accession number or barcode.
         </li>        
         <li>
+            <?php if(has_permission('photo_all')){ ?>
+                <a href="photo_all/index.php"><strong>Photo All:</strong></a>
+            <?php }else { ?>
+                <strong>Photo All:</strong>
+            <?php } ?>
+            Download lists of accessions/plants that need to be photographed.
+        </li>
+        <li>
             <?php if(has_permission('authorisation')){ ?>
                 <a href="authorisation/index.php"><strong>Authorisation:</strong></a>
             <?php }else { ?>
