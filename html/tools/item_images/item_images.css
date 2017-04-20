@@ -17,6 +17,7 @@ body{
     width: 70%;
     border:solid 1px gray;
     font-size: 83%;
+    overflow-y: auto;
 }
 
 #recentImages{
