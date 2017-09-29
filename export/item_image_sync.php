@@ -47,7 +47,9 @@ echo "Starting update from $last_date\n" ;
 // how many rows in each page
 $repo_query =  REPO_SOLR_URI 
     . '/query?start=0&rows=100&sort=indexed_at+asc&q='
-    . urlencode('indexed_at: ['. $last_date .' TO NOW] AND (item_type:"Specimen Photo" OR item_type:"Accession Photo")');
+    . urlencode('indexed_at: ['. $last_date .' TO NOW] AND (item_type:"Specimen Photo" OR item_type:"Accession Photo" OR item_type:"Herbarium Specimen Scan") AND mime_type_s:"image/jpeg" ');
+
+echo $repo_query;
 
 // we need a mysqli prepared statement to use repeatedly.
 $insert_stmt = $mysqli->prepare("INSERT INTO  `image_archive`.`repo_item_images` (accession_barcode, accession_barcode_numeric, image_url, photographer, repo_id, repo_last_indexed, created, modified) VALUES (?,?,?,?,?,?,NOW(),NOW()) ON DUPLICATE KEY UPDATE image_url = ?, photographer = ?, repo_last_indexed = ?, modified = NOW()");

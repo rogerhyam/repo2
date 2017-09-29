@@ -8,4 +8,6 @@ docs/run_once_script/foto_metadata_snap.db
 data_local/*
 html/tools/item_images/images/*
 html/tools/file_drop/files/*
+config.php
+config_bgbase_dump.php
 
