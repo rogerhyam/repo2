@@ -86,7 +86,7 @@ while(true){
         if(preg_match('/^[0-9]{8}/', $accession_barcode)) $accession_barcode_numeric = substr($accession_barcode, 0, 8);
         
         // image url - max size 4,000 pixels in one dir (will not enlarge beyond original size)
-        $image_url = "http://repo.rbge.org.uk/image_server.php?kind=4000&path_base64="  . base64_encode($doc->storage_location_path);
+        $image_url = "http://repo.rbge.org.uk/image_server.php?kind=1500&path_base64="  . base64_encode($doc->storage_location_path);
         
         if(isset($doc->creator)){
             $creator = implode(';', $doc->creator);
