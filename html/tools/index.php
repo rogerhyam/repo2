@@ -38,6 +38,14 @@
             Download lists of accessions/plants that need to be photographed.
         </li>
         <li>
+            <?php if(has_permission('manage_cache')){ ?>
+                <a href="manage_cache/index.php"><strong>Manage Cache:</strong></a>
+            <?php }else { ?>
+                <strong>Manage Cache:</strong>
+            <?php } ?>
+            The cache of resized images that are served in the interface and to 3rd parties externally.
+        </li>
+        <li>
             <?php if(has_permission('authorisation')){ ?>
                 <a href="authorisation/index.php"><strong>Authorisation:</strong></a>
             <?php }else { ?>
