@@ -43,6 +43,9 @@ require_once('../config_bgbase_dump.php');
    echo "Item Image Finish: " . $now->format(DATE_ATOM) . "\n";
 
    function process_image($row){
+	   
+ 		// N.B. THIS CODE IS SIMILAR TO THAT IN THE ITEM_IMAGES OF THE FTP_INGEST TOOL.
+		// FIX IT HERE CHECK IT WORKS THERE!
        
        // create a document
        $doc = array();

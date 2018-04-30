@@ -38,6 +38,14 @@
             Download lists of accessions/plants that need to be photographed.
         </li>
         <li>
+            <?php if(has_permission('ftp_ingester')){ ?>
+                <a href="ftp_ingester/index.php"><strong>FTP Ingester:</strong></a>
+            <?php }else { ?>
+                <strong>FTP Ingester:</strong>
+            <?php } ?>
+            Bulk upload of datasets via FTP.
+        </li>
+        <li>
             <?php if(has_permission('manage_cache')){ ?>
                 <a href="manage_cache/index.php"><strong>Manage Cache:</strong></a>
             <?php }else { ?>

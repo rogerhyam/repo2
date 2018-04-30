@@ -14,6 +14,9 @@
    if ($dh = opendir("images/$user")) {
 
        while (($file = readdir($dh)) !== false) {
+		   
+   			// N.B. THIS CODE IS SIMILAR TO THAT IN THE ITEM_IMAGES FTP_INGEST TOOL.
+   			// FIX IT HERE CHECK IT WORKS THERE!
            
            // only look at the main jpegs - others will be calculated
            if(!preg_match('/^Photo_[a-z0-9]+\.jpg$/', $file) ) continue;

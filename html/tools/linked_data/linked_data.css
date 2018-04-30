@@ -1,0 +1,68 @@
+*:focus {outline: 0;}
+#tabs{
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+#tabs td{
+    color: white;
+    /* border: solid 1px white; */
+}
+
+#tabs table{
+   /* border: solid 1px white; */
+    width: 100%;
+}
+
+#tabs .help-cell{
+    width: 3em;
+    vertical-align: top;
+}
+#tabs .button-cell{
+    width: 3em;
+}
+
+#tabs .commit-cell{
+    text-align: right;
+}
+
+
+#tabs textarea,
+#tabs input{
+    width: 100%;
+}
+
+#tabs th{
+   color: white;
+   text-align: right;
+   padding-right: 0.5em;
+   width: 20%;
+   vertical-align: top;
+}
+
+#tabs h3{
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: orange;
+}
+
+#tabs  p{
+    color: white;
+}
+
+#tabs select{
+    
+}
+
+.repo-context-help{
+    color: black;
+    background-color: gray;
+    border: solid white 1px;
+    border-radius: 1em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    margin-left: 0.3em;
+    text-decoration: none;
+}
+
