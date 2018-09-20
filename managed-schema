@@ -404,6 +404,7 @@
   <field name="catalogue_number" type="lowercase" indexed="true" stored="true"/>
   <field name="catalogue_number_other" type="lowercase" multiValued="true" indexed="true" stored="true"/>
   <field name="content" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="copyright_holder" type="strings"/>
   <field name="country_iso" type="lowercase" multiValued="true" indexed="true" stored="true"/>
   <field name="country_name" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="creator" type="string" multiValued="true" indexed="true" stored="true"/>

@@ -40,6 +40,9 @@
     
     <ul>
       <li><a href="#tabs-form">Form</a></li>
+	  <?php if(isset($doc->mime_type_s) && $doc->mime_type_s == 'image/jpeg'){?>
+	  <li><a href="#tabs-image">Image</a><li>
+	  <?php } // end test it is an image ?>
       <li><a href="#tabs-metadata">Raw Metadata</a></li>
       <li><a href="#tabs-index">Raw Index Value</a></li>
     </ul>
@@ -156,6 +159,29 @@
             </table>
         </form>
     </div><!-- form tab -->
+
+    <!-- image tab -->
+	<?php if(isset($doc->mime_type_s) && $doc->mime_type_s == 'image/jpeg'){?>
+    <div id="tabs-image">
+        <div class="spot-edit-image">
+			<form action="image_rotate.php" method="GET">
+				<input type="hidden" name="data_location" value="<?php echo $_GET['data_location'] ?>"/>
+			<?php 
+            
+			$src = '/image_server.php?kind=600&force_refresh=true&path_base64=' . base64_encode($doc->storage_location_path);
+			
+			echo "<img src=\"$src\" />";
+			?>
+			<p>
+				<button name="direction" value="CW" >Rotate CW</button>
+				<br/>
+				<button name="direction" value="CCW" >Rotate CCW</button>
+			</p>
+			
+			
+        </div>
+    </div>
+    <?php } // end test it is an image ?>
     
     <!-- Metadata -->
     <div id="tabs-metadata">

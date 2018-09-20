@@ -16,10 +16,23 @@
     $kind = @$_GET['kind'];
     if(!$kind) $kind = 600;
     $md5 = md5($within_repo);
+	
+	// are we forcing the regeneration of the cached files associated with this
+	// image - all kinds (sizes)
+	if(@$_GET['force_refresh']){
+		
+		// work through the dirs in cache - one for each kind
+		$directories = glob('cache/*', GLOB_ONLYDIR);
+		foreach($directories as $dir){
+			$path = $dir . '/' . substr($md5, 0,2) . '/' . $md5 . '.jpg';
+			if(file_exists($path)) unlink($path);
+		}
+	}
     
+	// create the path for this kind
     $cache_dir = "cache/$kind/" . substr($md5, 0,2);
     $cache_path =  "$cache_dir/$md5.jpg";
-    
+	
     // if it isn't in the cache create it
     if(!file_exists($cache_path)){
         

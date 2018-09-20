@@ -57,6 +57,9 @@ function handleUploads(){
        $imagick->thumbnailImage(200, 200, true);
        $imagick->writeImage("images/$user/Thumb_$newName"); 
        $imagick->clear();
+	   
+	   
+	   
        
         // we keep the old name in another file
         $out = fopen("images/$user/$newName.txt", 'w');

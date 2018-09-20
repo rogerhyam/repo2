@@ -18,7 +18,7 @@
         $repo_root_path = '/var/www/data';
     }
     
-    define('ACTIVE_DIRECTORY_SERVER', "192.168.150.90");
+    define('ACTIVE_DIRECTORY_SERVER', "192.168.150.90");	
     define('INDEX_QUEUE_PATH', '/var/www/index/queues' ); // this is deprecated in favour of mysql
     
     define('REPO_DB_HOST', 'localhost' );
@@ -30,7 +30,7 @@
     define('REPO_ROOT', $repo_root_path);
     
     // URI for solr server collection
-    define('REPO_SOLR_HOST', "localhost");
+	define('REPO_SOLR_HOST', "localhost");
     define('REPO_SOLR_PORT', "8983");
     define('REPO_SOLR_PATH', "/solr/" . $solr_core);
     define('REPO_SOLR_URI', "http://". REPO_SOLR_HOST . ":". REPO_SOLR_PORT . REPO_SOLR_PATH);
@@ -40,7 +40,7 @@
     define('REPO_SOLR_QUERY_STRING',  'facet=true&facet.mincount=1&facet.limit=100&facet.field=genus&facet.field=family&facet.field=epithet&facet.field=country_name&facet.field=item_type&facet.field=object_created_year&facet.field=keywords_ss&start=0&rows=' . REPO_SOLR_PAGE_SIZE ); 
     
     // API KEYS
-    define('REPO_GOOGLE_API_KEY', 'AIzaSyCuEKY1-ZvWGBfD_DFYe-kxAHop0hJPuYE');
+    define('REPO_GOOGLE_API_KEY', 'AIzaSyABcDRqCj6gIojxXsUngz8K98S7JI8hnAU');
     
     // A function that could be used anywhere
     function get_identifier_for_repo_file($repo_path, $qualifier = false){

@@ -20,3 +20,17 @@
     background-color: white;
     color: black;
 }
+
+#tabs-image{
+	position: relative;
+	overflow:hidden;
+}
+
+#tabs-image .spot-edit-image img,
+#tabs-image .spot-edit-image p{
+	float: left !important;
+}
+#tabs-image .spot-edit-image button{
+	margin-bottom: 1em;
+	margin-left: 1em;
+}

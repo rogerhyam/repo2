@@ -10,7 +10,8 @@
 
     
     // scan volumes
-    $vols = scandir('/media/bhl/Vegetation_of_Caithness');
+	/*
+    $vols = scandir('/media/bhl/Notes_from_the_Royal_Botanic_Garden_Edinburgh/vol_17/');
     foreach($vols as $vol){
         
         $matches = array();
@@ -25,6 +26,14 @@
             process_dir('/media/bhl/Vegetation_of_Caithness/'. $vol . '/' . $part, $out_path . $part . '.tif');
         }
     }
+	*/
+	
+	$in_path = '/media/bhl/Notes_from_the_Royal_Botanic_Garden_Edinburgh/vol_17/vol_17_part_81-82';
+	//$out_path = '/media/ocr/Input Folder/vol_17_part_81-82.tif';
+	
+	$out_path = '/home/roger/out.tif';
+	
+	process_dir($in_path, $out_path);
 
     function process_dir($in_path, $out_path){
     
@@ -53,7 +62,7 @@
         $multi_tif->setImageCompression(Imagick::COMPRESSION_LZW);
         $multi_tif->writeImages($out_path, true);
         $multi_tif->clear();
-        echo "\tStarting writing $out_path\n";
+        echo "\tDone writing $out_path\n";
         
         
     }

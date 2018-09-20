@@ -33,27 +33,7 @@ Annotation are peculiar to the thing being annotated (e.g. and OCR of the text) 
 
 # Installing SOLR
 
-Following instructions here https://www.digitalocean.com/community/tutorials/how-to-install-solr-5-2-1-on-ubuntu-14-04
-
-sudo apt-get install python-software-properties
-
-sudo apt-get update
-
-sudo apt-get install oracle-java8-installer
-
-wget http://mirrors.muzzy.org.uk/apache/lucene/solr/6.1.0/solr-6.1.0.tgz
-
-tar xzf solr-6.1.0.tgz solr-6.1.0/bin/install_solr_service.sh --strip-components=2
-
-sudo bash ./install_solr_service.sh solr-6.1.0.tgz
-
-- that gets it going with no collection
-
-Then create a collection based on data driven schema
-
-sudo su - solr -c "/opt/solr/bin/solr create -c rbge01 -n data_driven_schema_configs"
-
-Then copy over the rbge schema ...
+See PDF
 
 # Adding components to Apache
 
@@ -82,6 +62,7 @@ curl http://localhost:8983/solr/rbge01/update --data '<delete><query>indexed_at:
 
 curl http://localhost:8983/solr/gettingstarted/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
 curl http://localhost:8983/solr/rbge01/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
+curl http://repoindex.rbge.org.uk:8983/solr/rbge01/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
 
 sudo cp /var/solr/data/gettingstarted/conf/managed-schema /var/www/
 
@@ -99,9 +80,11 @@ https://coderwall.com/p/tog9eq/using-wkhtmltopdf-and-an-xvfb-daemon-to-render-ht
 make the upload size bigenough
 solrconfig.xml file: <requestDispatcher handleSelect=”true”> <requestParsers enableRemoteStreaming=”false” multipartUploadLimitInKB=”10240″ />
 
-curl "http://localhost:8983/solr/gettingstarted/update/extract?&extractOnly=true&wt=json&indent=true" -F "myfile=@stories.pdf"
+test
 
--F "myfile=@example/exampledocs/solr-word.pdf"
+curl "http://repoindex.rbge.org.uk:8983/solr/rbge01/update/extract?extractOnly=true&wt=json&indent=true" -F "myfile=@lenses_accessories_catalogue_01.pdf"
+
+ curl "http://repoindex.rbge.org.uk:8983/solr/rbge01/update/extract?extractOnly=true&wt=json&indent=true" -F "myfile=@/media/repo_disk/documents/publications/Notes_from_RBGE/9/Notes_from_the_Royal_Botanic_Garden_Edinburgh_Volume_9_No_43_(1916).pdf"
 
 # icons
 

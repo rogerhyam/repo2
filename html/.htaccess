@@ -28,6 +28,9 @@ RewriteRule ^image_server_base64/([^/]*) image_server\.php?path_base64=$1 [QSA,N
 # Allow the image server to work with a jpg extension as colourbox uses this
 RewriteRule ^image_server\.jpg image_server\.php [QSA,NC]
 
+# the image browser parses the path into facet/value/facet/value/facet/value?q=text query
+RewriteRule ^image_browser/(.*) image_browser/index\.php?path=$1 [QSA,NC]
+
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
 </IfModule>
