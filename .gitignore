@@ -10,4 +10,5 @@ html/tools/item_images/images/*
 html/tools/file_drop/files/*
 config.php
 config_bgbase_dump.php
+config_no_git.php
 

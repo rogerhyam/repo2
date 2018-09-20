@@ -1,5 +1,7 @@
 <?php
 
+    require('/var/www/config_no_git.php');
+
     session_start();
 
     date_default_timezone_set('UTC');
@@ -38,9 +40,6 @@
     
     // default bits to include in a query string to get facetting to work.
     define('REPO_SOLR_QUERY_STRING',  'facet=true&facet.mincount=1&facet.limit=100&facet.field=genus&facet.field=family&facet.field=epithet&facet.field=country_name&facet.field=item_type&facet.field=object_created_year&facet.field=keywords_ss&start=0&rows=' . REPO_SOLR_PAGE_SIZE ); 
-    
-    // API KEYS
-    define('REPO_GOOGLE_API_KEY', 'AIzaSyABcDRqCj6gIojxXsUngz8K98S7JI8hnAU');
     
     // A function that could be used anywhere
     function get_identifier_for_repo_file($repo_path, $qualifier = false){
