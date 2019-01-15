@@ -56,7 +56,8 @@
 
     // return the file
     header('Content-Type: image/jpeg');
-    header("Content-length: " . filesize($cache_path));    
+    header("Content-length: " . filesize($cache_path));
+	header("Access-Control-Allow-Origin: *");
     readfile($cache_path);
     exit;
     

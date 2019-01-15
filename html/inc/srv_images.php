@@ -85,6 +85,7 @@
 */
     // If its a jsonp callback request
     header("Content-type: text/javascript");
+	header("Access-Control-Allow-Origin: *");
     $callback = @$_GET['callback'];
     if (isset($callback) && $callback != '') {
       $json_response = json_encode($images);
@@ -137,7 +138,8 @@
                     
                     // links to the image
                     // $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/image_server.php?path=';
-                    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/image_server_base64/';
+					$protocol = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://';
+                    $base_url = $protocol . $_SERVER['HTTP_HOST'] . '/image_server_base64/';
                     $loc64 = base64_encode($doc->storage_location_path);
                     $image->url = $base_url . $loc64;
                     $image->thumbnail = $base_url . $loc64 . '/75/square';
