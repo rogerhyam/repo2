@@ -64,7 +64,7 @@ while(true){
     
     // run the query
     $ch = curl_init($repo_query);
-    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );        
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );       
     $result = json_decode(curl_exec($ch));
     curl_close($ch);
 

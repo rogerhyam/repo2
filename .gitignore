@@ -12,3 +12,13 @@ config.php
 config_bgbase_dump.php
 config_no_git.php
 
+export/rhododendron.csv
+export/repo_index_dump/Accession_Photo.csv
+export/repo_index_dump/Document.csv
+.gitignore
+export/repo_index_dump/Image.csv
+.gitignore
+.gitignore
+export/repo_index_dump/Specimen_Photo.csv
+export/repo_index_dump/README.txt
+export/repo_index_dump.zip
