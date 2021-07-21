@@ -9,7 +9,7 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     
-    $live = false;
+    $live = true;
     
     // switch to tell if we are live or not
     if($live){
@@ -32,7 +32,8 @@
     define('REPO_ROOT', $repo_root_path);
     
     // URI for solr server collection
-	define('REPO_SOLR_HOST', "localhost");
+//	define('REPO_SOLR_HOST', "localhost");
+    define('REPO_SOLR_HOST', "repoindex.rbge.org.uk");
     define('REPO_SOLR_PORT', "8983");
     define('REPO_SOLR_PATH', "/solr/" . $solr_core);
     define('REPO_SOLR_URI', "http://". REPO_SOLR_HOST . ":". REPO_SOLR_PORT . REPO_SOLR_PATH);
@@ -330,5 +331,4 @@
     );
     define('REPO_COUNTRIES_ISOS', $countries_isos);
     
-    
-?>
+

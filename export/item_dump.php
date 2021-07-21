@@ -1,5 +1,11 @@
 <?php
 
+/*
+
+php -d memory_limit=512M item_dump.php
+
+*/
+
 include('../../repo_secrets.php');
 
 // define the selectors and field lists for the dump
@@ -114,6 +120,7 @@ foreach ($item_types as $type => $fields) {
     // open a file to write to
     $out = fopen( str_replace('\ ', "_", $type) . '.csv', 'w');
 
+    // write the header
     fputcsv($out, $fields);
 
     $repo_query =  REPO_SOLR_URI 
@@ -167,6 +174,81 @@ foreach ($item_types as $type => $fields) {
     fclose($out);
 }
 
+// create an extra file suitable for import to Iris
+echo "Creating Iris import file.\n";
+
+$in = fopen('Accession_Photo.csv', 'r');
+$out = fopen('Iris_image_import.csv', 'w');
+
+$in_fields = fgetcsv($in);
+
+$out_fields = array(
+    "Action",
+    "ImageURL",
+    "TaxonName",
+    "Accession Number",
+    "ItemNo",
+    "ImageOrgFileName",
+    "ImageProvider",
+    "ImageDate",
+    "ImageComment",
+    "ImageRank"
+);
+fputcsv($out, $out_fields);
+
+while($in_row = fgetcsv($in)){
+
+    // create an associated array so we can work with field names
+    $in_row_assoc = array();
+    for ($i=0; $i < count($in_fields); $i++) { 
+        $in_row_assoc[$in_fields[$i]] = $in_row[$i];
+    }
+
+    $out_row = array();
+
+    // Action",
+    $out_row[] = 'U';
+    
+    //"ImageURL",
+    $out_row[] = 'http://solr.rbge.info/plantnet' . $in_row_assoc['storage_location_path'];
+
+    //"TaxonName",
+    $out_row[] =  $in_row_assoc['scientific_name_plain'];
+    
+    //"Accession Number",
+    $out_row[] =  substr($in_row_assoc['catalogue_number'], 0, 8);
+    
+    //"ItemNo",
+    $out_row[] =  substr($in_row_assoc['catalogue_number'], 8);
+
+    //"ImageOrgFileName",
+    $out_row[] =  $in_row_assoc['title'];
+
+    //"ImageProvider",
+    $out_row[] =  $in_row_assoc['creator'];
+
+    //"ImageDate", 2015-05-11T00:00:00Z
+    $date = DateTime::createFromFormat('Y-m-d', substr($in_row_assoc['object_created'], 0, 10));
+    if($date){
+        $out_row[] =  $date->format('d-M-y');
+    }else{
+        $out_row[] = "";
+    }
+
+    //"ImageComment",
+    $out_row[] =   $in_row_assoc['family'] . ' ' . $in_row_assoc['country_name'] ;
+
+    //"ImageRank"
+    $out_row[] =  '11';
+
+    fputcsv($out, $out_row);
+
+}
+
+fclose($in);
+fclose($out);
+
+
 // create a readme file
 $out = fopen( 'README.txt', 'w');
 fwrite($out, "This is a dump of the contents of botanics digital repository index.\n");
@@ -176,8 +258,9 @@ fwrite($out, "Created: " . date(DATE_ATOM));
 fclose($out);
 
 $zip = new ZipArchive();
-$zip->open('repo_index_dump.zip', ZipArchive::CREATE);
+$zip->open('../html/repo_index_dump.zip', ZipArchive::CREATE);
 $zip->addFile('README.txt');
+$zip->addFile('Iris_image_import.csv');
 
 foreach ($item_types as $type => $fields) {
     $file = str_replace('\ ', "_", $type) . ".csv";
@@ -190,6 +273,7 @@ foreach ($item_types as $type => $fields) {
     unlink($file);
 }
 unlink('README.txt');
+unlink('Iris_image_import.csv');
 
 echo "\nAll done now!\n";
 

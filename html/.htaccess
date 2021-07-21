@@ -5,6 +5,8 @@ RewriteCond "%{REMOTE_ADDR}" "!^192.168"
 RewriteCond "%{REQUEST_URI}" "!^/image_server"
 RewriteCond "%{REQUEST_URI}" "!^/service"
 RewriteCond "%{REQUEST_URI}" "!^/srv\.php"
+RewriteCond "%{REQUEST_URI}" "!^/repo_index_dump\.zip"
+RewriteCond "%{REQUEST_URI}" "!^/NRBGE.tar.gz"
 RewriteRule .* "-" [F]
 
 RewriteRule ^service$ srv.php [NC]
