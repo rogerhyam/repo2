@@ -196,6 +196,7 @@ $out_fields = array(
 );
 fputcsv($out, $out_fields);
 
+$skip_count = 0;
 while($in_row = fgetcsv($in)){
 
     // create an associated array so we can work with field names
@@ -216,13 +217,39 @@ while($in_row = fgetcsv($in)){
     $out_row[] =  $in_row_assoc['scientific_name_plain'];
     
     //"Accession Number",
-    $out_row[] =  substr($in_row_assoc['catalogue_number'], 0, 8);
-    
-    //"ItemNo",
-    $out_row[] =  substr($in_row_assoc['catalogue_number'], 8);
+    // we need to extract this from the derived_from uri
+    // http://data.rbge.org.uk/living/19240109A
+    $accession_uri = $in_row_assoc['derived_from'];
 
-    //"ImageOrgFileName",
-    $out_row[] =  $in_row_assoc['title'];
+    $matches = array();
+    if(preg_match('/^http:\/\/data\.rbge\.org\.uk\/living\/([0-9]{8})(.*)$/', $accession_uri ,$matches)){
+
+        //"ItemNo",
+        $out_row[] =  $matches[1];
+
+        //"ImageOrgFileName",
+        $out_row[] =  $matches[2];
+
+    }else{
+
+        // lets try again to get the accession number from the storage_location_path
+        //  /item_images/accessions/19/84/14/61/
+        if(preg_match('/^\/item_images\/accessions\/([0-9]{2})\/([0-9]{2})\/([0-9]{2})\/([0-9]{2})/', $in_row_assoc['storage_location_path'] ,$matches)){
+            
+            //"ItemNo",
+            $out_row[] =  $matches[1] . $matches[2] . $matches[3] . $matches[4];
+
+            //"ImageOrgFileName",
+            $out_row[] =  "";
+
+        }else{
+            // couldn't extract accession so continue
+            print_r($in_row_assoc);
+            $skip_count++;
+            continue;
+        }
+
+    }
 
     //"ImageProvider",
     $out_row[] =  $in_row_assoc['creator'];
@@ -275,6 +302,7 @@ foreach ($item_types as $type => $fields) {
 unlink('README.txt');
 unlink('Iris_image_import.csv');
 
+echo "$skip_count skipped \n";
 echo "\nAll done now!\n";
 
 
