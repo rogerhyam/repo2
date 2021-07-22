@@ -224,10 +224,10 @@ while($in_row = fgetcsv($in)){
     $matches = array();
     if(preg_match('/^http:\/\/data\.rbge\.org\.uk\/living\/([0-9]{8})(.*)$/', $accession_uri ,$matches)){
 
-        //"ItemNo",
+        //"Accession Number",
         $out_row[] =  $matches[1];
 
-        //"ImageOrgFileName",
+        //"ItemNo",
         $out_row[] =  $matches[2];
 
     }else{
@@ -236,10 +236,10 @@ while($in_row = fgetcsv($in)){
         //  /item_images/accessions/19/84/14/61/
         if(preg_match('/^\/item_images\/accessions\/([0-9]{2})\/([0-9]{2})\/([0-9]{2})\/([0-9]{2})/', $in_row_assoc['storage_location_path'] ,$matches)){
             
-            //"ItemNo",
+            //"Accession Number",
             $out_row[] =  $matches[1] . $matches[2] . $matches[3] . $matches[4];
 
-            //"ImageOrgFileName",
+            //"ItemNo",
             $out_row[] =  "";
 
         }else{
@@ -250,6 +250,9 @@ while($in_row = fgetcsv($in)){
         }
 
     }
+
+    //"ImageOrgFileName",
+    $out_row[] =  $in_row_assoc['title'];
 
     //"ImageProvider",
     $out_row[] =  $in_row_assoc['creator'];
